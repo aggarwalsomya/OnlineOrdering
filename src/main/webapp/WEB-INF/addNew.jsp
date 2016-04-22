@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Add Item</title>
+<title>Cmpe275_Term_Project_5 : Add Item</title>
 </head>
 <body>
 
