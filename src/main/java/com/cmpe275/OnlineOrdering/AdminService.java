@@ -21,7 +21,7 @@ public class AdminService {
 	 * @return Menu item details to the admin are returned
 	 */
 	@Transactional
-	public MenuItem getSpecificUser(String name) {
+	public MenuItem getMenuItem(String name) {
 		MenuItem m;
 		Query q = em.createQuery("Select m from MenuItem m where m.name=:arg1");
 		q.setParameter("arg1", name);

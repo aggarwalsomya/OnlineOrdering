@@ -19,12 +19,17 @@
     <property name="prefix" value="/WEB-INF/" />
     <property name="suffix" value=".jsp" />
   </bean>
+  
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- set the maximum file size in bytes -->
+    <property name="maxUploadSize" value="2000000"/>
+</bean>
    
   <!-- MySQL Datasource with Commons DBCP connection pooling -->
     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id="dataSource">
     <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-    <property name="url" value="jdbc:mysql://127.0.0.1:3306/cmpe275OnlineOrdering"/>
-    <property name="username" value=""/>
+    <property name="url" value="jdbc:mysql://127.0.0.1:3306/cmpe275onlineordering"/>
+    <property name="username" value="root"/>
     <property name="password" value=""/>
   </bean>
   
