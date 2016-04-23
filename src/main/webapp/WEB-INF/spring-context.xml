@@ -32,8 +32,6 @@
     <property name="username" value="root"/>
     <property name="password" value=""/>
   </bean>
-  
-  
    
   <!-- EntityManagerFactory -->
   <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">

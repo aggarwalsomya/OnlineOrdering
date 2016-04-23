@@ -5,22 +5,20 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
+import org.springframework.context.annotation.Bean;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Controller
 @RequestMapping("/")
 public class AdminController {
-
+	
 	@Autowired
 	private AdminService adminSvc;
-
 
 	/**
 	 * get data request for some menu name will be mapped here
@@ -54,6 +52,9 @@ public class AdminController {
 	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
 	public String addMenuItem(HttpServletRequest request,
 			 					@RequestParam CommonsMultipartFile fileUpload) {
+		
+		
+		
 		int id = this.getNextNonExistingNumber();
 		adminSvc.add(setParams(request, id, fileUpload
 		));
@@ -117,5 +118,14 @@ public class AdminController {
 		String name = request.getParameter("name");
 		adminSvc.delete(name);
 		return "success_delete";
+	}
+	
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	/**
+	 * returns the home page
+	 * @return
+	 */
+	public String home() {
+		return "AddMenuItem";
 	}
 }
