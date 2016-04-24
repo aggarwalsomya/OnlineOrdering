@@ -19,8 +19,13 @@
 			</tr>
 			<tr>
 				<td><label>Category</label></td>
-				<td><input type="text" name="category"
-					placeholder="enter category name" required /></td>
+				<td><select>
+  							<option value="drink">Drink</option>
+  							<option value="appetizer">Appetizer</option>
+  							<option value="maincourse">Main course</option>
+  							<option value="desert">Desert</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td><label>Picture</label></td>
