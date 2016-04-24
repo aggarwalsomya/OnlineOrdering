@@ -22,6 +22,7 @@ body {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	text-align: center;
+	margin-left:15px;
 }
 
 form {
@@ -102,32 +103,39 @@ margin-left : 170px;
 <div class="bodycontent">
 
 <div id="title">User Registration</div>
-<form method="post" name="myform"  >
+<form method="post" name="myform">
 	<br>
 	<div class="row"><label class="col1"> Email:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" name="email" value="" /></span></div>
+	<span class="col2"><input type="text" name="email"/></span></div>
 	<div class="row"><label class="col1"> Password:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" name="password" value="" /></span></div>
+	<span class="col2"><input type="text" name="password"/></span></div>
+	<div class="row"><label class="col1"> Verification Code:&nbsp;&nbsp;</label>
+	<span class="col2"><input type="text" placeholder="Enter code received on email" name="verCode"/></span></div>
+	<span class="col2"><input class="mybutton" type="submit" name="sendOTP" value="Send OTP"  onclick="selected(this.value)"></span><br>
+	<div class="row"><label class="col1"> Full Name:&nbsp;&nbsp;</label>
+	<span class="col2"><input type="text" name="fullName"/></span></div>
+	<div class="row"><label class="col1"> Address:&nbsp;&nbsp;</label>
+	<span class="col2"><input type="text" name="address"/></span></div>
+	<div class="row"><label class="col1"> Phone no.:&nbsp;&nbsp;</label>
+	<span class="col2"><input type="text" name="phone"/></span></div>
 	<br>
 	<br>
-		<input class="mybutton" type="submit" name="register" value="register"  onclick="m(this.value)">
-	<br><br><br>
-	<div class="exist">Existing user? <input type="submit"  name="login" value="login" onclick="m(this.value)"></div>
-	</form>
+		<input class="mybutton" type="submit" name="register" value="Register"  onclick="selected(this.value)">
+</form>
 	
 	</div>
 <script type="text/javascript">
-	function m(value){
+	function selected(value){
 		
 		var variable = value;	
-		  if(variable == "register")
+		  if(variable == "sendOTP")
 		  {
-		   document.myform.action ="registerUser";
+		   document.myform.action ="sendOTP";
 		  }
 		  else
-		  if(variable == "login")
+		  if(variable == "register")
 		  {
-		    document.myform.action ="";
+		    document.myform.action ="registerUser";
 		  }
 	
 	
