@@ -10,10 +10,10 @@
 	$(document).ready(function() {
 		$('#Delete').click(function() {
 			$.ajax({
-				url : 'http://localhost:8081/profile/' + $('#name').val(),
+				url : 'http://localhost:8081/OnlineOrdering/' + $('#name').val(),
 				type : 'DELETE',
 	            success: function(msg){
-            		window.location.href = "/profile"
+            		window.location.href = "/OnlineOrdering"
 	            }
 			});
 		});
