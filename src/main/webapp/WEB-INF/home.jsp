@@ -9,12 +9,23 @@
 <body>
 <table>
 		<tr>
-					<td><input type="button" class=button value="add"
-					id="addMenuItem" name="addMenuItem"></td>
-					<td><input type="button" class=button value="delete"
-					id="delete" name="delete"></td>
-					<td><input type="button" class=button value="search"
-					id="search" name="search"></td>
+					<td>
+					<a href="AddMenuItem.jsp"> 
+					<input type="button" class=button value="add"
+					id="addMenuItem" name="addMenuItem"></a></td>
+					
+					<td>
+					<a href="DeleteMenuItem.jsp"> 
+					<input type="button" class=button value="delete"
+					id="delete" name="delete">
+					</a>
+					</td>
+					<td>
+					<a href="SearchMenuItem.jsp"> 
+					<input type="button" class=button value="search"
+					id="search" name="search">
+					</a>
+					</td>
 		</tr>				
 </table>
 </body>
