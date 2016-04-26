@@ -30,7 +30,8 @@ public class AdminController {
 		MenuItem mi = adminSvc.getMenuItem(name);
 		
 		if (mi == null) {
-			return "errorFindMenuItem";
+			model.addAttribute("name",name);
+			return "ErrorFindMenuItem";
 		}
 
 		model.addAttribute("name", name);
@@ -41,7 +42,7 @@ public class AdminController {
 		model.addAttribute("unitprice", mi.getUnitprice());
 		model.addAttribute("preptime", mi.getPreptime());
 
-		return "GetMenuItemData";
+		return "DeleteMenuItem";
 	}
 	
 	/**
@@ -53,15 +54,13 @@ public class AdminController {
 	public String addMenuItem(HttpServletRequest request,
 			 					@RequestParam CommonsMultipartFile fileUpload) {
 		
-		
-		
 		int id = this.getNextNonExistingNumber();
 		adminSvc.add(setParams(request, id, fileUpload
 		));
 		if(validateImageFile(fileUpload))
 			return "AddMenuItem";
 		else
-			return "image_error";
+			return "ImageUploadError";
 	}
 	
 	private boolean validateImageFile(CommonsMultipartFile fileUpload) {
@@ -113,11 +112,11 @@ public class AdminController {
 	 * @param model
 	 * @return view
 	 */
-	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteMenuItem", method = RequestMethod.POST)
 	public String deleteMenuItem(HttpServletRequest request, Model model) {
 		String name = request.getParameter("name");
 		adminSvc.delete(name);
-		return "success_delete";
+		return "SuccessDeleteMenuItem";
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -126,6 +125,6 @@ public class AdminController {
 	 * @return
 	 */
 	public String home() {
-		return "AddMenuItem";
+		return "SearchMenuItem";
 	}
 }

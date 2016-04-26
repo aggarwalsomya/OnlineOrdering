@@ -26,7 +26,7 @@
 		<table>
 			<tr>
 				<td><label>Item Name</label></td>
-				<td><input type="text" name="name" value="${name}" /></td>
+				<td><input name="name" value="${name}" /></td>
 			</tr>
 
 			<tr>
@@ -37,15 +37,15 @@
 			</tr>
 			<tr>
 				<td><label>Unite Price</label></td>
-				<td><input type="text" name="unitprice" value="${unitprice}" /></td>
+				<td><input name="unitprice" value="${unitprice}" /></td>
 			</tr>
 			<tr>
 				<td><label>Calories</label></td>
-				<td><input type="text" name="calories" value="${calories}"/></td>
+				<td><input name="calories" value="${calories}" /></td>
 			</tr>
 			<tr>
 				<td><label>Preparation Time</label></td>
-				<td><input type="text" name="preptime" value="${preptime}"/></td>
+				<td><input name="preptime" value="${preptime}" /></td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Delete" /></td>

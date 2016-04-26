@@ -29,19 +29,19 @@
 			</tr>
 			<tr>
 				<td><label>Picture</label></td>
-				<td><input type="file" name="fileUpload" size="50" /></td>
+				<td><input type="file" name="fileUpload" size="50" required/></td>
 			</tr>
 			<tr>
 				<td><label>Unite Price</label></td>
-				<td><input type="text" name="unitprice" placeholder="enter price for 1 item"></td>
+				<td><input type="text" name="unitprice" placeholder="enter price for 1 item" required/></td>
 			</tr>
 			<tr>
 				<td><label>Calories</label></td>
-				<td><input type="text" name="calories" placeholder="enter calories in item"/></td>
+				<td><input type="text" name="calories" placeholder="enter calories in item" required/></td>
 			</tr>
 			<tr>
 				<td><label>Preparation Time (in mins)</label></td>
-				<td><input type="text" name="preptime" placeholder="enter preparation time (in mins)"/></td>
+				<td><input type="text" name="preptime" placeholder="enter preparation time (in mins)" required/></td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Add" /></td>

@@ -8,7 +8,7 @@
 
 </head>
 <body>
-	<form action="search" method="post">
+	<form action="searchItem" method="post">
 		<h1>Enter the name of the item you want to Search</h1>
 		<input type="text" name="name" placeholder="enter name of an item" />
 		<input type="submit" name="search" class="submit"

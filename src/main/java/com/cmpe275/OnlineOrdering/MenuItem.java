@@ -1,5 +1,6 @@
 package com.cmpe275.OnlineOrdering;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -28,6 +29,7 @@ public class MenuItem {
 	private String name;
 	private byte[] picture;
 	private String unitprice;
+	@Column(name="calories", nullable=false)
 	private String calories;
 	private String preptime;
 

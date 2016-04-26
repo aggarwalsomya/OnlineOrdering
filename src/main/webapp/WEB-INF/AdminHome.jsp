@@ -4,18 +4,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Cmpe275_Term_Project_5 : Home Page</title>
+<title>Cmpe275_Term_Project_5 : Admin Home Page</title>
 </head>
 <body>
 <table>
 		<tr>
 					<td>
-					<a href="AddMenuItem.jsp"> 
 					<input type="button" class=button value="add"
-					id="addMenuItem" name="addMenuItem"></a></td>
+					id="addMenuItem" name="addMenuItem" 
+					onclick="location.href = 'AddMenuItem'"></td>
 					
 					<td>
-					<a href="DeleteMenuItem.jsp"> 
+					<a href="SearchMenuItem.jsp"> 
 					<input type="button" class=button value="delete"
 					id="delete" name="delete">
 					</a>

@@ -70,9 +70,8 @@ public class AdminService {
 	 */
 	@Transactional
 	public void delete(String name) {
-		MenuItem entity = new MenuItem();
-		entity.setName(name);
-		System.out.println("AdminService::Delete called for menu item name:" +name);
-		em.remove(em.contains(entity) ? entity : em.merge(entity));
+		Query q = em.createQuery("Delete from MenuItem m where m.name=:arg1");
+		q.setParameter("arg1", name);
+		q.executeUpdate();
 	}
 }

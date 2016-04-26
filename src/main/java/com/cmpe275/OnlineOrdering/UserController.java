@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/")
 public class UserController {
 	
 	@Autowired
@@ -23,7 +23,7 @@ public class UserController {
 	 * get data request for some menu name will be mapped here
 	 * @return It will return the required view
 	 */
-	@RequestMapping(value = "/searchItem", method = RequestMethod.POST)
+	@RequestMapping(value = "/user/searchItem", method = RequestMethod.POST)
 	public String getData(HttpServletRequest request, Model model) {
 		String category = request.getParameter("category");
 		MenuItem[] mi = userSvc.getMenuItems(category);
@@ -43,7 +43,7 @@ public class UserController {
 		return "GetUserMenuItems";
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/Menu", method = RequestMethod.GET)
 	/**
 	 * returns the home page
 	 * @return
