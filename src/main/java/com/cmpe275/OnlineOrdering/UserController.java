@@ -29,9 +29,7 @@ public class UserController {
 			return "ErrorFindMenuItem_User";
 		}
 		
-		for(int i = 0; i < mi.size(); i++) {
-			model.addAttribute("record"+i, mi.get(i));
-		}
+		model.addAttribute("list", mi);
 		
 		return "GetUserMenuItems";
 	}
