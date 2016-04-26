@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cmpe275_Term_Project_5:Image Upload Error</title>
+<title>Insert title here</title>
 </head>
 <body>
 

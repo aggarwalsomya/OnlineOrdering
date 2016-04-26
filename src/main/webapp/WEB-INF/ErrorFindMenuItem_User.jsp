@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Cmpe275_Term_Project_5:Image Upload Error</title>
+<title>Cmpe275_Term_Project_5 : 404 Error</title>
 </head>
 <body>
-
+<h1>Error 404</h1><br><br>
+<p>No items are present in the category "${category}"! Try some other category.</p> 
 </body>
 </html>

@@ -1,16 +1,12 @@
 package com.cmpe275.OnlineOrdering;
 
-import java.util.Random;
-
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 @Controller
 @RequestMapping("/")
@@ -23,23 +19,20 @@ public class UserController {
 	 * get data request for some menu name will be mapped here
 	 * @return It will return the required view
 	 */
-	@RequestMapping(value = "/user/searchItem", method = RequestMethod.POST)
+	@RequestMapping(value = "/Menu/displayMenuItems", method = RequestMethod.POST)
 	public String getData(HttpServletRequest request, Model model) {
 		String category = request.getParameter("category");
-		MenuItem[] mi = userSvc.getMenuItems(category);
-		
+		List<MenuItem> mi = userSvc.getMenuItems(category);
+
 		if (mi == null) {
-			return "errorFindMenuItem";
+			model.addAttribute("category",category);
+			return "ErrorFindMenuItem_User";
 		}
-
-		for(int i = 0; i < mi.length; i++) {
-			model.addAttribute("name", mi[i].getName());
-			model.addAttribute("category", mi[i].getCategory());
-			model.addAttribute("calories", mi[i].getCalories());
-			model.addAttribute("picture", mi[i].getPicture());
-			model.addAttribute("unitprice", mi[i].getUnitprice());
+		
+		for(int i = 0; i < mi.size(); i++) {
+			model.addAttribute("record"+i, mi.get(i));
 		}
-
+		
 		return "GetUserMenuItems";
 	}
 	
@@ -49,6 +42,6 @@ public class UserController {
 	 * @return
 	 */
 	public String home() {
-		return "AddMenuItem";
+		return "DisplayUserMenu";
 	}
 }

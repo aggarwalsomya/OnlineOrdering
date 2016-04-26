@@ -26,22 +26,26 @@ public class UserService {
 	 * @return Menu item details to the user view are returned
 	 */
 	@Transactional
-	public MenuItem[] getMenuItems(String category) {
-		MenuItem[] mi = null;
+	public List<MenuItem> getMenuItems(String category) {
 		Query  q = em.createQuery("Select m from MenuItem m where m.category=:arg1");
 		q.setParameter("arg1", category);
+		List<MenuItem> ret = new ArrayList<MenuItem>();
+
 		try {
-			List<Object> resultList = q.getResultList();
-			for (Object result : resultList) {
-			    Object[] r = (Object[]) result;
-			    for (Object r1: r) {
-			        System.out.println(r1.toString());
-			    }
-			 
-			}
+			List<MenuItem> resultList = q.getResultList();
+			MenuItem mi = new MenuItem();
+
+			for(int i = 0; i < resultList.size(); i++) {
+				mi.setName(resultList.get(i).getName());
+				mi.setCategory(resultList.get(i).getCategory());
+				mi.setCalories(resultList.get(i).getCalories());
+				mi.setUnitprice(resultList.get(i).getUnitprice());
+				mi.setPicture(resultList.get(i).getPicture());
+				ret.add(mi);
+			}			
 		} catch (NoResultException e) {
-			mi = null;
+			ret = null;
 		}
-		return mi;
+		return ret;
 	}
 }

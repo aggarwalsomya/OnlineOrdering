@@ -19,7 +19,7 @@
 			</tr>
 			<tr>
 				<td><label>Category</label></td>
-				<td><select>
+				<td><select name = "category">
   							<option value="drink">Drink</option>
   							<option value="appetizer">Appetizer</option>
   							<option value="maincourse">Main course</option>
