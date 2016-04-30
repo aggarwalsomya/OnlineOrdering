@@ -102,44 +102,58 @@ margin-left : 170px;
 <body>
 <div class="bodycontent">
 
-<div id="title">User Registration</div>
-<form method="post" name="myform">
-	<br>
-	<div class="row"><label class="col1"> Email:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" name="email"/></span></div>
-	<div class="row"><label class="col1"> Password:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" name="password"/></span></div>
-	<div class="row"><label class="col1"> Verification Code:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" placeholder="Enter code received on email" name="verCode"/></span></div>
-	<span class="col2"><input class="mybutton" type="submit" name="sendOTP" value="Send OTP"  onclick="selected(this.value)"></span><br>
-	<div class="row"><label class="col1"> Full Name:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" name="fullName"/></span></div>
-	<div class="row"><label class="col1"> Address:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" name="address"/></span></div>
-	<div class="row"><label class="col1"> Phone no.:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" name="phone"/></span></div>
-	<br>
-	<br>
-		<input class="mybutton" type="submit" name="register" value="Register"  onclick="selected(this.value)">
-</form>
-	
+		<div id="title">User Registration</div>
+		<form method="post" action="registerUser">
+			<br>
+			<div class="row">
+				<label class="col1"> Email:&nbsp;&nbsp;</label> <span class="col2"><input
+					type="text" id="email" name="email" /></span>
+			</div>
+			<div class="row">
+				<label class="col1"> Password:&nbsp;&nbsp;</label> <span
+					class="col2"><input type="text" name="password" /></span>
+			</div>
+			<div class="row">
+				<label class="col1"> Verification Code:&nbsp;&nbsp;</label> <span
+					class="col2"><input type="text"
+					placeholder="Enter code received on email" name="verCode" /></span>
+			</div>
+			<span class="col2"><input class=button type=button
+				name="sendOTP" id="sendOTP" value="Send OTP" onclick="sendotp()"></span><br>
+			<div class="row">
+				<label class="col1"> Full Name:&nbsp;&nbsp;</label> <span
+					class="col2"><input type="text" name="fullName" /></span>
+			</div>
+			<div class="row">
+				<label class="col1"> Address:&nbsp;&nbsp;</label> <span class="col2"><input
+					type="text" id="address" name="address" /></span>
+			</div>
+			<div class="row">
+				<label class="col1"> Phone no.:&nbsp;&nbsp;</label> <span
+					class="col2"><input type="text" name="phone" /></span>
+			</div>
+			<br> <br> <input class="mybutton" type="submit"
+				name="register" value="Register">
+		</form>
+
 	</div>
-<script type="text/javascript">
-	function selected(value){
-		
-		var variable = value;	
-		  if(variable == "sendOTP")
-		  {
-		   document.myform.action ="sendOTP";
-		  }
-		  else
-		  if(variable == "register")
-		  {
-		    document.myform.action ="registerUser";
-		  }
-	
-	
-	}
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		function sendotp() {
+			var http = new XMLHttpRequest();
+			var url = "http://127.0.0.1:8080/OnlineOrdering/verifyMail";
+			var params = "email=";
+
+			params = params + document.getElementById("email").value;
+			http.open("POST", url, true);
+
+			//Send the proper header information along with the request
+			http.setRequestHeader("Content-type",
+					"application/x-www-form-urlencoded");
+			http.send(params);
+
+		}
 	</script>
 </body>
 </html>

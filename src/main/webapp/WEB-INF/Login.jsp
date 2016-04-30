@@ -101,7 +101,7 @@ margin-left : 170px;
 <body>
 <div class="bodycontent">
 
-<div id="title">User Registration</div>
+<div id="title">CMPE275_TermProject_Group5:Login</div>
 <form method="post" action="userLogin"  >
 	<br>
 	<div class="row"><label class="col1"> Email:&nbsp;&nbsp;</label>

@@ -1,6 +1,9 @@
 package com.cmpe275.OnlineOrdering;
 
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
@@ -17,6 +20,9 @@ public class LoginController {
 	
 	@Autowired
 	private MailSender mailOtp;
+
+	@Autowired
+	private LoginService loginSvc;
 
 	// first home login page which user sees
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -48,18 +54,69 @@ public class LoginController {
 		System.out.println("entered registration into db");
 		return "Redirect:/" ;
 	}
-	
-	//send email to the new user.
-	@RequestMapping(value = "/{someID}", method = RequestMethod.GET)
-	public String verifyMail(@PathVariable(value = "someID") String email, Model model) {
-		System.out.println("entered otp! " + email );
+
+	// generate verification code
+	public String generateCode() {
+
+		StringBuffer code = new StringBuffer("");
+		Random randomGenerator = new Random();
+		for (int i = 0; i <= 3; ++i) {
+			int randomInt = randomGenerator.nextInt(10);
+			code.append(Integer.toString(randomInt));
+		}
+		return code.toString();
+	}
+
+	// send code to the user email using SMTP.
+	private void sendCode(String code, String email) {
+
+		StringBuffer message = new StringBuffer("Your verification code: ");
+		message.append(code);
 		SimpleMailMessage verifyMail = new SimpleMailMessage();
 		verifyMail.setFrom("group5.275@gmail.com");
-		verifyMail.setTo(email+".com");
-		verifyMail.setSubject("test");
-		verifyMail.setText("test");
+		verifyMail.setTo(email);
+		verifyMail
+				.setSubject("Online Ordering Registration - Verification Code");
+		verifyMail.setText(message.toString());
 		mailOtp.send(verifyMail);
 		System.out.println("mail sent!");
-		return "";
+		
+	}
+
+	/**
+	 * It will generate the Random Id, if the id exists, it will generate a new
+	 * one.
+	 * 
+	 * @return the unique id
+	 */
+	private int getNextNonExistingNumber() {
+		Random rn = new Random();
+		rn.setSeed(System.currentTimeMillis());
+		while (true) {
+			int rand_id = rn.nextInt(Integer.SIZE - 1) % 10000;
+			if (!loginSvc.existsById(rand_id)) {
+				return rand_id;
+			}
+		}
+	}
+
+	// send generate code, mail the user, and store the temperory code in DB.
+	@RequestMapping(value = "/verifyMail", method = RequestMethod.POST)
+	public void verifyMail(HttpServletRequest request,
+			HttpServletResponse response) {
+		System.out.println("entered otp! " + request.getParameter("email"));
+		String code = generateCode();
+		String email = request.getParameter("email");
+		sendCode(code, email);
+		TempUser t = new TempUser();
+
+		t.setEmail(email);
+		t.setCode(code);
+		if (loginSvc.tuserExists(email)) {
+			loginSvc.updateTuser(t);
+		} else {
+			t.setId(getNextNonExistingNumber());
+			loginSvc.addTuser(t);
+		}
 	}
 }
