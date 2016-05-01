@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>CMPE275_TermProject_Group5:Registration</title>
+<title>CMPE275_TermProject_Group5:Menu Items</title>
 </head>
 <body>
 	

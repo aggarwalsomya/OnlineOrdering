@@ -122,7 +122,7 @@ margin-left : 170px;
 				name="sendOTP" id="sendOTP" value="Send OTP" onclick="sendotp()"></span><br>
 			<div class="row">
 				<label class="col1"> Full Name:&nbsp;&nbsp;</label> <span
-					class="col2"><input type="text" name="fullName" /></span>
+					class="col2"><input type="text" name="fullname" /></span>
 			</div>
 			<div class="row">
 				<label class="col1"> Address:&nbsp;&nbsp;</label> <span class="col2"><input
