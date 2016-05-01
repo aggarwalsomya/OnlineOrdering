@@ -8,7 +8,7 @@
 </head>
 <body>
 
-	<form method="POST" action="displayMenuItems">
+	<form method="POST" action="Menu/displayMenuItems">
 		<table>
 			<tr>
 				<td><label>Select a Category</label></td>
