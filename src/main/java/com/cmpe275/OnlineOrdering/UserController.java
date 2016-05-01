@@ -28,7 +28,7 @@ public class UserController {
 			model.addAttribute("category",category);
 			return "ErrorFindMenuItem_User";
 		}
-		
+	
 		model.addAttribute("list", mi);
 		
 		return "GetUserMenuItems";

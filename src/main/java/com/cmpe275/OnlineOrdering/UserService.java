@@ -33,9 +33,10 @@ public class UserService {
 
 		try {
 			List<MenuItem> resultList = q.getResultList();
-			MenuItem mi = new MenuItem();
-
+			
+     
 			for(int i = 0; i < resultList.size(); i++) {
+				MenuItem mi = new MenuItem();
 				mi.setName(resultList.get(i).getName());
 				mi.setCategory(resultList.get(i).getCategory());
 				mi.setCalories(resultList.get(i).getCalories());
