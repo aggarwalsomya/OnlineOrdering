@@ -45,27 +45,37 @@ public class LoginController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(HttpServletRequest request) {
 		System.out.println("entered register home");
+		
 		return "registration";
 	}
-	//after register, register button click redirection
-	@RequestMapping(value = "/registerRedirect", method = RequestMethod.POST)
-	public String registerRedirect(HttpServletRequest request) {
-		System.out.println("");
-		return "registration";
-	}
-	//after register, login button click redirection
-	@RequestMapping(value = "/loginRedirect", method = RequestMethod.POST)
-	public String loginRedirect(HttpServletRequest request) {
-		System.out.println("");
-		return "Login";
-	}
+	
+	
+	
 	
 	
 	//verify otp and register
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-	public String registerUser(HttpServletRequest request) {
+	public String registerUser(HttpServletRequest request, Model model) {
 		System.out.println("entered registration into db");
-		return "Redirect:/" ;
+		String email = request.getParameter("email");
+		String codeAssigned= loginSvc.getTuser(email).getCode();
+		String code = request.getParameter("verCode");
+		if(codeAssigned.equals(code)) {
+			model.addAttribute("msg", "You have registered successfully.Please proceed to login by clicking the login button!");
+			UserCredentials user = new UserCredentials();
+			user.setEmail(email);
+			user.setAddress(request.getParameter("address"));
+			user.setFullname(request.getParameter("fullname"));
+			user.setPassword(request.getParameter("password"));
+			user.setPhone(request.getParameter("phone"));
+			user.setId(getNextNonExistingNumber());
+			loginSvc.adduser(user);
+			
+		}else {
+			model.addAttribute("msg","the verification code you have entered is wrong! Please click register button to register again.");
+			
+		}
+		return "AfterRegisterClick";
 	}
 
 	// generate verification code
@@ -97,6 +107,23 @@ public class LoginController {
 	}
 
 	/**
+	 * It will generate the Random Id, if the id exists for temp user, it will generate a new
+	 * one.
+	 * 
+	 * @return the unique id
+	 */
+	private int getNextNonExistingNumberTuser() {
+		Random rn = new Random();
+		rn.setSeed(System.currentTimeMillis());
+		while (true) {
+			int rand_id = rn.nextInt(Integer.SIZE - 1) % 10000;
+			if (!loginSvc.existsByIdTuser(rand_id)) {
+				return rand_id;
+			}
+		}
+	}
+	
+	/**
 	 * It will generate the Random Id, if the id exists, it will generate a new
 	 * one.
 	 * 
@@ -112,6 +139,7 @@ public class LoginController {
 			}
 		}
 	}
+	
 
 	// send generate code, mail the user, and store the temperory code in DB.
 	@RequestMapping(value = "/verifyMail", method = RequestMethod.POST)
@@ -121,15 +149,19 @@ public class LoginController {
 		String code = generateCode();
 		String email = request.getParameter("email");
 		sendCode(code, email);
-		TempUser t = new TempUser();
-
-		t.setEmail(email);
+		TempUser t = loginSvc.getTuser(email);
+			
+        if(t==null) {
+		t=new TempUser();
 		t.setCode(code);
-		if (loginSvc.tuserExists(email)) {
-			loginSvc.updateTuser(t);
-		} else {
-			t.setId(getNextNonExistingNumber());
-			loginSvc.addTuser(t);
-		}
+        t.setEmail(email);
+		t.setId(getNextNonExistingNumberTuser());
+		loginSvc.addTuser(t);
+        } else {
+        	t.setCode(code);
+           loginSvc.updateTuser(t);
+        }
+		
+		
 	}
 }
