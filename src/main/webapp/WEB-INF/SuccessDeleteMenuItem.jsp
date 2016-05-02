@@ -9,6 +9,8 @@
 <body>
 <h1>Success!!!</h1><br><br>
 
-<a href="home.jsp"></a><input type="submit" value="Back" /></a> 
+ 
+<input type="button" class=button value="back"
+					id="back" name="back" onclick="location.href = 'home';">
 </body>
 </html>

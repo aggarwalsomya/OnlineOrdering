@@ -118,6 +118,35 @@ public class AdminController {
 		adminSvc.delete(name);
 		return "SuccessDeleteMenuItem";
 	}
+    
+    
+    //returns search page on click
+    @RequestMapping(value = "/searchIt", method = RequestMethod.GET)
+    public String searchIt(HttpServletRequest request) {
+        System.out.println("entered register home");
+        return "SearchMenuItem";
+    }
+    
+    //returns add item page on click
+    @RequestMapping(value = "/addIt", method = RequestMethod.GET)
+    public String addIt(HttpServletRequest request) {
+        System.out.println("entered register home");
+        return "AddMenuItem";
+    }
+    
+    //Go back to home page
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String home(HttpServletRequest request) {
+        System.out.println("entered register home");
+        return "home";
+    }
+    
+    //logout and jump to first page.
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest request) {
+        System.out.println("entered register home");
+        return "Login";
+    }
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	/**
@@ -125,6 +154,6 @@ public class AdminController {
 	 * @return
 	 */
 	public String home() {
-		return "SearchMenuItem";
+		return "home";
 	}
 }
