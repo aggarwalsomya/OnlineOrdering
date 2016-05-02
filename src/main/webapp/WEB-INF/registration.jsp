@@ -118,8 +118,10 @@ margin-left : 170px;
 					class="col2"><input type="text"
 					placeholder="Enter code received on email" name="verCode" /></span>
 			</div>
+			<div class="row">
+			<label class="col1">&nbsp;&nbsp;</label>
 			<span class="col2"><input class=button type=button
-				name="sendOTP" id="sendOTP" value="Send OTP" onclick="sendotp()"></span><br>
+			 name="sendOTP" id="sendOTP" value="Send OTP" onclick="sendotp()"></span></div><br>
 			<div class="row">
 				<label class="col1"> Full Name:&nbsp;&nbsp;</label> <span
 					class="col2"><input type="text" name="fullname" /></span>

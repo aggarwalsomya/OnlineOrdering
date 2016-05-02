@@ -93,7 +93,7 @@ div.row {
 	width: 40%;
 }
 .exist{
-margin-left : 170px;
+margin-left : 155px;
 }
 
 </style>
@@ -110,9 +110,9 @@ margin-left : 170px;
 	<span class="col2"><input type="text" name="password" value="" /></span></div>
 	<br>
 	<br>
-		<input class="mybutton" type="submit" name="login" value="login">
+		<input class="mybutton" type="submit" name="login" value="Login">
 	<br><br><br>
-	<div class="exist">New user? <input type="button" class=button id="register" name="register" value="register" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/register';"></div>
+	<div class="exist">New user? <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/register';"></div>
 	</form>
 	
 	</div>

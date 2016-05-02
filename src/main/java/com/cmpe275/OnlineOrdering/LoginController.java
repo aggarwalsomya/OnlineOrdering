@@ -47,6 +47,19 @@ public class LoginController {
 		System.out.println("entered register home");
 		return "registration";
 	}
+	//after register, register button click redirection
+	@RequestMapping(value = "/registerRedirect", method = RequestMethod.POST)
+	public String registerRedirect(HttpServletRequest request) {
+		System.out.println("");
+		return "registration";
+	}
+	//after register, login button click redirection
+	@RequestMapping(value = "/loginRedirect", method = RequestMethod.POST)
+	public String loginRedirect(HttpServletRequest request) {
+		System.out.println("");
+		return "Login";
+	}
+	
 	
 	//verify otp and register
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
