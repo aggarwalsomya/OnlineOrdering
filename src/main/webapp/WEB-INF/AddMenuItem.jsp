@@ -19,17 +19,19 @@
 			</tr>
 			<tr>
 				<td><label>Category</label></td>
-				<td><select name = "category">
-  							<option value="drink">Drink</option>
-  							<option value="appetizer">Appetizer</option>
-  							<option value="maincourse">Main course</option>
-  							<option value="desert">Desert</option>
+				<td>  <select>
+  							<option name="drink" value="drink">Drink</option>
+  							<option name="appetizer" value="appetizer">Appetizer</option>
+  							<option name="maincourse" value="maincourse">Main course</option>
+  							<option name="desert" value="desert">Desert</option>
 					</select>
+					<!--  <input type="text" name="category"
+					placeholder="enter item name" required />-->
 				</td>
 			</tr>
 			<tr>
 				<td><label>Picture</label></td>
-				<td><input type="file" name="fileUpload" size="50" required/></td>
+				<td><input type="file" name="fileUpload" size="200000000" required/></td>
 			</tr>
 			<tr>
 				<td><label>Unite Price</label></td>
@@ -44,9 +46,11 @@
 				<td><input type="text" name="preptime" placeholder="enter preparation time (in mins)" required/></td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="Add" /></td>
+				<td><input type="submit" value="Add" required/></td>
 			</tr>
 		</table>
 	</form>
+	<input type="button" class=button value="back"
+					id="back" name="back" onclick="location.href = 'home';">
 </body>
 </html>

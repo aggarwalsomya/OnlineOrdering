@@ -1,58 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Cmpe275_Term_Project_5 : Delete Menu Item</title>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#Delete').click(function() {
-			$.ajax({
-				url : 'http://localhost:8081/OnlineOrdering/' + $('#name').val(),
-				type : 'DELETE',
-	            success: function(msg){
-            		window.location.href = "/OnlineOrdering"
-	            }
-			});
-		});
-	});
-</script>
+
 </head>
 <body>
 
-<form method="POST" action="deleteMenuItem">
+	<form method="POST" action="deleteItem">
 		<table>
 			<tr>
 				<td><label>Item Name</label></td>
-				<td><input name="name" value="${name}" /></td>
+				<td>${name}</td>
 			</tr>
 
 			<tr>
 				<td><label>Picture</label></td>
 
-				<td><input type="file" name="fileUpload" size="50" value="${fileUpload}"/></td>
+				<td>${fileUpload}</td>
 
 			</tr>
 			<tr>
 				<td><label>Unite Price</label></td>
-				<td><input name="unitprice" value="${unitprice}" /></td>
+				<td>${unitprice}</td>
 			</tr>
 			<tr>
 				<td><label>Calories</label></td>
-				<td><input name="calories" value="${calories}" /></td>
+				<td>${calories}</td>
 			</tr>
 			<tr>
 				<td><label>Preparation Time</label></td>
-				<td><input name="preptime" value="${preptime}" /></td>
+				<td>${preptime}</td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Delete" /></td>
 			</tr>
 		</table>
 	</form>
-
+	<input type="button" class=button value="back" id="back" name="back"
+		onclick="location.href = 'home';">
 
 </body>
 </html>
