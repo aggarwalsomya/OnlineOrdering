@@ -23,6 +23,7 @@ public class AdminController {
 	/**
 	 * get data request for some menu name will be mapped here
 	 * @return It will return the required view
+	 * @author Somya
 	 */
 	@RequestMapping(value = "/searchItem", method = RequestMethod.POST)
 	public String getData(HttpServletRequest request, Model model) {
@@ -49,6 +50,7 @@ public class AdminController {
 	 * Request for adding the menu item will be mapped here
 	 * @param request
 	 * @return view
+	 * @author Somya
 	 */
 	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
 	public String addMenuItem(HttpServletRequest request,
@@ -63,6 +65,12 @@ public class AdminController {
 			return "ImageUploadError";
 	}
 	
+	/**
+	 * 
+	 * @param fileUpload
+	 * @return
+	 * @author Somya
+	 */
 	private boolean validateImageFile(CommonsMultipartFile fileUpload) {
 		if (fileUpload != null && fileUpload.getSize() > 0) {
 			return true;
@@ -73,6 +81,7 @@ public class AdminController {
 	/**
 	 * It will generate the Random Id, if the id exists, it will generate a new one.
 	 * @return the unique id
+	 * @author Somya
 	 */
 	private int getNextNonExistingNumber() {
 		Random rn = new Random();
@@ -91,6 +100,7 @@ public class AdminController {
 	 * @param id
 	 * @param fileUpload 
 	 * @return the profile object will all the parameters
+	 * @author Somya
 	 */
 	private MenuItem setParams(HttpServletRequest request, int id, CommonsMultipartFile fileUpload) {
 		MenuItem mi = new MenuItem();
@@ -111,6 +121,7 @@ public class AdminController {
 	 * @param name : menu item name
 	 * @param model
 	 * @return view
+	 * @author Somya
 	 */
 	@RequestMapping(value = "/deleteMenuItem", method = RequestMethod.POST)
 	public String deleteMenuItem(HttpServletRequest request, Model model) {
@@ -121,6 +132,11 @@ public class AdminController {
     
     
     //returns search page on click
+	/**
+	 * 
+	 * @param request
+	 * @return
+	 */
     @RequestMapping(value = "/searchIt", method = RequestMethod.GET)
     public String searchIt(HttpServletRequest request) {
         System.out.println("entered register home");

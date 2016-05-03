@@ -24,6 +24,7 @@ public class UserService {
 	 * 
 	 * @param category of the menu item which is to be looked for
 	 * @return Menu item details to the user view are returned
+	 * @author Somya
 	 */
 	@Transactional
 	public List<MenuItem> getMenuItems(String category) {

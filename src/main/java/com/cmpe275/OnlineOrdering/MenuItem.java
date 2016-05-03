@@ -7,6 +7,7 @@ import javax.persistence.Table;
 
 /** This is the main menu item class containing the various menu items.
  * All the fields are private in nature and getters and setters are written for them
+ * @author Somya
  * *
  */
 

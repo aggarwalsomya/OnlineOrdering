@@ -19,6 +19,7 @@ public class AdminService {
 	 * 
 	 * @param name of the menu item which is to be looked for
 	 * @return Menu item details to the admin are returned
+	 * @author Somya
 	 */
 	@Transactional
 	public MenuItem getMenuItem(String name) {
@@ -36,6 +37,7 @@ public class AdminService {
 	/**
 	 * This method is used to add a new menu item in the database.
 	 * @param MenuItem contains the details of the menu item which needs to be added
+	 * @author Somya
 	 */
 	@Transactional
 	public void add(MenuItem m) {
@@ -46,6 +48,7 @@ public class AdminService {
 	 * will check if the menu item with the name exists?
 	 * @param name of the menu item
 	 * @return yes if it exists else no
+	 * @author Somya
 	 */
 	public boolean exists(String name) {
 		MenuItem mi = new MenuItem();
@@ -57,6 +60,7 @@ public class AdminService {
 	 * will check if the menu item with the Id exists?
 	 * @param Id of the menu item
 	 * @return yes if it exists else no
+	 * @author Somya
 	 */
 	public boolean existsById(int id) {
 		MenuItem mi = new MenuItem();
@@ -67,6 +71,7 @@ public class AdminService {
 	/**
 	 * deletes the menu item with the specified name
 	 * @param name of the menu item
+	 * @author Somya
 	 */
 	@Transactional
 	public void delete(String name) {
