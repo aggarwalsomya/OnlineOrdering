@@ -1,5 +1,6 @@
 package com.cmpe275.OnlineOrdering;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -50,4 +51,54 @@ public class UserService {
 		}
 		return ret;
 	}
+	
+	/**
+	 * It will get the total prepTime for all the items ordered in a menu
+	 * @return
+	 */
+	public MenuItem getTotalPrepTimeForOrder(String menuitem_name) {
+		MenuItem mi;
+		Query q = em.createQuery("Select mi from MenuItem mi where mi.name=:arg1");
+		q.setParameter("arg1", menuitem_name);
+		try {
+			mi = (MenuItem) q.getSingleResult();
+		} catch (NoResultException e) {
+			mi = null;
+		}
+		return mi;	
+	}
+	
+	/**
+	 * It will add the order to the chef's schedule
+	 * @param chefid
+	 * @param orderid
+	 * @param busyFrom
+	 * @param busyTo
+	 * @param date
+	 */
+	@Transactional
+	public void addOrderToChefSchedule(Schedule sch) {
+		em.merge(sch);
+	}
+	
+	/**
+	 * Update the database rows for the order id with the status confirmed (placed order)
+	 * @param orderid
+	 * @param status
+	 */
+	@Transactional
+	public void placeConfirmOrder(int orderid, String status) {
+//		Order o = new Order();
+//		o.setUserid(10);
+//		o.setOrderid(101);
+//		o.setQuantity(1);
+//		o.setStatus("placed");
+//		o.setMenuid(11);
+//		em.merge(o);
+		
+//		Query  q = em.createQuery("UPDATE Order SET status=:arg1 where orderid=:arg2");
+//		q.setParameter("arg1", "111");
+//		q.setParameter("arg2", 101).executeUpdate();
+	}
+
 }
