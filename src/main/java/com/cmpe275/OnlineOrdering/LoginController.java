@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/")
 public class LoginController {
-	
+
 	@Autowired
 	private MailSender mailOtp;
 
@@ -28,40 +28,35 @@ public class LoginController {
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String getData(HttpServletRequest request, Model model) {
 		System.out.println("entered user home");
-		
-		
 
 		return "Login";
 	}
-	
-	//to check if user is valid
+
+	// to check if user is valid
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 	public String userLogin(HttpServletRequest request) {
-		
-		return "redirect:/" ;
+
+		return "redirect:/";
 	}
-	
-	//register page shown to user
+
+	// register page shown to user
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(HttpServletRequest request) {
 		System.out.println("entered register home");
-		
+
 		return "registration";
 	}
-	
-	
-	
-	
-	
-	//verify otp and register
+
+	// verify otp and register
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
 	public String registerUser(HttpServletRequest request, Model model) {
 		System.out.println("entered registration into db");
 		String email = request.getParameter("email");
-		String codeAssigned= loginSvc.getTuser(email).getCode();
+		String codeAssigned = loginSvc.getTuser(email).getCode();
 		String code = request.getParameter("verCode");
-		if(codeAssigned.equals(code)) {
-			model.addAttribute("msg", "You have registered successfully.Please proceed to login by clicking the login button!");
+		if (codeAssigned.equals(code)) {
+			model.addAttribute("msg",
+					"You have registered successfully.Please proceed to login by clicking the login button!");
 			UserCredentials user = new UserCredentials();
 			user.setEmail(email);
 			user.setAddress(request.getParameter("address"));
@@ -70,10 +65,11 @@ public class LoginController {
 			user.setPhone(request.getParameter("phone"));
 			user.setId(getNextNonExistingNumber());
 			loginSvc.adduser(user);
-			
-		}else {
-			model.addAttribute("msg","the verification code you have entered is wrong! Please click register button to register again.");
-			
+
+		} else {
+			model.addAttribute("msg",
+					"the verification code you have entered is wrong! Please click register button to register again.");
+
 		}
 		return "AfterRegisterClick";
 	}
@@ -98,17 +94,16 @@ public class LoginController {
 		SimpleMailMessage verifyMail = new SimpleMailMessage();
 		verifyMail.setFrom("group5.275@gmail.com");
 		verifyMail.setTo(email);
-		verifyMail
-				.setSubject("Online Ordering Registration - Verification Code");
+		verifyMail.setSubject("Online Ordering Registration - Verification Code");
 		verifyMail.setText(message.toString());
 		mailOtp.send(verifyMail);
 		System.out.println("mail sent!");
-		
+
 	}
 
 	/**
-	 * It will generate the Random Id, if the id exists for temp user, it will generate a new
-	 * one.
+	 * It will generate the Random Id, if the id exists for temp user, it will
+	 * generate a new one.
 	 * 
 	 * @return the unique id
 	 */
@@ -122,7 +117,7 @@ public class LoginController {
 			}
 		}
 	}
-	
+
 	/**
 	 * It will generate the Random Id, if the id exists, it will generate a new
 	 * one.
@@ -139,29 +134,26 @@ public class LoginController {
 			}
 		}
 	}
-	
 
 	// send generate code, mail the user, and store the temperory code in DB.
 	@RequestMapping(value = "/verifyMail", method = RequestMethod.POST)
-	public void verifyMail(HttpServletRequest request,
-			HttpServletResponse response) {
+	public void verifyMail(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("entered otp! " + request.getParameter("email"));
 		String code = generateCode();
 		String email = request.getParameter("email");
 		sendCode(code, email);
 		TempUser t = loginSvc.getTuser(email);
-			
-        if(t==null) {
-		t=new TempUser();
-		t.setCode(code);
-        t.setEmail(email);
-		t.setId(getNextNonExistingNumberTuser());
-		loginSvc.addTuser(t);
-        } else {
-        	t.setCode(code);
-           loginSvc.updateTuser(t);
-        }
-		
-		
+
+		if (t == null) {
+			t = new TempUser();
+			t.setCode(code);
+			t.setEmail(email);
+			t.setId(getNextNonExistingNumberTuser());
+			loginSvc.addTuser(t);
+		} else {
+			t.setCode(code);
+			loginSvc.updateTuser(t);
+		}
+
 	}
 }

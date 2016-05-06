@@ -1,15 +1,13 @@
 package com.cmpe275.OnlineOrdering;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import java.util.TreeMap;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,17 +86,46 @@ public class UserService {
 	 */
 	@Transactional
 	public void placeConfirmOrder(int orderid, String status) {
-//		Order o = new Order();
-//		o.setUserid(10);
-//		o.setOrderid(101);
-//		o.setQuantity(1);
-//		o.setStatus("placed");
-//		o.setMenuid(11);
-//		em.merge(o);
+		Order o = new Order();
+		o.setUserid(10);
+		o.setOrderid(101);
+		o.setQuantity(1);
+		o.setStatus("placed");
+		o.setMenuid(11);
+		em.merge(o);
 		
-//		Query  q = em.createQuery("UPDATE Order SET status=:arg1 where orderid=:arg2");
-//		q.setParameter("arg1", "111");
-//		q.setParameter("arg2", 101).executeUpdate();
+//		Query  q = em.createQuery("update Order set orderid=:arg2");
+//		//q.setParameter("arg1", "placed");
+//		q.setParameter("arg2", 999);
+//		q.executeUpdate();
+		
+		
 	}
+	
+	/**
+	 * 
+	 * @param chefid
+	 * @param date
+	 * @author Somya
+	 * @return 
+	 */
+	@Transactional
+	public Map<Integer, Integer> getScheduleForChef(int chefid, String date) {
+		Query  q = em.createQuery("Select s from Schedule s where s.chefid=:arg1 and s.date=:arg2");
+		q.setParameter("arg1", chefid);
+		q.setParameter("arg2", date);
+		
+		Map<Integer, Integer>time = new TreeMap<Integer, Integer>();		
+		try {
+			List<Schedule> resultList = q.getResultList();     
+			for(int i = 0; i < resultList.size(); i++) {
+				time.put(resultList.get(i).getBusystarttime(),resultList.get(i).getBusyendtime());
+			}		
+		} catch (NoResultException e) {
+			time = null;
+		}
+		return time;
 
+	}
+	
 }

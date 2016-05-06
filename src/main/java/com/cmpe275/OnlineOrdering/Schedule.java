@@ -15,7 +15,7 @@ public class Schedule {
 	private int orderid;
 	private int busystarttime;
 	private int busyendtime;
-	private Date date;
+	private String date;
 	
 	public int getChefid() {
 		return chefid;
@@ -41,10 +41,10 @@ public class Schedule {
 	public void setBusyendtime(int busyendtime) {
 		this.busyendtime = busyendtime;
 	}
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 }

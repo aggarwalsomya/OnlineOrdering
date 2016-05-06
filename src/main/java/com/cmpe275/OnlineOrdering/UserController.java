@@ -1,16 +1,20 @@
 package com.cmpe275.OnlineOrdering;
 
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @Controller
 @RequestMapping("/")
@@ -92,8 +96,8 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.GET)
 	public String checkCustomTime() {
-		Date date = null;
 
+		String date = "2016-05-011";
 		List<String> MenuItemNames = new ArrayList<String>();
 		MenuItemNames.add("coke");
 		MenuItemNames.add("chocolate fudge");
@@ -102,7 +106,7 @@ public class UserController {
 		MenuItemNames.add("ice tea");
 
 		Time t = null;
-		int pickuptime = 0;
+		int pickuptime = 700;
 		int orderid = 101;
 		// get the post/get data. // TODO:
 
@@ -110,18 +114,25 @@ public class UserController {
 		// output of parsing should be a struct filled with request data
 
 		int totalPrepTime = getTotalPrepTimeForMenu(MenuItemNames);
+		System.out.println("Pickup time:"+pickuptime);
+		System.out.println("Date:"+date);
 
 		Schedule sch = isAnyChefFree(pickuptime, date, totalPrepTime);
 		if (sch != null) {
-			System.out.println("Some chef is free. we can take the order.");
+			System.out.println("Order Accepted.");
 
 			// update the order status in the database for this order.
-			userSvc.placeConfirmOrder(orderid, ORDERPLACED);
+			//userSvc.placeConfirmOrder(orderid, ORDERPLACED);
 
 			// add the order to the chef's schedule as well.
 			// fill the class here. TODO:
-			sch.setOrderid(orderid);
-			sch.setDate(date);
+			sch.setOrderid(105);
+			sch.setDate("2016-05-11");
+			
+			System.out.println("Start Time:"+ sch.getBusystarttime());
+			System.out.println("End Time:"+ sch.getBusyendtime());
+			System.out.println("Chef:"+sch.getChefid());
+			
 			userSvc.addOrderToChefSchedule(sch);
 
 			return "success";
@@ -140,7 +151,7 @@ public class UserController {
 	 * @return chefid who is free
 	 * @author Somya
 	 */
-	private Schedule isAnyChefFree(int pickuptime, Date date, int preptime) {
+	private Schedule isAnyChefFree(int pickuptime, String date, int preptime) {
 		int chefid = 1;
 		Schedule sch_1 = isChefFree(chefid, pickuptime, date, preptime);
 		if (sch_1 == null) {
@@ -170,38 +181,66 @@ public class UserController {
 	 * @return
 	 * @author Somya
 	 */
-	private Schedule isChefFree(int chefid, int pickuptime, Date date, int preptime) {
-		int a[] = { 540, 650, 710 };
-		int b[] = { 600, 700, 900 };
+	private Schedule isChefFree(int chefid, int pickuptime, String date, int preptime) {
 
+		Map<Integer, Integer> time = new TreeMap<Integer, Integer>();
+		time = userSvc.getScheduleForChef(chefid, date);
+
+		int a[] = new int[time.size()];
+		int b[] = new int[time.size()];
+		int id = 0;
+		for (Map.Entry<Integer, Integer> entry : time.entrySet()) {
+			a[id] = entry.getKey();
+			b[id] = entry.getValue();
+			id++;
+		}
+		for(int i=0; i<a.length; i++)
+			System.out.println(a[i]+" "+b[i]);
+		
+		// cases failing : 610-640-30 ; 640-750-10; 610-670-30; 950-1000
 		int minStartTime = pickuptime - preptime - 60;
 		int maxStartTime = pickuptime - preptime;
+		System.out.println("MinStartTime:"+minStartTime);
+		System.out.println("MaxStartTime:"+maxStartTime);
 		
 		Schedule sch = new Schedule();
 
 		// it means the chef is all free
 		if (a.length == 0) {
 			System.out.println("Yes, can accomodate, chef is all free!");
-			sch.setBusystarttime(maxStartTime);						//scheduled here late
-			sch.setBusyendtime(pickuptime);							//scheduled here late
+			sch.setBusystarttime(maxStartTime); // scheduled here late
+			sch.setBusyendtime(pickuptime); // scheduled here late
 			return sch;
 		} else {
 			// assuming all the start times are valid.
-			// cases where the start time lies before the chef schedule start time
+			// cases where the start time lies before the chef schedule start
+			// time
 			if (minStartTime < a[0]) {
 				if (maxStartTime <= a[0]) {
-					System.out.println("Yes.");
-					sch.setBusystarttime(minStartTime);				//scheduled here early.
-					sch.setBusyendtime(minStartTime + preptime);	//scheduled here early.
-					return sch;
+					if (maxStartTime == a[0]) {
+						System.out.println("Yes, can be accomodated-1");
+						sch.setBusystarttime(a[0] - preptime);
+						sch.setBusyendtime(maxStartTime);
+						return sch;
+					} else {
+						if (a[0] - maxStartTime >= preptime) {
+							sch.setBusystarttime(maxStartTime);
+							sch.setBusyendtime(pickuptime);
+							return sch;
+						} else {
+							sch.setBusystarttime(a[0] - preptime);
+							sch.setBusyendtime(a[0]);
+							return sch;
+						}
+					}
 				} else {
 					if (a[0] - minStartTime >= preptime) {
-						System.out.println("Yes.");					//scheduled here late
-						sch.setBusystarttime(a[0] - preptime);		//scheduled here late
+						System.out.println("Will it ever come here?");
+						sch.setBusystarttime(a[0] - preptime);
 						sch.setBusyendtime(pickuptime);
 						return sch;
 					} else {
-						System.out.println("No.");
+						System.out.println("No, it cannot be accomodated");
 						return null;
 					}
 				}
@@ -219,12 +258,12 @@ public class UserController {
 
 				if (minStartTime <= b[i]) {
 					if (((b[i] + preptime) <= maxLimit) && ((b[i] + preptime) <= pickuptime)) {
-						System.out.println("Yes:");
-						sch.setBusystarttime(Math.min(maxLimit,pickuptime) - preptime);		//scheduled here late
-						sch.setBusyendtime(pickuptime);										//scheduled here late
+						System.out.println("Yes, it can be accomodated-2");
+						sch.setBusystarttime(Math.min(maxLimit, pickuptime) - preptime);
+						sch.setBusyendtime(Math.min(maxLimit, pickuptime));
 						return sch;
 					} else {
-						System.out.println("No:");
+						System.out.println("No, it cannot be accomodated");
 						return null;
 					}
 				} else {
@@ -232,12 +271,15 @@ public class UserController {
 						continue;
 					else {
 						if (minStartTime + preptime <= maxLimit) {
-							System.out.println("Yes::");
-							sch.setBusystarttime(minStartTime);					//scheduled here early
-							sch.setBusyendtime(minStartTime+preptime);			//scheduled here early
+							System.out.println("Yes, scheduling early");
+							sch.setBusystarttime(minStartTime); // scheduled
+																// here early
+							sch.setBusyendtime(minStartTime + preptime); // scheduled
+																			// here
+																			// early
 							return sch;
 						} else {
-							System.out.println("No::");
+							System.out.println("No, it cant be accomodated");
 							return null;
 						}
 					}
