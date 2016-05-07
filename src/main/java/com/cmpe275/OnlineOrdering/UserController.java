@@ -2,8 +2,10 @@ package com.cmpe275.OnlineOrdering;
 
 import java.sql.Time;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -65,11 +67,131 @@ public class UserController {
 		return "GetUserMenuItems";
 	}
 
-	public String getEarliestPickUpTime() {
+	/**
+	 * This function will take the current date and return a list of dates for next 30 days.
+	 * @param curDate
+	 * @return
+	 * @throws ParseException
+	 * @author Somya
+	 */
+	private List<String> getNextDates(String curDate) throws ParseException {
+		List<String> dateList = new ArrayList<String>();
+		dateList.add(curDate);
 
-		return "";
+		final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		for (int i = 0; i < 29; i++) {
+			final Date date = format.parse(curDate);
+			final Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.DAY_OF_YEAR, 1);
+			dateList.add(format.format(calendar.getTime()));
+			curDate = format.format(calendar.getTime());
+		}
+		return dateList;
 	}
+	
+	/**
+	 * This function will return the earliest pick up time for an order
+	 * @return
+	 * @throws ParseException
+	 * @author Somya
+	 */
+	@RequestMapping(value = "/Menu/EarlyTime", method = RequestMethod.GET)
+	public String getEarliestPickUpTime() throws ParseException {
+		String curDate = "2016-05-11";
+		List<String>daterange = getNextDates(curDate);
+		List<String> MenuItemNames = new ArrayList<String>();
+		MenuItemNames.add("coke");
+		MenuItemNames.add("chocolate fudge");
+		MenuItemNames.add("brown rice");
+		MenuItemNames.add("spring rolls");
+		MenuItemNames.add("ice tea");
+		int totalPrepTime = getTotalPrepTimeForMenu(MenuItemNames);		
+		for(int id = 0; id < 30; id++) {
+			int earlytime = getEarliestPickupForDate(totalPrepTime, daterange.get(id));
+			if(earlytime >= 540 && earlytime <= 1080) {
+				System.out.println("Earliest pick up time is:"+earlytime+" on:"+daterange.get(id));
+				break;
+			}
+		}
+		return "home";
+	}
+	
+	/**
+	 * This function will return the earliest pick up time for any chef on one date
+	 * @param preptime
+	 * @param date
+	 * @return
+	 * @author Somya
+	 */
+	private int getEarliestPickupForDate(int preptime, String date) {
+		int earlyTime = 9999;
+		
+		for(int chefid = 1; chefid <= 3; chefid++) {
+			earlyTime = Math.min(earlyTime, getEarliestTimeForChef(chefid, date, preptime));
+		}
+		
+		return earlyTime;
+	}
+	
+	/**
+	 * This function contains the algo, it will check the earliest time on a day for a chef.
+	 * @param chefid
+	 * @param date
+	 * @param preptime
+	 * @return
+	 * @author Somya
+	 */
+	private int getEarliestTimeForChef(int chefid, String date, int preptime) {
 
+		Map<Integer, Integer> time = new TreeMap<Integer, Integer>();
+		time = userSvc.getScheduleForChef(chefid, date);
+
+		int a[] = new int[time.size()];
+		int b[] = new int[time.size()];
+		int id = 0;
+		for (Map.Entry<Integer, Integer> entry : time.entrySet()) {
+			a[id] = entry.getKey();
+			b[id] = entry.getValue();
+			id++;
+		}
+		//for(int i=0; i<a.length; i++)
+		//	System.out.print(a[i]+"-"+b[i]+" ");
+
+		int restOpen = 540;
+		int restClose = 1080;
+
+		// case where chef is all free
+		if (a.length == 0)
+			return restOpen + preptime;
+		else {
+
+			// see if chef can accomodate it as the first order of the day
+			if (a[0] - restOpen >= preptime) {
+				// chef can do this as first meal of the day.
+				return restOpen + preptime;
+			}
+
+			// see if chef can accomodate in the middle of the day schedule
+			for (int i = 0; i < a.length - 1; i++) {
+				if (a[i + 1] - b[i] >= preptime)
+					return b[i] + preptime;
+			}
+
+			// see if chef can accomodate in the end
+			if (restClose - b[b.length - 1] >= preptime)
+				return b[b.length - 1] + preptime;
+
+			return 9999;
+		}
+	}
+	
+	/**
+	 * This function will return the total prep time for a list of menu item names
+	 * @param MenuItemNames
+	 * @return
+	 * @author Somya
+	 */
 	private int getTotalPrepTimeForMenu(List<String> MenuItemNames) {
 		int totalPrepTime = 0;
 		for (int i = 0; i < MenuItemNames.size(); i++) {
@@ -97,7 +219,10 @@ public class UserController {
 	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.GET)
 	public String checkCustomTime() {
 
-		String date = "2016-05-011";
+		String date = "2016-05-12";
+		int orderid = 206;
+		int pickuptime = 1000;
+
 		List<String> MenuItemNames = new ArrayList<String>();
 		MenuItemNames.add("coke");
 		MenuItemNames.add("chocolate fudge");
@@ -106,8 +231,6 @@ public class UserController {
 		MenuItemNames.add("ice tea");
 
 		Time t = null;
-		int pickuptime = 700;
-		int orderid = 101;
 		// get the post/get data. // TODO:
 
 		// parse post/get data. you will get menu items here. // TODO
@@ -126,8 +249,8 @@ public class UserController {
 
 			// add the order to the chef's schedule as well.
 			// fill the class here. TODO:
-			sch.setOrderid(105);
-			sch.setDate("2016-05-11");
+			sch.setOrderid(orderid);
+			sch.setDate(date);
 			
 			System.out.println("Start Time:"+ sch.getBusystarttime());
 			System.out.println("End Time:"+ sch.getBusyendtime());
@@ -194,13 +317,13 @@ public class UserController {
 			b[id] = entry.getValue();
 			id++;
 		}
-		for(int i=0; i<a.length; i++)
-			System.out.println(a[i]+" "+b[i]);
+		//for(int i=0; i<a.length; i++)
+			//System.out.print(a[i]+"-"+b[i]+" ");
 		
 		// cases failing : 610-640-30 ; 640-750-10; 610-670-30; 950-1000
 		int minStartTime = pickuptime - preptime - 60;
 		int maxStartTime = pickuptime - preptime;
-		System.out.println("MinStartTime:"+minStartTime);
+		System.out.println("\nMinStartTime:"+minStartTime);
 		System.out.println("MaxStartTime:"+maxStartTime);
 		
 		Schedule sch = new Schedule();
@@ -288,7 +411,7 @@ public class UserController {
 		}
 		return null;
 	}
-
+	
 	@RequestMapping(value = "/Menu", method = RequestMethod.GET)
 	/**
 	 * returns the home page
