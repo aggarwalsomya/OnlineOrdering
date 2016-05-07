@@ -111,7 +111,7 @@ margin-left : 170px;
 			</div>
 			<div class="row">
 				<label class="col1"> Password:&nbsp;&nbsp;</label> <span
-					class="col2"><input type="text" name="password" /></span>
+					class="col2"><input type="password" name="password" /></span>
 			</div>
 			<div class="row">
 				<label class="col1"> Verification Code:&nbsp;&nbsp;</label> <span

@@ -107,7 +107,7 @@ margin-left : 155px;
 	<div class="row"><label class="col1"> Email:&nbsp;&nbsp;</label>
 	<span class="col2"><input type="text" name="email" value="" /></span></div>
 	<div class="row"><label class="col1"> Password:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" name="password" value="" /></span></div>
+	<span class="col2"><input type="password" name="password" value="" /></span></div>
 	<br>
 	<br>
 		<input class="mybutton" type="submit" name="login" value="Login">
