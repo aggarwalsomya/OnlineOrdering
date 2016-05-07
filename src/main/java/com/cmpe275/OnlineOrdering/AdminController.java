@@ -1,12 +1,17 @@
 package com.cmpe275.OnlineOrdering;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.context.annotation.Bean;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +39,18 @@ public class AdminController {
 			model.addAttribute("name",name);
 			return "ErrorFindMenuItem";
 		}
-
+		
+        byte[] binaryData;
+		try {
+			binaryData = mi.getPicture();
+	        byte[] encodeBase64 = Base64.encodeBase64(binaryData);
+	        String base64Encoded = new String(encodeBase64, "UTF-8");
+	        // add outputString to model and show it is on page
+	        model.addAttribute("picPath", base64Encoded);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		model.addAttribute("name", name);
 		model.addAttribute("id",mi.getId());
 		model.addAttribute("category", mi.getCategory());
@@ -64,7 +80,7 @@ public class AdminController {
 		else
 			return "ImageUploadError";
 	}
-	
+
 	/**
 	 * 
 	 * @param fileUpload
@@ -77,7 +93,7 @@ public class AdminController {
 		} else
 			return false;
 	}
-	
+
 	/**
 	 * It will generate the Random Id, if the id exists, it will generate a new one.
 	 * @return the unique id
@@ -123,13 +139,21 @@ public class AdminController {
 	 * @return view
 	 * @author Somya
 	 */
-	@RequestMapping(value = "/deleteMenuItem", method = RequestMethod.POST)
-	public String deleteMenuItem(HttpServletRequest request, Model model) {
-		String name = request.getParameter("name");
-		adminSvc.delete(name);
-		return "SuccessDeleteMenuItem";
+//	@RequestMapping(value = "/deleteMenuItem", method = RequestMethod.POST)
+//	public String deleteMenuItem(HttpServletRequest request, Model model) {
+//		List<String>list = request.getParameter("menulist");
+//		for(int i = 0; i < list.size(); i++) {
+//			adminSvc.delete(list.get(i));
+//		}
+//		return "SuccessDeleteMenuItem";
+//	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String showAllMenuItemsForDelete(Model model){
+		List<MenuItem>itemlist = adminSvc.getAllMenuItems();
+		model.addAttribute("itemlist",itemlist);
+		return "DeleteMenuItem";
 	}
-    
     
     //returns search page on click
 	/**

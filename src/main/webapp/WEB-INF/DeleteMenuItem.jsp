@@ -8,22 +8,19 @@
 
 </head>
 <body>
-
+	<img alt="" src="data:image/jpeg;base64,${picPath}" style="width:304px;height:228px;">
 	<form method="POST" action="deleteItem">
 		<table>
 			<tr>
 				<td><label>Item Name</label></td>
 				<td>${name}</td>
 			</tr>
-
 			<tr>
 				<td><label>Picture</label></td>
-
-				<td>${fileUpload}</td>
-
+				<td></td>
 			</tr>
 			<tr>
-				<td><label>Unite Price</label></td>
+				<td><label>Unit Price</label></td>
 				<td>${unitprice}</td>
 			</tr>
 			<tr>
@@ -41,6 +38,5 @@
 	</form>
 	<input type="button" class=button value="back" id="back" name="back"
 		onclick="location.href = 'home';">
-
 </body>
 </html>

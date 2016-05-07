@@ -1,5 +1,8 @@
 package com.cmpe275.OnlineOrdering;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
@@ -78,5 +81,29 @@ public class AdminService {
 		Query q = em.createQuery("Delete from MenuItem m where m.name=:arg1");
 		q.setParameter("arg1", name);
 		q.executeUpdate();
+	}
+	
+	@Transactional
+	public List<MenuItem> getAllMenuItems() {
+		
+		Query  q = em.createQuery("Select m from MenuItem");
+		List<MenuItem> resultList = new ArrayList<MenuItem>();
+		List<MenuItem> ret = new ArrayList<MenuItem>();
+		try {
+			resultList = q.getResultList();
+			for(int i = 0; i < resultList.size(); i++) {
+				MenuItem mi = new MenuItem();
+				mi.setName(resultList.get(i).getName());
+				mi.setCategory(resultList.get(i).getCategory());
+				mi.setCalories(resultList.get(i).getCalories());
+				mi.setUnitprice(resultList.get(i).getUnitprice());
+				mi.setPicture(resultList.get(i).getPicture());
+				mi.setPreptime(resultList.get(i).getPreptime());
+				ret.add(mi);
+			}			
+		} catch (NoResultException e) {
+			ret = null;
+		}
+		return ret;
 	}
 }
