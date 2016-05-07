@@ -28,6 +28,7 @@ public class MenuItem {
 
 	private String category;
 	private String name;
+	@Column(name="picture",columnDefinition="longblob")
 	private byte[] picture;
 	private String unitprice;
 	@Column(name="calories", nullable=false)

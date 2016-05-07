@@ -31,7 +31,7 @@
 			</tr>
 			<tr>
 				<td><label>Picture</label></td>
-				<td><input type="file" name="fileUpload" size="200000000" required/></td>
+				<td><input type="file" name="fileUpload" size="9999999999999999" required/></td>
 			</tr>
 			<tr>
 				<td><label>Unite Price</label></td>
