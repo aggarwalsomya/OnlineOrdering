@@ -83,6 +83,7 @@ public class AdminService {
 		q.executeUpdate();
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<MenuItem> getAllMenuItems() {
 		
