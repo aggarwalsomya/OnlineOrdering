@@ -1,10 +1,15 @@
 package com.cmpe275.OnlineOrdering;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.xerces.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -43,13 +48,14 @@ public class LoginController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(HttpServletRequest request) {
 		System.out.println("entered register home");
-
 		return "registration";
 	}
 
+	
 	// verify otp and register
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-	public String registerUser(HttpServletRequest request, Model model) {
+	public String registerUser(HttpServletRequest request, Model model) throws Exception {
+		Password p =  new Password();
 		System.out.println("entered registration into db");
 		String email = request.getParameter("email");
 		String codeAssigned = loginSvc.getTuser(email).getCode();
@@ -61,7 +67,12 @@ public class LoginController {
 			user.setEmail(email);
 			user.setAddress(request.getParameter("address"));
 			user.setFullname(request.getParameter("fullname"));
-			user.setPassword(request.getParameter("password"));
+			
+			//Storing the hash of the password in the database
+			String userPassword = request.getParameter("password");
+			String hashPassword = p.getPasswordHash(userPassword);
+			user.setPassword(hashPassword);
+			
 			user.setPhone(request.getParameter("phone"));
 			user.setId(getNextNonExistingNumber());
 			loginSvc.adduser(user);
