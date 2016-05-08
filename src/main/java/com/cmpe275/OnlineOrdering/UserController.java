@@ -152,31 +152,54 @@ public class UserController {
 	public String getEarliestPickUpTime(HttpServletRequest request, Model model) throws ParseException {
 		// TODO: integrate
 		int user_id = 123;
-		
+
 		String menuitems = request.getParameter("itemData");
 		Map<String, Integer> mi = deserializeMenuItems(menuitems);
-		
+
 		Date date = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
 		String curDate= new SimpleDateFormat("yyyy-MM-dd").format(date);
 		System.out.println(curDate);
 		
+		int currMin = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
 		List<String>daterange = getNextDates(curDate);
-		
+
 		int orderid = this.getNextNonExistingOrderId(user_id);
 		this.last_order_id = orderid;
-		
 
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
 		float totalPrice = this.getTotalPriceForMenu(mi);
-		int earlytime = 600; //initialize with some random valid value
+		int earlytime = 0; //initialize with some random valid value
 		String earlydate = "";
+		String msg = "";
 		
+		if(totalPrepTime > 540) {
+			msg = "Order is too long to prepare in one day. Cannot accept the order. Please modify or cancel the order.";
+			model.addAttribute("msg",msg);
+			model.addAttribute("menulist",mi);
+			model.addAttribute("orderid",orderid);
+			model.addAttribute("totalprice", totalPrice);
+			return "checkouterror";
+		}
+
 		for(int id = 0; id < 30; id++) {
-			earlytime = getEarliestPickupForDate(totalPrepTime, daterange.get(id));
+			earlytime = getEarliestPickupForDate(
+				totalPrepTime, 
+				daterange.get(id), 
+				(id == 0 ? currMin : -1)
+			);
 			if(earlytime >= 540 && earlytime <= 1080) {
 				earlydate = daterange.get(id);
 				System.out.println("Earliest pick up time is:"+earlytime+" on:" + daterange.get(id));
 				break;
+			} else {
+				msg = "Pick up for this order is not available till next 30 days! Please cancel or modify your order.";
+				model.addAttribute("msg",msg);
+				model.addAttribute("menulist",mi);
+				model.addAttribute("orderid",orderid);
+				model.addAttribute("totalprice", totalPrice);
+				return "checkouterror";
 			}
 		}
 
@@ -188,7 +211,6 @@ public class UserController {
 		model.addAttribute("totalprice", totalPrice);
 		
 		String startTime = "00:00";
-		earlytime = 800;
 		int h = earlytime / 60 + Integer.parseInt(startTime.substring(0,1));
 		int m = earlytime % 60 + Integer.parseInt(startTime.substring(3,4));
 		String newtime = h+":"+m;
@@ -209,11 +231,11 @@ public class UserController {
 	 * @return
 	 * @author Somya
 	 */
-	private int getEarliestPickupForDate(int preptime, String date) {
+	private int getEarliestPickupForDate(int preptime, String date, int startMin) {
 		int earlyTime = 9999;
 
 		for(int chefid = 1; chefid <= 3; chefid++) {
-			earlyTime = Math.min(earlyTime, getEarliestTimeForChef(chefid, date, preptime));
+			earlyTime = Math.min(earlyTime, getEarliestTimeForChef(chefid, date, preptime, startMin));
 		}
 
 		return earlyTime;
@@ -227,45 +249,46 @@ public class UserController {
 	 * @return
 	 * @author Somya
 	 */
-	private int getEarliestTimeForChef(int chefid, String date, int preptime) {
+	private int getEarliestTimeForChef(int chefid, String date, int preptime, int startMin) {
 
-		Map<Integer, Integer> time = new TreeMap<Integer, Integer>();
-		time = userSvc.getScheduleForChef(chefid, date);
+		Map<Integer, Integer> time = userSvc.getScheduleForChef(chefid, date);
 
-		int a[] = new int[time.size()];
-		int b[] = new int[time.size()];
-		int id = 0;
+		List<Integer> a = new ArrayList<Integer>();
+		List<Integer> b = new ArrayList<Integer>();
+
 		for (Map.Entry<Integer, Integer> entry : time.entrySet()) {
-			a[id] = entry.getKey();
-			b[id] = entry.getValue();
-			id++;
+			if (entry.getKey() < startMin || entry.getValue() < startMin) {
+				startMin = Math.max(entry.getValue(), startMin);
+				continue;
+			}
+			a.add(entry.getKey());
+			b.add(entry.getValue());
 		}
-		//for(int i=0; i<a.length; i++)
-		//	System.out.print(a[i]+"-"+b[i]+" ");
 
-		int restOpen = 540;
+		int restOpen = Math.max(540, startMin);
 		int restClose = 1080;
 
 		// case where chef is all free
-		if (a.length == 0)
-			return restOpen + preptime;
+		if (a.size() == 0) {
+			if (restOpen + preptime <= restClose)
+				return restOpen + preptime;
+			else 
+				return 9999;
+		}
 		else {
-
-			// see if chef can accomodate it as the first order of the day
-			if (a[0] - restOpen >= preptime) {
+			// see if chef can accommodate it as the first order of the day
+			if (a.get(0) - restOpen >= preptime) {
 				// chef can do this as first meal of the day.
 				return restOpen + preptime;
 			}
-
-			// see if chef can accomodate in the middle of the day schedule
-			for (int i = 0; i < a.length - 1; i++) {
-				if (a[i + 1] - b[i] >= preptime)
-					return b[i] + preptime;
+			// see if chef can accommodate in the middle of the day schedule
+			for (int i = 0; i < a.size()- 1; i++) {
+				if (a.get(i + 1) - b.get(i) >= preptime)
+					return b.get(i) + preptime;
 			}
-
-			// see if chef can accomodate in the end
-			if (restClose - b[b.length - 1] >= preptime)
-				return b[b.length - 1] + preptime;
+			// see if chef can accommodate in the end
+			if (restClose - b.get(b.size()- 1) >= preptime)
+				return b.get(b.size()- 1) + preptime;
 
 			return 9999;
 		}

@@ -95,29 +95,6 @@ public class UserService {
 		od.setStatus(status);
 		od.setMenu_items(menu_items);
 		em.merge(od);
-		
-//		Query  q = em.createQuery("Select o from Order o where o.orderid=:arg1");
-//		q.setParameter("arg1", 101);
-//		List<Order> ret = new ArrayList<Order>();
-//
-//		try {
-//
-//			List resultList = q.getResultList();     
-//			for(int i = 0; i < resultList.size(); i++) {
-//				Order o = (Order) resultList.get(i);
-//				o.setStatus("placed");
-//				System.out.println(o.getMenuid()+" "+o.getStatus());
-//				ret.add(o);
-//			}			
-//		} catch (NoResultException e) {
-//			ret = null;
-//		}
-		
-//		for(int i=0; i < ret.size(); i++) {
-//			Order o = ret.get(i);
-//			System.out.println(o.getMenuid()+" "+o.getStatus());
-//			em.merge(o);
-//		}
 	}
 	
 	/**
