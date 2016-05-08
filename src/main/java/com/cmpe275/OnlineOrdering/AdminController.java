@@ -53,7 +53,7 @@ public class AdminController {
 		model.addAttribute("category", mi.getCategory());
 		model.addAttribute("calories", mi.getCalories());
 		model.addAttribute("picture", mi.getPicture());
-		model.addAttribute("unitprice", mi.getUnitprice());
+		model.addAttribute("unitprice", Float.toString(mi.getUnitprice()));
 		model.addAttribute("preptime", mi.getPreptime());
 
 		return "DeleteMenuItem";
@@ -121,8 +121,9 @@ public class AdminController {
 		mi.setName(request.getParameter("name"));
 		mi.setCategory(request.getParameter("category"));
 		mi.setCalories(request.getParameter("calories"));
-		mi.setPreptime(request.getParameter("preptime"));
-		mi.setUnitprice(request.getParameter("unitprice"));
+		int ptime = Integer.parseInt(request.getParameter("preptime"));
+		mi.setPreptime(ptime);
+		mi.setUnitprice(Float.parseFloat(request.getParameter("unitprice")));
 		mi.setPicture(fileUpload.getBytes());
 		return mi;
 	}	
@@ -145,11 +146,17 @@ public class AdminController {
 //		return "SuccessDeleteMenuItem";
 //	}
 	
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String showAllMenuItemsForDelete(Model model){
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/displaymenu", method = RequestMethod.GET)
+	public String showAllMenuItemsForDelete(Model model){		
 		List<MenuItem>itemlist = adminSvc.getAllMenuItems();
 		model.addAttribute("itemlist",itemlist);
-		return "DeleteMenuItem";
+		System.out.println(itemlist.get(0).getName());
+		return "SearchMenuItem";
 	}
     
     //returns search page on click
@@ -165,6 +172,11 @@ public class AdminController {
     }
     
     //returns add item page on click
+    /**
+     * 
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/addIt", method = RequestMethod.GET)
     public String addIt(HttpServletRequest request) {
         System.out.println("entered register home");
@@ -172,6 +184,11 @@ public class AdminController {
     }
     
     //Go back to home page
+    /**
+     * 
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(HttpServletRequest request) {
         System.out.println("entered register home");
@@ -179,6 +196,11 @@ public class AdminController {
     }
     
     //logout and jump to first page.
+    /**
+     * 
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request) {
         System.out.println("entered register home");

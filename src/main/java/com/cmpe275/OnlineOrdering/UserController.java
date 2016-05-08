@@ -6,8 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +30,14 @@ public class UserController {
 	public final String DRINK = "drink";
 	public final String ORDERPLACED = "PLACED";
 
+	//TODO remove this later
+	public int last_order_id = 0;
+
 	@Autowired
 	private UserService userSvc;
+	
+	@Autowired
+	private AdminService adminSvc;
 
 	/**
 	 * get data request for some menu name will be mapped here
@@ -45,14 +54,11 @@ public class UserController {
 			model.addAttribute("category", category);
 			return "ErrorFindMenuItem_User";
 		}
-
 		model.addAttribute("list", mi);
-
 		return "GetUserMenuItems";
 	}
 
 	/**
-	 * 
 	 * @param model
 	 * @return
 	 * @author Somya
@@ -89,6 +95,54 @@ public class UserController {
 		return dateList;
 	}
 	
+	private Map<String, Integer> deserializeMenuItems(String mi) {
+		String[] items = mi.split(";;");
+		Map<String, Integer> menu_items = new TreeMap<String, Integer>();
+		for (String item: items) {
+			String[] parts = item.split("::");
+			menu_items.put(parts[0], Integer.parseInt(parts[1]));
+		}
+		return menu_items;
+	}
+
+	private String serializeMenuItems(Map<String, Integer> menuItems){
+		//TODO:
+		String serializedString = "";
+		for (Map.Entry<String, Integer> entry: menuItems.entrySet()) {
+			serializedString += entry.getKey() + "::" + Integer.toString(entry.getValue());
+			serializedString += ";;";
+		}
+		return serializedString;
+	}
+
+	private Map<String, Integer> parseMenuItemsFromRequest() {
+		//TODO: Integrate .dummy data for now
+		Map<String, Integer> menuItems = new TreeMap<String, Integer>();
+		menuItems.put("coke", 1);
+		menuItems.put("chocolate fudge", 2);
+		menuItems.put("brown rice", 3);
+		menuItems.put("spring rolls", 4);
+		menuItems.put("ice tea", 2);
+		return menuItems;
+	}
+	
+	
+	/**
+	 * It will generate the Random Id, if the id exists, it will generate a new one.
+	 * @return the unique id
+	 */
+	private int getNextNonExistingOrderId(int user_id) {
+		Random rn = new Random();
+		rn.setSeed(System.currentTimeMillis());
+		while (true) {
+			int rand_id = rn.nextInt(Integer.SIZE - 1) % 10000;
+			if (!userSvc.orderExists(user_id, rand_id)) {
+				return rand_id;
+			}
+		}
+	}
+
+
 	/**
 	 * This function will return the earliest pick up time for an order
 	 * @return
@@ -99,23 +153,27 @@ public class UserController {
 	public String getEarliestPickUpTime() throws ParseException {
 		String curDate = "2016-05-11";
 		List<String>daterange = getNextDates(curDate);
-		List<String> MenuItemNames = new ArrayList<String>();
-		MenuItemNames.add("coke");
-		MenuItemNames.add("chocolate fudge");
-		MenuItemNames.add("brown rice");
-		MenuItemNames.add("spring rolls");
-		MenuItemNames.add("ice tea");
-		int totalPrepTime = getTotalPrepTimeForMenu(MenuItemNames);		
+		int user_id = 123;
+		int orderid = this.getNextNonExistingOrderId(user_id);
+		this.last_order_id = orderid;
+		// TODO: integrate
+		Map<String, Integer> mi = this.parseMenuItemsFromRequest();
+		int totalPrepTime = getTotalPrepTimeForMenu(mi);
+		float totalPrice = this.getTotalPriceForMenu(mi);
+		
 		for(int id = 0; id < 30; id++) {
 			int earlytime = getEarliestPickupForDate(totalPrepTime, daterange.get(id));
 			if(earlytime >= 540 && earlytime <= 1080) {
-				System.out.println("Earliest pick up time is:"+earlytime+" on:"+daterange.get(id));
+				System.out.println("Earliest pick up time is:"+earlytime+" on:" + daterange.get(id));
 				break;
 			}
 		}
+
+		String menu_items_str = this.serializeMenuItems(mi);
+		userSvc.placeOrder(user_id, orderid, menu_items_str, "pending");
 		return "home";
 	}
-	
+
 	/**
 	 * This function will return the earliest pick up time for any chef on one date
 	 * @param preptime
@@ -125,11 +183,11 @@ public class UserController {
 	 */
 	private int getEarliestPickupForDate(int preptime, String date) {
 		int earlyTime = 9999;
-		
+
 		for(int chefid = 1; chefid <= 3; chefid++) {
 			earlyTime = Math.min(earlyTime, getEarliestTimeForChef(chefid, date, preptime));
 		}
-		
+
 		return earlyTime;
 	}
 	
@@ -191,24 +249,39 @@ public class UserController {
 	 * @return
 	 * @author Somya
 	 */
-	private int getTotalPrepTimeForMenu(List<String> MenuItemNames) {
+	private int getTotalPrepTimeForMenu(Map<String, Integer> MenuItemNames) {
 		int totalPrepTime = 0;
-		for (int i = 0; i < MenuItemNames.size(); i++) {
+		for (Map.Entry<String, Integer> entry : MenuItemNames.entrySet()) {
 			// parse the order and get the total prep time for all items from
 			// database.
-			String menuitem_name = MenuItemNames.get(i);
-			MenuItem mi = userSvc.getTotalPrepTimeForOrder(menuitem_name);
-			int prepTime = Integer.parseInt(mi.getPreptime());
+			int prepTime = adminSvc.getTotalPrepTimeForMenuItem(entry.getKey()) * entry.getValue();
 			totalPrepTime += prepTime;
 		}
 
 		System.out.println("Total prep time for the order is:" + totalPrepTime);
 		return totalPrepTime;
+	}
+	
+	/**
+	 * This function will return the total price for a list of menu item names
+	 * @param MenuItemNames
+	 * @return
+	 * @author Somya
+	 */
+	private float getTotalPriceForMenu(Map<String, Integer> MenuItemNames) {
+		float totalPrice= 0;
+		for (Map.Entry<String, Integer> entry : MenuItemNames.entrySet()) {
+			// parse the order and get the total prep time for all items from
+			// database.
+			float pr = adminSvc.getPriceForMenuItem(entry.getKey()) * entry.getValue();
+			totalPrice += pr;
+		}
 
+		System.out.println("Total price for the order is:" + totalPrice);
+		return totalPrice;
 	}
 
 	/**
-	 * 
 	 * @param time
 	 * @param date
 	 * @param preptime
@@ -217,52 +290,46 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.GET)
 	public String checkCustomTime() {
+		//TODO: integrate
+		Map<String, Integer> mi = this.parseMenuItemsFromRequest();
 
+		// TODO: parse the whole request
 		String date = "2016-05-12";
-		int orderid = 206;
+		int user_id = 123;
+		int orderid = this.last_order_id;
 		int pickuptime = 1000;
 
-		List<String> MenuItemNames = new ArrayList<String>();
-		MenuItemNames.add("coke");
-		MenuItemNames.add("chocolate fudge");
-		MenuItemNames.add("brown rice");
-		MenuItemNames.add("spring rolls");
-		MenuItemNames.add("ice tea");
-
-		Time t = null;
 		// get the post/get data. // TODO:
-
 		// parse post/get data. you will get menu items here. // TODO
 		// output of parsing should be a struct filled with request data
 
-		int totalPrepTime = getTotalPrepTimeForMenu(MenuItemNames);
+		int totalPrepTime = getTotalPrepTimeForMenu(mi);
 		System.out.println("Pickup time:"+pickuptime);
 		System.out.println("Date:"+date);
 
-		Schedule sch = isAnyChefFree(pickuptime, date, totalPrepTime);
+		Schedule sch = getAvailableScheduleForOrder(pickuptime, date, totalPrepTime);
 		if (sch != null) {
 			System.out.println("Order Accepted.");
+			String menu_items = mi.toString();
 
 			// update the order status in the database for this order.
-			//userSvc.placeConfirmOrder(orderid, ORDERPLACED);
+			userSvc.placeOrder(user_id, orderid, menu_items, "placed");
 
 			// add the order to the chef's schedule as well.
 			// fill the class here. TODO:
 			sch.setOrderid(orderid);
 			sch.setDate(date);
-			
+
 			System.out.println("Start Time:"+ sch.getBusystarttime());
 			System.out.println("End Time:"+ sch.getBusyendtime());
 			System.out.println("Chef:"+sch.getChefid());
-			
-			userSvc.addOrderToChefSchedule(sch);
 
+			userSvc.addOrderToChefSchedule(sch);
 			return "success";
 		} else {
 			System.out.println("No chef is free, ask him to modify the order");
 			return "customTimeOrderError";
 		}
-
 	}
 
 	/**
@@ -273,7 +340,7 @@ public class UserController {
 	 * @return chefid who is free
 	 * @author Somya
 	 */
-	private Schedule isAnyChefFree(int pickuptime, String date, int preptime) {
+	private Schedule getAvailableScheduleForOrder(int pickuptime, String date, int preptime) {
 		int chefid = 1;
 		Schedule sch_1 = isChefFree(chefid, pickuptime, date, preptime);
 		if (sch_1 == null) {

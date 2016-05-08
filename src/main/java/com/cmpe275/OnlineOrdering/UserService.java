@@ -18,9 +18,7 @@ public class UserService {
 	@PersistenceContext
 	private EntityManager em;
 
-
 	/** This method is used to get the details of a all menu items for a category.
-	 * 
 	 * @param category of the menu item which is to be looked for
 	 * @return Menu item details to the user view are returned
 	 * @author Somya
@@ -32,8 +30,8 @@ public class UserService {
 		List<MenuItem> ret = new ArrayList<MenuItem>();
 
 		try {
+			@SuppressWarnings("unchecked")
 			List<MenuItem> resultList = q.getResultList();
-			
      
 			for(int i = 0; i < resultList.size(); i++) {
 				MenuItem mi = new MenuItem();
@@ -51,22 +49,6 @@ public class UserService {
 	}
 	
 	/**
-	 * It will get the total prepTime for all the items ordered in a menu
-	 * @return
-	 */
-	public MenuItem getTotalPrepTimeForOrder(String menuitem_name) {
-		MenuItem mi;
-		Query q = em.createQuery("Select mi from MenuItem mi where mi.name=:arg1");
-		q.setParameter("arg1", menuitem_name);
-		try {
-			mi = (MenuItem) q.getSingleResult();
-		} catch (NoResultException e) {
-			mi = null;
-		}
-		return mi;	
-	}
-	
-	/**
 	 * It will add the order to the chef's schedule
 	 * @param chefid
 	 * @param orderid
@@ -79,27 +61,51 @@ public class UserService {
 		em.merge(sch);
 	}
 	
+	@Transactional
+	public boolean orderExists(int user_id, int order_id) {
+		OrderDetailsId or = new OrderDetailsId();
+		or.userid = user_id;
+		or.orderid = order_id;
+		return em.find(OrderDetails.class, or) != null;
+	}
+	
 	/**
 	 * Update the database rows for the order id with the status confirmed (placed order)
 	 * @param orderid
 	 * @param status
 	 */
 	@Transactional
-	public void placeConfirmOrder(int orderid, String status) {
-		Order o = new Order();
-		o.setUserid(10);
-		o.setOrderid(101);
-		o.setQuantity(1);
-		o.setStatus("placed");
-		o.setMenuid(11);
-		em.merge(o);
+	public void placeOrder(int userid, int orderid, String menu_items, String status) {
 		
-//		Query  q = em.createQuery("update Order set orderid=:arg2");
-//		//q.setParameter("arg1", "placed");
-//		q.setParameter("arg2", 999);
-//		q.executeUpdate();
+		OrderDetails od = new OrderDetails();
+		od.setUserid(userid);
+		od.setOrderid(orderid);
+		od.setStatus(status);
+		od.setMenu_items(menu_items);
+		em.merge(od);
 		
+//		Query  q = em.createQuery("Select o from Order o where o.orderid=:arg1");
+//		q.setParameter("arg1", 101);
+//		List<Order> ret = new ArrayList<Order>();
+//
+//		try {
+//
+//			List resultList = q.getResultList();     
+//			for(int i = 0; i < resultList.size(); i++) {
+//				Order o = (Order) resultList.get(i);
+//				o.setStatus("placed");
+//				System.out.println(o.getMenuid()+" "+o.getStatus());
+//				ret.add(o);
+//			}			
+//		} catch (NoResultException e) {
+//			ret = null;
+//		}
 		
+//		for(int i=0; i < ret.size(); i++) {
+//			Order o = ret.get(i);
+//			System.out.println(o.getMenuid()+" "+o.getStatus());
+//			em.merge(o);
+//		}
 	}
 	
 	/**
