@@ -117,15 +117,16 @@ div.row {
 					class="col2"><input type="text" name="phone" id="phone"
 					required /></span>
 			</div>
-			<p>
-				Mobile Carrier<span> <select id="carrier" name="carrier">
+			<div class="row">
+			<p class="col1">
+				Mobile Carrier</p><span class="col2"> <select id="carrier" name="carrier">
 						<option value="ve">Verizon</option>
 						<option value="at">At&T</option>
 						<option value="tm">T-Mobile</option>
 						<option value="oth">Other</option>
 				</select>
 				</span>
-			</p>
+			</div>
 
 			<div class="row">
 				<label class="col1"> Verification Code:&nbsp;&nbsp;</label> <span

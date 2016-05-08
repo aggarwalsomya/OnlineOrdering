@@ -52,6 +52,11 @@ public class LoginController {
 		String email = request.getParameter("email");
 		String codeAssigned = loginSvc.getTuser(email).getCode();
 		String code = request.getParameter("verCode");
+		if(existingUser(email)) {
+			model.addAttribute("msg","This email has already been registered. Please proceed to login!");
+			TempUser t = loginSvc.getTuser(email);
+            loginSvc.delTuser(t);
+		} else {
 		if (codeAssigned.equals(code)) {
 			model.addAttribute(
 					"msg",
@@ -78,7 +83,15 @@ public class LoginController {
 					"the verification code you have entered is wrong! Please click register button to register again.");
 
 		}
+		}
 		return "AfterRegisterClick";
+	}
+
+	private boolean existingUser(String email) {
+		// TODO Auto-generated method stub
+		UserCredentials uc = loginSvc.getUser(email);
+		if(uc==null)return false;
+		return true;
 	}
 
 	// generate verification code
