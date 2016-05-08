@@ -20,6 +20,13 @@ public class LoginService {
 		em.merge(t);
 	}
 	
+	//delete temperory user 
+	@Transactional
+	public void delTuser(TempUser t) {
+		System.out.println(t.getId());
+		em.remove(em.contains(t) ? t : em.merge(t));
+	}
+	
 	//adds user details to table
 	@Transactional
 	public void adduser(UserCredentials u) {
