@@ -16,7 +16,7 @@
 		<ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#Drinks">Drinks</a></li>
   <li><a data-toggle="tab" href="#Appetizers">Appetizers</a></li>
-  <li><a data-toggle="tab" href="#Maincourse">MainCourse</a></li>
+  <li><a data-toggle="tab" href="#Maincourse">Main Course</a></li>
   <li><a data-toggle="tab" href="#Deserts">Deserts</a></li>
 </ul>          
 <br>
@@ -25,11 +25,13 @@
     <div id="Drinks" class="tab-pane fade in active">
     <table id="drinktable">
      <c:forEach var="list1" items="${list_drink}" varStatus="status">
-				<tr style="border:1px solid black;" ><td><input id="cb1" type="checkbox" name="checker1"/><td style="border:1px solid black;">${list1.picture}</td>
+				<tr style="border:1px solid black;" >
+				<td><input id="cb1" type="checkbox" name="checker1"/>
+				<td style="border:1px solid black;"><img alt="" src="data:image/jpeg;base64,${list1.picpath}" style="width:304px;height:228px;"></td>
 				<td style="border:1px solid black;">${list1.name}</td>
 				<td style="border:1px solid black;">${list1.unitprice}</td>
-				<td style="border:1px solid black;"><select class="1-100" id="quan"></select></td>
 				<td style="border:1px solid black;">${list1.calories}</td>
+				<td style="border:1px solid black;"><select class="1-100" id="quan_1"></select></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -38,10 +40,13 @@
     <div id="Appetizers" class="tab-pane fade">
 	 <table  id="appetizertable">
      <c:forEach var="list2" items="${list_appetizer}" varStatus="status">
-				<tr style="border:1px solid black;" ><td><input id="cb1" type="checkbox" name="checker1"/><td style="border:1px solid black;">${list2.picture}</td>
+				<tr style="border:1px solid black;" ><td>
+				<input id="cb1" type="checkbox" name="checker1"/>
+				<td style="border:1px solid black;"><img alt="" src="data:image/jpeg;base64,${list2.picpath}" style="width:304px;height:228px;"></td>
 				<td style="border:1px solid black;">${list2.name}</td>
 				<td style="border:1px solid black;">${list2.unitprice}</td>
 				<td style="border:1px solid black;">${list2.calories}</td>
+				<td style="border:1px solid black;"><select class="1-100" id="quan_2"></select></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -50,10 +55,13 @@
 	<div id="Maincourse" class="tab-pane fade">
 	 <table  id="maincoursetable">
      <c:forEach var="list3" items="${list_maincourse}" varStatus="status">
-				<tr style="border:1px solid black;" ><td><input id="cb1" type="checkbox" name="checker1"/><td style="border:1px solid black;">${list3.picture}</td>
+				<tr style="border:1px solid black;" >
+				<td><input id="cb1" type="checkbox" name="checker1"/>
+				<td style="border:1px solid black;"><img alt="" src="data:image/jpeg;base64,${list3.picpath}" style="width:304px;height:228px;"></td>
 				<td style="border:1px solid black;">${list3.name}</td>
 				<td style="border:1px solid black;">${list3.unitprice}</td>
 				<td style="border:1px solid black;">${list3.calories}</td>
+				<td style="border:1px solid black;"><select class="1-100" id="quan_3"></select></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -62,10 +70,13 @@
 	<div id="Deserts" class="tab-pane fade">
 	 <table  id="deserttable">
      <c:forEach var="list4" items="${list_desert}" varStatus="status">
-				<tr style="border:1px solid black;" ><td><input id="cb1" type="checkbox" name="checker1"/><td style="border:1px solid black;">${list4.picture}</td>
+				<tr style="border:1px solid black;" >
+				<td><input id="cb1" type="checkbox" name="checker1"/>
+				<td style="border:1px solid black;"><img alt="" src="data:image/jpeg;base64,${list4.picpath}" style="width:304px;height:228px;"></td>
 				<td style="border:1px solid black;">${list4.name}</td>
 				<td style="border:1px solid black;">${list4.unitprice}</td>
 				<td style="border:1px solid black;">${list4.calories}</td>
+				<td style="border:1px solid black;"><select class="1-100" id="quan_4"></select></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -74,9 +85,9 @@
   </div>
   <button id="jqcc">Add to cart</button>
   
-  <form action="" method="POST">
-  <input type="hidden" id="itemData" name="itemData">
-  <input type="submit" id="next" value="Proceed to checkout"/>
+  <form action="Checkout" method="POST">
+  	<input type="hidden" id="itemData" name="itemData">
+  	<input type="submit" id="next" value="Proceed to checkout"/>
   </form>
    
   <div id="demo1"></div>
@@ -98,36 +109,32 @@ var arrayOfMaincourse = [];
 var arrayOfDeserts = [];
 $('#jqcc').click(function() {
     $('input:checkbox:checked', tableControl1).each(function() {
-        arrayOfDrinks.push($(this).closest('tr').find('td').eq(2).text()+':'+$(this).closest('tr').find('td select#quan option:selected').text());
+        arrayOfDrinks.push($(this).closest('tr').find('td').eq(2).text()+'::'+$(this).closest('tr').find('td select#quan_1 option:selected').text());
     }).get();
 
 
     $('input:checkbox:checked', tableControl2).each(function() {
-        arrayOfAppetizers.push($(this).closest('tr').find('td').eq(2).text());
+        arrayOfAppetizers.push($(this).closest('tr').find('td').eq(2).text()+'::'+$(this).closest('tr').find('td select#quan_2 option:selected').text());
     }).get();
 
 
     $('input:checkbox:checked', tableControl3).each(function() {
-        arrayOfMaincourse.push($(this).closest('tr').find('td').eq(2).text());
+        arrayOfMaincourse.push($(this).closest('tr').find('td').eq(2).text()+'::'+$(this).closest('tr').find('td select#quan_3 option:selected').text());
     }).get();
     
 
     $('input:checkbox:checked', tableControl4).each(function() {
-        arrayOfDeserts.push($(this).closest('tr').find('td').eq(2).text());
+        arrayOfDeserts.push($(this).closest('tr').find('td').eq(2).text()+'::'+$(this).closest('tr').find('td select#quan_4 option:selected').text());
     }).get();
     
     $('input:checkbox').removeAttr('checked');
     var arrayOfItemNames= arrayOfDrinks.concat(arrayOfAppetizers,arrayOfMaincourse,arrayOfDeserts);
-    var dataToSend= arrayOfItemNames.join("_");
+    var dataToSend= arrayOfItemNames.join(";;");
     document.getElementById("demo1").innerHTML = dataToSend;
     
     $('#next').click(function() {
     	document.getElementById("itemData").value = dataToSend;	
     });
-    
-    
-    
-    
 });
 });
 

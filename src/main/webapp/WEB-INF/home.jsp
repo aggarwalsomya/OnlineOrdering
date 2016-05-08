@@ -17,7 +17,7 @@
 					<td>
 					 
 					<input type="button" class=button value="delete"
-					id="delete" name="delete" onclick="location.href = 'searchIt';">
+					id="delete" name="delete" onclick="location.href = 'displaymenu';">
 					
 					</td>
 					

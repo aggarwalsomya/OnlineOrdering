@@ -1,5 +1,6 @@
 package com.cmpe275.OnlineOrdering;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,30 +20,40 @@ public class UserService {
 	@PersistenceContext
 	private EntityManager em;
 
-	/** This method is used to get the details of a all menu items for a category.
-	 * @param category of the menu item which is to be looked for
+	/**
+	 * This method is used to get the details of a all menu items for a
+	 * category.
+	 * 
+	 * @param category
+	 *            of the menu item which is to be looked for
 	 * @return Menu item details to the user view are returned
 	 * @author Somya
+	 * @throws UnsupportedEncodingException 
 	 */
 	@Transactional
-	public List<MenuItem> getMenuItems(String category) {
-		Query  q = em.createQuery("Select m from MenuItem m where m.category=:arg1");
+	public List<MenuItem> getMenuItems(String category) throws UnsupportedEncodingException {
+		Query q = em.createQuery("Select m from MenuItem m where m.category=:arg1");
 		q.setParameter("arg1", category);
 		List<MenuItem> ret = new ArrayList<MenuItem>();
 
 		try {
 			@SuppressWarnings("unchecked")
 			List<MenuItem> resultList = q.getResultList();
-     
-			for(int i = 0; i < resultList.size(); i++) {
+
+			for (int i = 0; i < resultList.size(); i++) {
 				MenuItem mi = new MenuItem();
 				mi.setName(resultList.get(i).getName());
 				mi.setCategory(resultList.get(i).getCategory());
 				mi.setCalories(resultList.get(i).getCalories());
 				mi.setUnitprice(resultList.get(i).getUnitprice());
-				mi.setPicture(resultList.get(i).getPicture());
+
+				byte[] binaryData;
+				binaryData = resultList.get(i).getPicture();
+				byte[] encodeBase64 = Base64.encodeBase64(binaryData);
+				String base64Encoded = new String(encodeBase64, "UTF-8");
+				mi.setpicpath(base64Encoded);
 				ret.add(mi);
-			}			
+			}
 		} catch (NoResultException e) {
 			ret = null;
 		}
@@ -123,6 +135,7 @@ public class UserService {
 		
 		Map<Integer, Integer>time = new TreeMap<Integer, Integer>();		
 		try {
+			@SuppressWarnings("unchecked")
 			List<Schedule> resultList = q.getResultList();     
 			for(int i = 0; i < resultList.size(); i++) {
 				time.put(resultList.get(i).getBusystarttime(),resultList.get(i).getBusyendtime());

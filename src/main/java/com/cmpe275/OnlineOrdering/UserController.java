@@ -1,13 +1,11 @@
 package com.cmpe275.OnlineOrdering;
 
-import java.sql.Time;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -44,9 +42,9 @@ public class UserController {
 	 * 
 	 * @return It will return the required view
 	 * @author Somya
+	 * @throws UnsupportedEncodingException 
 	 */
-	@RequestMapping(value = "/Menu/displayMenuItems", method = RequestMethod.POST)
-	public String getData(HttpServletRequest request, Model model) {
+	public String getData(HttpServletRequest request, Model model) throws UnsupportedEncodingException {
 		String category = request.getParameter("category");
 		List<MenuItem> mi = userSvc.getMenuItems(category);
 
@@ -62,8 +60,10 @@ public class UserController {
 	 * @param model
 	 * @return
 	 * @author Somya
+	 * @throws UnsupportedEncodingException 
 	 */
-	public String getDataForEachCategory(Model model) {
+	@RequestMapping(value = "/Menu/displayMenuItems", method = RequestMethod.GET)
+	public String getDataForEachCategory(Model model) throws UnsupportedEncodingException {
 		String category[] = { MAINCOURSE, DRINK, DESERT, APPETIZER };
 		for (int i = 0; i < category.length; i++) {
 			List<MenuItem> mi = userSvc.getMenuItems(category[i]);
@@ -106,8 +106,7 @@ public class UserController {
 	}
 
 	private String serializeMenuItems(Map<String, Integer> menuItems){
-		//TODO:
-		String serializedString = "";
+		String serializedString = " ";
 		for (Map.Entry<String, Integer> entry: menuItems.entrySet()) {
 			serializedString += entry.getKey() + "::" + Integer.toString(entry.getValue());
 			serializedString += ";;";
@@ -125,7 +124,6 @@ public class UserController {
 		menuItems.put("ice tea", 2);
 		return menuItems;
 	}
-	
 	
 	/**
 	 * It will generate the Random Id, if the id exists, it will generate a new one.
@@ -149,20 +147,30 @@ public class UserController {
 	 * @throws ParseException
 	 * @author Somya
 	 */
-	@RequestMapping(value = "/Menu/EarlyTime", method = RequestMethod.GET)
-	public String getEarliestPickUpTime() throws ParseException {
-		String curDate = "2016-05-11";
-		List<String>daterange = getNextDates(curDate);
+	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.POST)
+	public String getEarliestPickUpTime(HttpServletRequest request, Model model) throws ParseException {
+		// TODO: integrate
 		int user_id = 123;
+		
+		String menuitems = request.getParameter("itemData");
+		Map<String, Integer> mi = deserializeMenuItems(menuitems);
+		
+		Date date = new Date();
+		String curDate= new SimpleDateFormat("yyyy-MM-dd").format(date);
+		System.out.println(curDate);
+		
+		List<String>daterange = getNextDates(curDate);
+		
 		int orderid = this.getNextNonExistingOrderId(user_id);
 		this.last_order_id = orderid;
-		// TODO: integrate
-		Map<String, Integer> mi = this.parseMenuItemsFromRequest();
+		
+
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
 		float totalPrice = this.getTotalPriceForMenu(mi);
+		int earlytime = 600; //initialise with some random valid value
 		
 		for(int id = 0; id < 30; id++) {
-			int earlytime = getEarliestPickupForDate(totalPrepTime, daterange.get(id));
+			earlytime = getEarliestPickupForDate(totalPrepTime, daterange.get(id));
 			if(earlytime >= 540 && earlytime <= 1080) {
 				System.out.println("Earliest pick up time is:"+earlytime+" on:" + daterange.get(id));
 				break;
@@ -171,7 +179,14 @@ public class UserController {
 
 		String menu_items_str = this.serializeMenuItems(mi);
 		userSvc.placeOrder(user_id, orderid, menu_items_str, "pending");
-		return "home";
+		
+		//Adding Items to Model as well
+		model.addAttribute("orderid", orderid);
+		model.addAttribute("totalprice", totalPrice);
+		model.addAttribute("earliestpickuptime",earlytime);
+		model.addAttribute("menulist",mi);
+		
+		return "checkout";
 	}
 
 	/**

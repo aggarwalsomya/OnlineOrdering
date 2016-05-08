@@ -37,7 +37,8 @@ public class MenuItem {
 	private String calories;
 
 	private int preptime;
-
+	private String picpath;
+	
 	public String getCategory() {
 		return category;
 	}
@@ -93,6 +94,14 @@ public class MenuItem {
 
 	public MenuItem() {
 
+	}
+
+	public String getpicpath() {
+		return picpath;
+	}
+
+	public void setpicpath(String picpath) {
+		this.picpath = picpath;
 	}
 
 }
