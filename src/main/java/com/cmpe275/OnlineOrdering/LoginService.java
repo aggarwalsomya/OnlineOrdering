@@ -20,6 +20,13 @@ public class LoginService {
 		em.merge(t);
 	}
 	
+	//delete temperory user 
+	@Transactional
+	public void delTuser(TempUser t) {
+		System.out.println(t.getId());
+		em.remove(em.contains(t) ? t : em.merge(t));
+	}
+	
 	//adds user details to table
 	@Transactional
 	public void adduser(UserCredentials u) {
@@ -76,5 +83,22 @@ public class LoginService {
 		}
 		return t;
 	}
+	
+	//get specific  user by searching by email.
+		@Transactional
+		public UserCredentials getUser(String email) {
+			UserCredentials uc;
+			Query q = em
+					.createQuery("Select u from UserCredentials u where u.email=:arg1");
+			q.setParameter("arg1", email);
+			try {
+				uc = (UserCredentials) q.getSingleResult();
+				
+			} catch (NoResultException e) {
+				uc = null;
+				
+			}
+			return uc;
+		}
 
 }

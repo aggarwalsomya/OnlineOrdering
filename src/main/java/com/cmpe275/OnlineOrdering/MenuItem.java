@@ -8,7 +8,6 @@ import javax.persistence.Table;
 /** This is the main menu item class containing the various menu items.
  * All the fields are private in nature and getters and setters are written for them
  * @author Somya
- * *
  */
 
 @Entity
@@ -28,12 +27,16 @@ public class MenuItem {
 
 	private String category;
 	private String name;
+
 	@Column(name="picture",columnDefinition="longblob")
 	private byte[] picture;
-	private String unitprice;
+
+	private float unitprice;
+	
 	@Column(name="calories", nullable=false)
 	private String calories;
-	private String preptime;
+
+	private int preptime;
 
 	public String getCategory() {
 		return category;
@@ -59,11 +62,11 @@ public class MenuItem {
 		this.picture = picture;
 	}
 
-	public String getUnitprice() {
+	public float getUnitprice() {
 		return unitprice;
 	}
 
-	public void setUnitprice(String unitprice) {
+	public void setUnitprice(float unitprice) {
 		this.unitprice = unitprice;
 	}
 
@@ -75,12 +78,17 @@ public class MenuItem {
 		this.calories = calories;
 	}
 
-	public String getPreptime() {
+	public int getPreptime() {
 		return preptime;
 	}
 
-	public void setPreptime(String preptime) {
+	public void setPreptime(int preptime) {
 		this.preptime = preptime;
+	}
+	
+	@Override
+	public String toString() {
+		return this.id + " : " + this.name;
 	}
 
 	public MenuItem() {

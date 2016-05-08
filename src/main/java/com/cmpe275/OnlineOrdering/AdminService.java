@@ -17,15 +17,14 @@ public class AdminService {
 	@PersistenceContext
 	private EntityManager em;
 
-
 	/** This method is used to get the details of a specific menu item with the name as passed.
-	 * 
 	 * @param name of the menu item which is to be looked for
 	 * @return Menu item details to the admin are returned
 	 * @author Somya
 	 */
 	@Transactional
 	public MenuItem getMenuItem(String name) {
+		
 		MenuItem m;
 		Query q = em.createQuery("Select m from MenuItem m where m.name=:arg1");
 		q.setParameter("arg1", name);
@@ -36,6 +35,41 @@ public class AdminService {
 		}
 		return m;
 	}
+	
+	/**
+	 * It will get the total prepTime for all the items ordered in a menu
+	 * @return
+	 */
+	public int getTotalPrepTimeForMenuItem(String menuitem_name) {
+		MenuItem mi;
+		Query q = em.createQuery("Select mi from MenuItem mi where mi.name=:arg1");
+		q.setParameter("arg1", menuitem_name);
+		try {
+			mi = (MenuItem) q.getSingleResult();
+			if (mi != null) {
+				return mi.getPreptime();
+			}
+		} catch (NoResultException e) {
+			mi = null;
+		}
+		return 0;	
+	}
+	
+	public float getPriceForMenuItem(String menuitem_name) {
+		MenuItem mi;
+		Query q = em.createQuery("Select mi from MenuItem mi where mi.name=:arg1");
+		q.setParameter("arg1", menuitem_name);
+		try {
+			mi = (MenuItem) q.getSingleResult();
+			if (mi != null) {
+				return mi.getUnitprice();
+			}
+		} catch (NoResultException e) {
+			mi = null;
+		}
+		return 0;	
+	}
+
 
 	/**
 	 * This method is used to add a new menu item in the database.
@@ -87,7 +121,7 @@ public class AdminService {
 	@Transactional
 	public List<MenuItem> getAllMenuItems() {
 		
-		Query  q = em.createQuery("Select m from MenuItem");
+		Query  q = em.createQuery("Select m from MenuItem m");
 		List<MenuItem> resultList = new ArrayList<MenuItem>();
 		List<MenuItem> ret = new ArrayList<MenuItem>();
 		try {

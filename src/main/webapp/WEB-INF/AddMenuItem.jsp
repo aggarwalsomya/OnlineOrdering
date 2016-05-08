@@ -19,14 +19,13 @@
 			</tr>
 			<tr>
 				<td><label>Category</label></td>
-				<td><!--  <select>
+				<td> <select name="category">
   							<option name="drink" value="drink">Drink</option>
   							<option name="appetizer" value="appetizer">Appetizer</option>
   							<option name="maincourse" value="maincourse">Main course</option>
   							<option name="desert" value="desert">Desert</option>
-					</select>-->
-					  <input type="text" name="category"
-					placeholder="enter item name" required />
+					</select>
+					  
 				</td>
 			</tr>
 			<tr>
