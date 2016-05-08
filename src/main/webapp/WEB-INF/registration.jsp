@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -9,7 +10,6 @@
 <title>CMPE275_TermProject_Group5:Registration</title>
 </head>
 <style>
-
 body {
 	color: #5A698B;
 }
@@ -22,7 +22,7 @@ body {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	text-align: center;
-	margin-left:15px;
+	margin-left: 15px;
 }
 
 form {
@@ -36,7 +36,6 @@ form {
 	margin: 0;
 	float: left;
 	margin-right: 2px;
-	
 }
 
 .col2 {
@@ -45,7 +44,6 @@ form {
 	display: block;
 	float: left;
 	margin: 0;
-	
 }
 
 .col2comment {
@@ -54,7 +52,6 @@ form {
 	margin: 0;
 	display: block;
 	float: left;
-	
 }
 
 .col1comment {
@@ -64,7 +61,6 @@ form {
 	float: left;
 	display: block;
 	margin-right: 2px;
-	
 }
 
 div.row {
@@ -83,9 +79,8 @@ div.row {
 	margin: 4px 0 5px 8px;
 }
 
-.mybutton
-{
-   margin-left : 140px;
+.mybutton {
+	margin-left: 140px;
 }
 
 .bodycontent {
@@ -93,47 +88,62 @@ div.row {
 	margin-top: 50px;
 	width: 40%;
 }
-.exist{
-margin-left : 170px;
-}
 
+.exist {
+	margin-left: 170px;
+}
 </style>
 
 <body>
-<div class="bodycontent">
+	<div class="bodycontent">
 
 		<div id="title">User Registration</div>
 		<form method="post" action="registerUser">
 			<br>
 			<div class="row">
 				<label class="col1"> Email:&nbsp;&nbsp;</label> <span class="col2"><input
-					type="text" id="email" name="email" /></span>
+					type="email" id="email" name="email" required /></span>
 			</div>
 			<div class="row">
 				<label class="col1"> Password:&nbsp;&nbsp;</label> <span
-					class="col2"><input type="password" name="password" /></span>
+					class="col2"><input type="password" name="password" required /></span>
 			</div>
+			<div class="row">
+				<label class="col1"> Full Name:&nbsp;&nbsp;</label> <span
+					class="col2"><input type="text" name="fullname" /></span>
+			</div>
+			<div class="row">
+				<label class="col1"> Mobile no.:&nbsp;&nbsp;</label> <span
+					class="col2"><input type="text" name="phone" id="phone"
+					required /></span>
+			</div>
+			<p>
+				Mobile Carrier<span> <select id="carrier" name="carrier">
+						<option value="ve">Verizon</option>
+						<option value="at">At&T</option>
+						<option value="tm">T-Mobile</option>
+						<option value="oth">Other</option>
+				</select>
+				</span>
+			</p>
+
 			<div class="row">
 				<label class="col1"> Verification Code:&nbsp;&nbsp;</label> <span
 					class="col2"><input type="text"
 					placeholder="Enter code received on email" name="verCode" /></span>
 			</div>
 			<div class="row">
-			<label class="col1">&nbsp;&nbsp;</label>
-			<span class="col2"><input class=button type=button
-			 name="sendOTP" id="sendOTP" value="Send OTP" onclick="sendotp()"></span></div><br>
-			<div class="row">
-				<label class="col1"> Full Name:&nbsp;&nbsp;</label> <span
-					class="col2"><input type="text" name="fullname" /></span>
+				<label class="col1">&nbsp;&nbsp;</label> <span class="col2"><input
+					class=button type=button name="sendOTP" id="sendOTP"
+					value="Send OTP" onclick="sendotp()"></span>
 			</div>
+			<br>
+
 			<div class="row">
 				<label class="col1"> Address:&nbsp;&nbsp;</label> <span class="col2"><input
 					type="text" id="address" name="address" /></span>
 			</div>
-			<div class="row">
-				<label class="col1"> Phone no.:&nbsp;&nbsp;</label> <span
-					class="col2"><input type="text" name="phone" /></span>
-			</div>
+
 			<br> <br> <input class="mybutton" type="submit"
 				name="register" value="Register">
 		</form>
@@ -147,7 +157,9 @@ margin-left : 170px;
 			var url = "http://127.0.0.1:8080/OnlineOrdering/verifyMail";
 			var params = "email=";
 
-			params = params + document.getElementById("email").value;
+			params = params + document.getElementById("email").value
+					+ "&carrier=" + document.getElementById("carrier").value
+					+ "&phone=" + document.getElementById("phone").value;
 			http.open("POST", url, true);
 
 			//Send the proper header information along with the request

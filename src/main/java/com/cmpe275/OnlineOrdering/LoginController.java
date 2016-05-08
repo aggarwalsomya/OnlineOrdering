@@ -43,34 +43,36 @@ public class LoginController {
 		return "registration";
 	}
 
-	
 	// verify otp and register
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-	public String registerUser(HttpServletRequest request, Model model) throws Exception {
-		Password p =  new Password();
+	public String registerUser(HttpServletRequest request, Model model)
+			throws Exception {
+		Password p = new Password();
 		System.out.println("entered registration into db");
 		String email = request.getParameter("email");
 		String codeAssigned = loginSvc.getTuser(email).getCode();
 		String code = request.getParameter("verCode");
 		if (codeAssigned.equals(code)) {
-			model.addAttribute("msg",
+			model.addAttribute(
+					"msg",
 					"You have registered successfully.Please proceed to login by clicking the login button!");
 			UserCredentials user = new UserCredentials();
 			user.setEmail(email);
 			user.setAddress(request.getParameter("address"));
 			user.setFullname(request.getParameter("fullname"));
-			
-			//Storing the hash of the password in the database
+
+			// Storing the hash of the password in the database
 			String userPassword = request.getParameter("password");
 			String hashPassword = p.getPasswordHash(userPassword);
 			user.setPassword(hashPassword);
-			
+
 			user.setPhone(request.getParameter("phone"));
 			user.setId(getNextNonExistingNumber());
 			loginSvc.adduser(user);
 
 		} else {
-			model.addAttribute("msg",
+			model.addAttribute(
+					"msg",
 					"the verification code you have entered is wrong! Please click register button to register again.");
 
 		}
@@ -97,7 +99,8 @@ public class LoginController {
 		SimpleMailMessage verifyMail = new SimpleMailMessage();
 		verifyMail.setFrom("group5.275@gmail.com");
 		verifyMail.setTo(email);
-		verifyMail.setSubject("Online Ordering Registration - Verification Code");
+		verifyMail
+				.setSubject("Online Ordering Registration - Verification Code");
 		verifyMail.setText(message.toString());
 		mailOtp.send(verifyMail);
 		System.out.println("mail sent!");
@@ -138,13 +141,36 @@ public class LoginController {
 		}
 	}
 
+	// send sms to mobile
+	private void sendSms(String code, String smsEmail) {
+
+		StringBuffer message = new StringBuffer("Your verification code: ");
+		message.append(code);
+		SimpleMailMessage verifyMail = new SimpleMailMessage();
+		verifyMail.setFrom("group5.275@gmail.com");
+		verifyMail.setTo(smsEmail);
+
+		verifyMail.setText(message.toString());
+		mailOtp.send(verifyMail);
+		System.out.println("sms sent!");
+
+	}
+
 	// send generate code, mail the user, and store the temperory code in DB.
 	@RequestMapping(value = "/verifyMail", method = RequestMethod.POST)
-	public void verifyMail(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("entered otp! " + request.getParameter("email"));
+	public void verifyMail(HttpServletRequest request,
+			HttpServletResponse response) {
+		System.out.println("entered otp! " + request.getParameter("phone"));
 		String code = generateCode();
 		String email = request.getParameter("email");
+
+		String carrierMail = getEmail(request.getParameter("carrier"));
+
 		sendCode(code, email);
+		if (!carrierMail.isEmpty()) {
+
+			sendSms(code, request.getParameter("phone") + carrierMail);
+		}
 		TempUser t = loginSvc.getTuser(email);
 
 		if (t == null) {
@@ -158,5 +184,18 @@ public class LoginController {
 			loginSvc.updateTuser(t);
 		}
 
+	}
+
+	private String getEmail(String carrier) {
+		// TODO Auto-generated method stub
+		String email = "";
+		if (carrier.equals("ve")) {
+			email = "@vtext.com";
+		} else if (carrier.equals("at")) {
+			email = "@txt.att.net";
+		} else if (carrier.equals("tm")) {
+			email = "@tmomail.net";
+		}
+		return email;
 	}
 }
