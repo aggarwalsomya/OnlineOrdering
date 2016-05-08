@@ -339,18 +339,18 @@ display: none;
         <div class="box-in">
            
            <h2>Please choose your option</h2>
-           <br><br><br><br><br><br><br>
+           <br><br>
           <table>
 		<tr>
 
 					<td>
 					 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" class=button value="add"
+					<input type="button" class=button value="Add Menu Item"
 					id="addMenuItem" name="addMenuItem" onclick="location.href = 'addIt';"></td>
 					
 					<td>
 					 
-					<input type="button" class=button value="delete"
+					<input type="button" class=button value="Delete Menu Item"
 					id="delete" name="delete" onclick="location.href = 'displaymenu';">
 					
 					</td>
