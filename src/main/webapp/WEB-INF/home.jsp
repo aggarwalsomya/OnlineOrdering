@@ -104,7 +104,6 @@ h2 {
 font: normal 1.5em Georgia, "Times New Roman", Times, serif;
 color: #004F8B;
 letter-spacing: 1px;
-background: url('.img/h2-bg.gif') no-repeat 0 53%;
 padding-left: 25px;
 margin-bottom: 7px;
 }
@@ -117,7 +116,6 @@ list-style-type: none;
 }
 
 ul.menu li {
-background: url('.img/menu-li-divider.gif') no-repeat 50% 100%;
 padding: 18px 0;
 }
 
@@ -163,12 +161,10 @@ width: 900px;
 }
 
 .box-top {
-background: url('.img/box-top.gif') no-repeat 0 0;
 height: 15px;
 }
 
 .box {
-background: url('.img/box-bg.gif') repeat-y 0 0;
 }
 
 .box-in {
@@ -184,7 +180,6 @@ color: #242424;
 }
 
 .box-bottom {
-background: url('.img/box-bottom.gif') no-repeat 0 100%;
 height: 48px;
 }
 
@@ -197,7 +192,7 @@ ul.main-list li {
 line-height: 1.3;
 margin-bottom: 12px;
 color: #004F8B;
-background: url('.img/bullet.gif') no-repeat 0 0;
+
 padding-left: 27px;
 }
 
