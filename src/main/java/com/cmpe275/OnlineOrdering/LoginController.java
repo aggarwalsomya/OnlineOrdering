@@ -69,6 +69,8 @@ public class LoginController {
 			user.setPhone(request.getParameter("phone"));
 			user.setId(getNextNonExistingNumber());
 			loginSvc.adduser(user);
+			TempUser t = loginSvc.getTuser(email);
+            loginSvc.delTuser(t);
 
 		} else {
 			model.addAttribute(
