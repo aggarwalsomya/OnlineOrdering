@@ -1,6 +1,7 @@
 package com.cmpe275.OnlineOrdering;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -167,11 +168,13 @@ public class UserController {
 
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
 		float totalPrice = this.getTotalPriceForMenu(mi);
-		int earlytime = 600; //initialise with some random valid value
+		int earlytime = 600; //initialize with some random valid value
+		String earlydate = "";
 		
 		for(int id = 0; id < 30; id++) {
 			earlytime = getEarliestPickupForDate(totalPrepTime, daterange.get(id));
 			if(earlytime >= 540 && earlytime <= 1080) {
+				earlydate = daterange.get(id);
 				System.out.println("Earliest pick up time is:"+earlytime+" on:" + daterange.get(id));
 				break;
 			}
@@ -183,12 +186,22 @@ public class UserController {
 		//Adding Items to Model as well
 		model.addAttribute("orderid", orderid);
 		model.addAttribute("totalprice", totalPrice);
-		model.addAttribute("earliestpickuptime",earlytime);
+		
+		String startTime = "00:00";
+		earlytime = 800;
+		int h = earlytime / 60 + Integer.parseInt(startTime.substring(0,1));
+		int m = earlytime % 60 + Integer.parseInt(startTime.substring(3,4));
+		String newtime = h+":"+m;
+		model.addAttribute("earliestpickuptime",newtime);
+		
 		model.addAttribute("menulist",mi);
+		
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		model.addAttribute("earlydate", format.parse(earlydate).toString().substring(0, 11));
 		
 		return "checkout";
 	}
-
+	
 	/**
 	 * This function will return the earliest pick up time for any chef on one date
 	 * @param preptime
