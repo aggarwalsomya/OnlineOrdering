@@ -13,6 +13,6 @@
 			<input type="button" class=button value="Cancel Order" id="cancel"
 		name="cancel" onclick="location.href = 'cancelOrder';">
 	<input type="button" class=button value="Logout" id="Logout"
-		name="Logout" onclick="location.href = 'signout';">
+		name="Logout" onclick="location.href = 'logout';">
 </body>
 </html>

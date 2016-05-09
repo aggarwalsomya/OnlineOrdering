@@ -2,6 +2,7 @@ package com.cmpe275.OnlineOrdering;
 
 import java.util.Random;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,7 +30,9 @@ public class LoginController {
 	public String getData(HttpServletRequest request, Model model) {
 		System.out.println("entered user home");
 		HttpSession session = request.getSession(false);
-		if (session != null) {
+		
+		if (session != null && session.getAttribute("username")!=null) {
+			System.out.println("the session is" + session.getId());
 			return "AlreadyLogged";
 		}
 		return "Login";
@@ -64,6 +67,8 @@ public class LoginController {
 		}
 
 		HttpSession session = request.getSession();
+		if(session.isNew())System.out.println("yes");
+		else System.out.println("no");
 		session.setAttribute("userID", uc.getId());
 		session.setAttribute("username", uc.getFullname());
 		session.setAttribute("useremail", uc.getEmail());
@@ -86,19 +91,49 @@ public class LoginController {
 	}
 
 	// user logging out
-	@RequestMapping(value = "/signout", method = RequestMethod.GET)
-	public String logout(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request, Model model, HttpServletResponse response) {
 		System.out.println("entered register home");
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession();
 		if (session != null) {
 			String name = (String) session.getAttribute("username");
 			model.addAttribute("user", name);
+			System.out.println("removing attributes");
+		//	session.removeAttribute("username");
+		//	session.removeAttribute("userid");
+		//	session.removeAttribute("username");
+			System.out.println("removed attributes");
+			//deleteCookie(response, request);
+			
+			session.invalidate();
+		//	session.invalidate();
+			System.out.println("invalidated");
+			
+			Cookie[] cookies = request.getCookies();
+			System.out.println("entering cookie");
+			for (Cookie cookie : cookies) {
+				System.out.println("cookie is" + cookie.getName());
+			//	Cookie cookie1 = new Cookie);
+			//	Cookie ck=new Cookie(cookie.getName(),"");  
+		        cookie.setMaxAge(0); 
+		        cookie.setValue("");
+		        response.addCookie(cookie);  	
+		       System.out.println("destroy");
+			}
+			
+
+			
 		} else {
 			model.addAttribute("user", "you have already logged out!");
 		}
-		session.invalidate();
+		
+		
+	 //   deleteCookie(response, request);
+		
 		return "logout";
 	}
+
+	
 
 	// verify otp and register
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)

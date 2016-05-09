@@ -89,7 +89,7 @@ public class UserController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
-		if (session != null) {
+		if (session != null && session.getAttribute("username")!=null) {
 			model.addAttribute("user", session.getAttribute("username"));
 			return "UserHome";
 		}

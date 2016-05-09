@@ -10,6 +10,6 @@
 <h1>Error 404</h1><br>
 <p>${msg}</p>
 <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'register';"> 
-<input type="button" class=button id="login" name="login" value="Login" onclick="location.href = '/home';"> 
+<input type="button" class=button id="login" name="login" value="Login" onclick="location.href = 'home';"> 
 </body>
 </html>
