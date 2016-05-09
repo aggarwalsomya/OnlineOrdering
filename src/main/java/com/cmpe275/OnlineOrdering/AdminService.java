@@ -117,6 +117,19 @@ public class AdminService {
 		q.executeUpdate();
 	}
 	
+	/**
+	 * This function will reset the orders, clean up any existing orders.
+	 */
+	@Transactional
+	public void systemreset() {
+		Query q = em.createQuery("Delete from Schedule sch");
+		q.executeUpdate();
+		
+		q = em.createQuery("Delete from OrderDetails od");
+		q.executeUpdate();
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<MenuItem> getAllMenuItems() {

@@ -173,6 +173,7 @@ public class UserController {
 		int earlytime = 0; //initialize with some random valid value
 		String earlydate = "";
 		String msg = "";
+		boolean found = false;
 		
 		if(totalPrepTime > 540) {
 			msg = "Order is too long to prepare in one day. Cannot accept the order. Please modify or cancel the order.";
@@ -189,18 +190,22 @@ public class UserController {
 				daterange.get(id), 
 				(id == 0 ? currMin : -1)
 			);
+			
 			if(earlytime >= 540 && earlytime <= 1080) {
 				earlydate = daterange.get(id);
 				System.out.println("Earliest pick up time is:"+earlytime+" on:" + daterange.get(id));
+				found = true;
 				break;
-			} else {
-				msg = "Pick up for this order is not available till next 30 days! Please cancel or modify your order.";
-				model.addAttribute("msg",msg);
-				model.addAttribute("menulist",mi);
-				model.addAttribute("orderid",orderid);
-				model.addAttribute("totalprice", totalPrice);
-				return "checkouterror";
-			}
+			} 
+		}
+		
+		if(!found) {
+			msg = "Pick up for this order is not available till next 30 days! Please cancel or modify your order.";
+			model.addAttribute("msg",msg);
+			model.addAttribute("menulist",mi);
+			model.addAttribute("orderid",orderid);
+			model.addAttribute("totalprice", totalPrice);
+			return "checkouterror";
 		}
 
 		String menu_items_str = this.serializeMenuItems(mi);

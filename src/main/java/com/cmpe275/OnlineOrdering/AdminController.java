@@ -78,6 +78,14 @@ public class AdminController {
 			return "ImageUploadError";
 	}
 
+	@RequestMapping(value = "/reset", method = RequestMethod.GET)
+	public String adminreset(Model model) {
+		adminSvc.systemreset();
+		return "ResetSuccess";
+	}
+
+	
+	
 	/**
 	 * 
 	 * @param fileUpload
