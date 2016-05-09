@@ -29,12 +29,24 @@ public class LoginController {
 		return "Login";
 	}
 
-	// to check if user is valid
-	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
-	public String userLogin(HttpServletRequest request) {
-
-		return "redirect:/";
-	}
+	//to check if user is valid
+		@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
+		public String userLogin(HttpServletRequest request, Model model) {
+			String email = request.getParameter("email");
+			String password = request.getParameter("password");
+			UserCredentials uc = loginSvc.getUser(email);
+			
+			if (uc == null) {
+				model.addAttribute("msg",email);
+				return "usernotfound";
+			}else{
+				
+			}
+			
+			
+			return "redirect:/" ;
+		}
+		
 
 	// register page shown to user
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
