@@ -2,22 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
-<head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
-<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-<script src="http://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.js"></script> 
-<style>
-.ui-timepicker-div.ui-timepicker-oneLine dl dd.ui_tpicker_second:before { content:':'; display:none; }
-.ui-timepicker-div.ui-timepicker-oneLine dl dd.ui_tpicker_millisec:before,
-.ui-timepicker-div.ui-timepicker-oneLine dl dd.ui_tpicker_microsec:before { content:'.'; display:none; }
-.ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_unit_hide,
-.ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_unit_hide:before{ display: inline-block; }
-</style>
-</head>
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen"
+     href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+  </head>
 <body>
 <h3>Order Id: ${orderid}<h3>
 //Table for order details
@@ -33,24 +24,42 @@
 		<p>Total Price: ${totalprice}</p>
 		<p>Date for pickup : ${earlydate}</p>
 		Earliest Pickup Time: ${earliestpickuptime}<br>
-		<input type="text" id="timepicker" />
 		<button>Place Order</button>
-		<script>
-    $(function () {
-        $('#timepicker').datetimepicker({
-		   
-		   hourMin: 9,
-		   hourMax: 18,
-		   dateFormat: 'dd-mm-yy',
-		   minDate:0,
-		   maxDate: '+1M',
-			showSecond:false,
-			showMillisec:false,
-			showMicrosec:false,
-			showTimezone:false
-		});
-      }); 
-</script>  
-
+		 <div id="datetimepicker" class="input-append date">
+      <input type="text"></input>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+      </span>
+    </div>
+		<script type="text/javascript"
+     src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+    </script> 
+    <script type="text/javascript"
+     src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.min.js">
+    </script>
+    <script type="text/javascript"
+     src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
+    </script>
+    <script type="text/javascript">
+      $('#datetimepicker').datetimepicker({
+        format: 'dd/MM/yyyy hh:mm',
+		pickDate: false, 
+		pickSeconds: false,
+        language: 'pt-BR'
+      });
+	  
+	  $.fn.datetimepicker.defaults = {
+  maskInput: true,           // disables the text input mask
+  pickDate: false,            // disables the date picker
+  pickTime: true,            // disables de time picker
+  pick12HourFormat: false,   // enables the 12-hour format time picker
+  pickSeconds: false,         // disables seconds in the time picker
+  startDate: -Infinity,      // set a minimum date
+  endDate: Infinity          // set a maximum date
+};
+    </script>
 </body>
 </html>
