@@ -37,6 +37,6 @@
 		</table>
 	</form>
 	<input type="button" class=button value="back" id="back" name="back"
-		onclick="location.href = 'home';">
+		onclick="location.href = 'AdminHome';">
 </body>
 </html>

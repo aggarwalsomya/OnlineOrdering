@@ -191,17 +191,7 @@ public class AdminController {
         return "AddMenuItem";
     }
     
-    //Go back to home page
-    /**
-     * 
-     * @param request
-     * @return
-     */
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String home(HttpServletRequest request) {
-        System.out.println("entered register home");
-        return "home";
-    }
+   
     
     //logout and jump to first page.
     /**
@@ -215,12 +205,12 @@ public class AdminController {
         return "Login";
     }
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	/**
 	 * returns the home page
 	 * @return
 	 */
 	public String home() {
-		return "home";
+		return "AdminHome";
 	}
 }

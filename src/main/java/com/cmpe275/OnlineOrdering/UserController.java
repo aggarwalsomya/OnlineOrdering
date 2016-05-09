@@ -86,8 +86,8 @@ public class UserController {
 		return "GetUserMenuItems";
 	}
 
-	@RequestMapping(value = "/userHome", method = RequestMethod.GET)
-	public String userHome(Model model, HttpServletRequest request) {
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public String home(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			model.addAttribute("user", session.getAttribute("username"));
@@ -98,6 +98,18 @@ public class UserController {
 
 	}
 
+	/**
+	 * cancels order for user
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/cancelOrder", method = RequestMethod.GET) 
+	public String cancelOrder(Model model) {
+		
+		return "";
+	}
+	
+	
 	/**
 	 * This function will take the current date and return a list of dates for
 	 * next 30 days.

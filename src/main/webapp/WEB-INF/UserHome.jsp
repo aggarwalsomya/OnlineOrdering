@@ -10,6 +10,8 @@
 	<p>Welcome ${user} !!</p>
 	<input type="button" class=button value="Place Order" id="Order"
 		name="Order" onclick="location.href = 'Menu/displayMenuItems';">
+			<input type="button" class=button value="Cancel Order" id="cancel"
+		name="cancel" onclick="location.href = 'cancelOrder';">
 	<input type="button" class=button value="Logout" id="Logout"
 		name="Logout" onclick="location.href = 'signout';">
 </body>

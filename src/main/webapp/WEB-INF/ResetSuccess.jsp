@@ -14,6 +14,6 @@
 	<p>System Reset Successful</p>
 
 	<input type="button" class=button value="Admin Home" id="back" name="back"
-		onclick="location.href = 'http://localhost:8081/OnlineOrdering/home';">
+		onclick="location.href = 'AdminHome';">
 </body>
 </html>

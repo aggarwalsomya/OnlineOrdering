@@ -9,7 +9,7 @@
 <body>
 <h1>Error 404</h1><br>
 <p>${msg}</p>
-<input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/register';"> 
-<input type="button" class=button id="login" name="login" value="Login" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/user';"> 
+<input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'register';"> 
+<input type="button" class=button id="login" name="login" value="Login" onclick="location.href = '/home';"> 
 </body>
 </html>

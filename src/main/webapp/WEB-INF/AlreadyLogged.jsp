@@ -8,5 +8,6 @@
 </head>
 <body>
 <p>You have already logged in!</p>
+<input type="button" class=button id="home" value="Home" onclick="location.href = 'home';">
 </body>
 </html>

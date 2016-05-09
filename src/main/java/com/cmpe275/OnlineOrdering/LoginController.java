@@ -25,7 +25,7 @@ public class LoginController {
 	private LoginService loginSvc;
 
 	// first home login page which user sees
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getData(HttpServletRequest request, Model model) {
 		System.out.println("entered user home");
 		HttpSession session = request.getSession(false);
@@ -41,6 +41,10 @@ public class LoginController {
 		Password p = new Password();
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		
+		if(isAdmin(email, password)) {
+			return "AdminHome";
+		}
 		UserCredentials uc = loginSvc.getUser(email);
 
 		if (uc == null) {
@@ -66,6 +70,12 @@ public class LoginController {
 		model.addAttribute("user", uc.getFullname());
 		return "UserHome";
 
+	}
+
+	private boolean isAdmin(String email, String password) {
+		// TODO Auto-generated method stub
+		if (email.equals("admin") && password.equals("admin"))return true;
+		return false;
 	}
 
 	// register page shown to user
