@@ -28,47 +28,66 @@ public class LoginController {
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String getData(HttpServletRequest request, Model model) {
 		System.out.println("entered user home");
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			return "AlreadyLogged";
+		}
 		return "Login";
 	}
 
-	//to check if user is valid
-		@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
-		public String userLogin(HttpServletRequest request, Model model) {
-			Password p = new Password();
-			String email = request.getParameter("email");
-			String password = request.getParameter("password");
-			UserCredentials uc = loginSvc.getUser(email);
-			
-			if (uc == null) {
-				model.addAttribute("msg","User is not registered. Register with us now!");
-				return "usernotfound";
-			}else{
-				try {
-					if(p.check(password, uc.getPassword())) {
-					} else {
-						model.addAttribute("msg","Invalid Password. Try again!");
-						return "usernotfound";
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			
-			 HttpSession session=request.getSession();
-             session.setAttribute("userID",uc.getId());
-             session.setAttribute("username", uc.getFullname());
-             session.setAttribute("useremail", uc.getEmail());
-             model.addAttribute("user", uc.getFullname());
-             return "UserHome" ;
+	// to check if user is valid
+	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
+	public String userLogin(HttpServletRequest request, Model model) {
+		Password p = new Password();
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		UserCredentials uc = loginSvc.getUser(email);
 
+		if (uc == null) {
+			model.addAttribute("msg",
+					"User is not registered. Register with us now!");
+			return "usernotfound";
+		} else {
+			try {
+				if (p.check(password, uc.getPassword())) {
+				} else {
+					model.addAttribute("msg", "Invalid Password. Try again!");
+					return "usernotfound";
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
+
+		HttpSession session = request.getSession();
+		session.setAttribute("userID", uc.getId());
+		session.setAttribute("username", uc.getFullname());
+		session.setAttribute("useremail", uc.getEmail());
+		model.addAttribute("user", uc.getFullname());
+		return "UserHome";
+
+	}
 
 	// register page shown to user
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(HttpServletRequest request) {
 		System.out.println("entered register home");
 		return "registration";
+	}
+
+	// user logging out
+	@RequestMapping(value = "/signout", method = RequestMethod.GET)
+	public String logout(HttpServletRequest request, Model model) {
+		System.out.println("entered register home");
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			String name = (String) session.getAttribute("username");
+			model.addAttribute("user", name);
+		} else {
+			model.addAttribute("user", "you have already logged out!");
+		}
+		session.invalidate();
+		return "logout";
 	}
 
 	// verify otp and register
@@ -80,37 +99,38 @@ public class LoginController {
 		String email = request.getParameter("email");
 		String codeAssigned = loginSvc.getTuser(email).getCode();
 		String code = request.getParameter("verCode");
-		if(existingUser(email)) {
-			model.addAttribute("msg","This email has already been registered. Please proceed to login!");
+		if (existingUser(email)) {
+			model.addAttribute("msg",
+					"This email has already been registered. Please proceed to login!");
 			TempUser t = loginSvc.getTuser(email);
-            loginSvc.delTuser(t);
+			loginSvc.delTuser(t);
 		} else {
-		if (codeAssigned.equals(code)) {
-			model.addAttribute(
-					"msg",
-					"You have registered successfully.Please proceed to login by clicking the login button!");
-			UserCredentials user = new UserCredentials();
-			user.setEmail(email);
-			user.setAddress(request.getParameter("address"));
-			user.setFullname(request.getParameter("fullname"));
+			if (codeAssigned.equals(code)) {
+				model.addAttribute(
+						"msg",
+						"You have registered successfully.Please proceed to login by clicking the login button!");
+				UserCredentials user = new UserCredentials();
+				user.setEmail(email);
+				user.setAddress(request.getParameter("address"));
+				user.setFullname(request.getParameter("fullname"));
 
-			// Storing the hash of the password in the database
-			String userPassword = request.getParameter("password");
-			String hashPassword = p.getPasswordHash(userPassword);
-			user.setPassword(hashPassword);
+				// Storing the hash of the password in the database
+				String userPassword = request.getParameter("password");
+				String hashPassword = p.getPasswordHash(userPassword);
+				user.setPassword(hashPassword);
 
-			user.setPhone(request.getParameter("phone"));
-			user.setId(getNextNonExistingNumber());
-			loginSvc.adduser(user);
-			TempUser t = loginSvc.getTuser(email);
-            loginSvc.delTuser(t);
+				user.setPhone(request.getParameter("phone"));
+				user.setId(getNextNonExistingNumber());
+				loginSvc.adduser(user);
+				TempUser t = loginSvc.getTuser(email);
+				loginSvc.delTuser(t);
 
-		} else {
-			model.addAttribute(
-					"msg",
-					"the verification code you have entered is wrong! Please click register button to register again.");
+			} else {
+				model.addAttribute(
+						"msg",
+						"the verification code you have entered is wrong! Please click register button to register again.");
 
-		}
+			}
 		}
 		return "AfterRegisterClick";
 	}
@@ -118,7 +138,8 @@ public class LoginController {
 	private boolean existingUser(String email) {
 		// TODO Auto-generated method stub
 		UserCredentials uc = loginSvc.getUser(email);
-		if(uc==null)return false;
+		if (uc == null)
+			return false;
 		return true;
 	}
 
