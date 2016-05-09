@@ -25,22 +25,30 @@ public class LoginController {
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String getData(HttpServletRequest request, Model model) {
 		System.out.println("entered user home");
-
 		return "Login";
 	}
 
 	//to check if user is valid
 		@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 		public String userLogin(HttpServletRequest request, Model model) {
+			Password p = new Password();
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			UserCredentials uc = loginSvc.getUser(email);
 			
 			if (uc == null) {
-				model.addAttribute("msg",email);
+				model.addAttribute("msg","User is not registered. Register with us now!");
 				return "usernotfound";
 			}else{
-				
+				try {
+					if(p.check(password, uc.getPassword())) {
+					} else {
+						model.addAttribute("msg","Invalid Password. Try again!");
+						return "usernotfound";
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 			
 			
