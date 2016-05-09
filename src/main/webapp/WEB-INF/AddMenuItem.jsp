@@ -302,6 +302,20 @@ display: none;
 
 </style>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+$("document").ready(function(){
+    $("#fileUpload").change(function() {
+    	  var filesize = this.files[0].size;
+    	  if(filesize > 1024 * 1024) {
+    		  alert('Image size too big, max is 1MB');
+    		  $("#fileUpload").val('');
+    	  }
+            });
+});
+</script>
+
+
 
 <div id="wrapper">
   <div class="title">
@@ -360,7 +374,7 @@ display: none;
       </tr>
       <tr>
         <td><label>Picture</label></td>
-        <td><input type="file" name="fileUpload" size="9999999999999999" required/></td>
+        <td><input type="file" id="fileUpload" name="fileUpload" size="500000" required/></td>
 
       </tr>
       <tr>
