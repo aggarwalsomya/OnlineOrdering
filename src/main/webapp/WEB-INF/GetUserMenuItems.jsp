@@ -13,6 +13,7 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
+<p>hello ${user} ! </p>
 		<ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#Drinks">Drinks</a></li>
   <li><a data-toggle="tab" href="#Appetizers">Appetizers</a></li>

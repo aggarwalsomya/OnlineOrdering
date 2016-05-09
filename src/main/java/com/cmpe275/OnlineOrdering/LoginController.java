@@ -1,8 +1,11 @@
 package com.cmpe275.OnlineOrdering;
 
 import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -51,8 +54,13 @@ public class LoginController {
 				}
 			}
 			
-			
-			return "redirect:/" ;
+			 HttpSession session=request.getSession();
+             session.setAttribute("userID",uc.getId());
+             session.setAttribute("username", uc.getFullname());
+             session.setAttribute("useremail", uc.getEmail());
+             model.addAttribute("user", uc.getFullname());
+             return "UserHome" ;
+
 		}
 		
 

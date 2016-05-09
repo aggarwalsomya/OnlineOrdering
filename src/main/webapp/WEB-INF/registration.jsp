@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -110,7 +110,7 @@ div.row {
 			</div>
 			<div class="row">
 				<label class="col1"> Full Name:&nbsp;&nbsp;</label> <span
-					class="col2"><input type="text" name="fullname" /></span>
+					class="col2"><input type="text" name="fullname" required /></span>
 			</div>
 			<div class="row">
 				<label class="col1"> Mobile no.:&nbsp;&nbsp;</label> <span
@@ -131,7 +131,7 @@ div.row {
 			<div class="row">
 				<label class="col1"> Verification Code:&nbsp;&nbsp;</label> <span
 					class="col2"><input type="text"
-					placeholder="Enter code received on email" name="verCode" /></span>
+					placeholder="Enter code received on email" name="verCode" required/></span>
 			</div>
 			<div class="row">
 				<label class="col1">&nbsp;&nbsp;</label> <span class="col2"><input
@@ -142,7 +142,7 @@ div.row {
 
 			<div class="row">
 				<label class="col1"> Address:&nbsp;&nbsp;</label> <span class="col2"><input
-					type="text" id="address" name="address" /></span>
+					type="text" id="address" name="address" required /></span>
 			</div>
 
 			<br> <br> <input class="mybutton" type="submit"

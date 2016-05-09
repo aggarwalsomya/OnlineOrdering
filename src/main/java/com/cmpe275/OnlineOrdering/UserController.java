@@ -13,6 +13,8 @@ import java.util.Random;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,7 +66,18 @@ public class UserController {
 	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/Menu/displayMenuItems", method = RequestMethod.GET)
-	public String getDataForEachCategory(Model model) throws UnsupportedEncodingException {
+	public String getDataForEachCategory(Model model, HttpServletRequest request) throws UnsupportedEncodingException {
+	
+		 HttpSession session=request.getSession(false);
+	        if(session!=null){
+	        String name=(String)session.getAttribute("username");
+	          model.addAttribute("user", name);
+	        }
+	        else{
+	           model.addAttribute("user", "notset");
+	        }
+	   
+		
 		String category[] = { MAINCOURSE, DRINK, DESERT, APPETIZER };
 		for (int i = 0; i < category.length; i++) {
 			List<MenuItem> mi = userSvc.getMenuItems(category[i]);
