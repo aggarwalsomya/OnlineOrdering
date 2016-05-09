@@ -83,13 +83,15 @@ public class LoginService {
 		}
 		return t;
 	}
+		
+	
 	
 	//get specific  user by searching by email.
 		@Transactional
 		public UserCredentials getUser(String email) {
 			UserCredentials uc;
 			Query q = em
-					.createQuery("Select u from UserCredentials u where u.email=:arg1");
+					.createQuery("Select uc from UserCredentials uc where uc.email=:arg1");
 			q.setParameter("arg1", email);
 			try {
 				uc = (UserCredentials) q.getSingleResult();
