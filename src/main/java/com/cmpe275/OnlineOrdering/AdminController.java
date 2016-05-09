@@ -145,26 +145,30 @@ public class AdminController {
 	 * @return view
 	 * @author Somya
 	 */
-//	@RequestMapping(value = "/deleteMenuItem", method = RequestMethod.POST)
-//	public String deleteMenuItem(HttpServletRequest request, Model model) {
-//		List<String>list = request.getParameter("menulist");
-//		for(int i = 0; i < list.size(); i++) {
-//			adminSvc.delete(list.get(i));
-//		}
-//		return "SuccessDeleteMenuItem";
-//	}
+	@RequestMapping(value = "/deleteMenuItem", method = RequestMethod.POST)
+	public String deleteMenuItem(HttpServletRequest request, Model model) {
+		String itemdata = request.getParameter("itemData");
+		System.out.println(itemdata);
+		
+		String[] data = itemdata.split(";;");
+		for(int i = 0; i < data.length; i++) {
+			System.out.println("Data selected for delete is:"+ data[i]);
+			adminSvc.delete(data[i]);
+		}
+		return "SuccessDeleteMenuItem";
+	}
 	
 	/**
 	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/displaymenu", method = RequestMethod.GET)
+	@RequestMapping(value = "/AdminDelete", method = RequestMethod.GET)
 	public String showAllMenuItemsForDelete(Model model){		
 		List<MenuItem>itemlist = adminSvc.getAllMenuItems();
 		model.addAttribute("itemlist",itemlist);
 		System.out.println(itemlist.get(0).getName());
-		return "SearchMenuItem";
+		return "DeleteMenuItem";
 	}
     
     //returns search page on click
@@ -205,7 +209,7 @@ public class AdminController {
         return "Login";
     }
 	
-	@RequestMapping(value = "/admin", method = RequestMethod.GET)
+	@RequestMapping(value = "/AdminHome", method = RequestMethod.GET)
 	/**
 	 * returns the home page
 	 * @return

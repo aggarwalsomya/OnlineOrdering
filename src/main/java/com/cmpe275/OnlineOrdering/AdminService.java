@@ -1,5 +1,6 @@
 package com.cmpe275.OnlineOrdering;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -145,7 +147,18 @@ public class AdminService {
 				mi.setCategory(resultList.get(i).getCategory());
 				mi.setCalories(resultList.get(i).getCalories());
 				mi.setUnitprice(resultList.get(i).getUnitprice());
-				mi.setPicture(resultList.get(i).getPicture());
+				
+				byte[] binaryData;
+				binaryData = resultList.get(i).getPicture();
+				byte[] encodeBase64 = Base64.encodeBase64(binaryData);
+				String base64Encoded;
+				try {
+					base64Encoded = new String(encodeBase64, "UTF-8");
+					mi.setpicpath(base64Encoded);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+				
 				mi.setPreptime(resultList.get(i).getPreptime());
 				ret.add(mi);
 			}			

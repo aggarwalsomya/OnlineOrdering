@@ -9,9 +9,28 @@
 </head>
 <body>
 	<form action="searchItem" method="post">
-		<h1>Enter the name of the item you want to Search</h1>
-		<input type="text" name="name" placeholder="enter name of an item" />
-		<input type="submit" name="search" class="submit" value="Search">
+		<table style="border:1px solid black;">
+		<thead>
+    <tr>
+      <th style="border:1px solid black;">Image</th>
+      <th style="border:1px solid black;">Name</th>
+      <th style="border:1px solid black;">Unit Price</th>
+      <th style="border:1px solid black;">Calories</th>
+      <th style="border:1px solid black;">Select</th>
+          </tr></thead>
+			<c:forEach var="listValue" items="${itemlist}" varStatus="status">
+				<tr style="border:1px solid black;" ><td style="border:1px solid black;">
+				<!-- input type="checkbox" name="menulist" value=${listValue.name}--></td> 
+				<td style="border:1px solid black;">${listValue.picture}</td>
+				<td style="border:1px solid black;">${listValue.name}</td>
+				<td style="border:1px solid black;">${listValue.unitprice}</td>
+				<td style="border:1px solid black;">${listValue.calories}</td>
+				</tr>
+			</c:forEach>
+		</table>
+		
+				<input type="submit" value="Delete" /></td>
+			
 	</form>
 	<input type="button" class=button value="back" id="back" name="back"
 		onclick="location.href = 'home'">

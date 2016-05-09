@@ -351,7 +351,7 @@ display: none;
 					<td>
 					 
 					<input type="button" class=button value="Delete Menu Item"
-					id="delete" name="delete" onclick="location.href = 'displaymenu';">
+					id="delete" name="delete" onclick="location.href = 'AdminDelete';">
 					
 					</td>
 					

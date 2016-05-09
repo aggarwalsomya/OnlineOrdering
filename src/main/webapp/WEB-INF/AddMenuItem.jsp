@@ -393,7 +393,7 @@ $("document").ready(function(){
       <tr>
         <td><input type="submit" value="Add" required/></td>
         <td>
-        <input type="button" class=button value="back"
+        <input type="button" class=button value="Admin Home"
           id="back" name="back" onclick="location.href = 'AdminHome';">
           </td>
       </tr>

@@ -1,42 +1,79 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Cmpe275_Term_Project_5 : Delete Menu Item</title>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>CMPE275_TermProject_Group5:Delete Menu Items</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<img alt="" src="data:image/jpeg;base64,${picPath}" style="width:304px;height:228px;">
-	<form method="POST" action="deleteItem">
-		<table>
-			<tr>
-				<td><label>Item Name</label></td>
-				<td>${name}</td>
-			</tr>
-			<tr>
-				<td><label>Picture</label></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td><label>Unit Price</label></td>
-				<td>${unitprice}</td>
-			</tr>
-			<tr>
-				<td><label>Calories</label></td>
-				<td>${calories}</td>
-			</tr>
-			<tr>
-				<td><label>Preparation Time</label></td>
-				<td>${preptime}</td>
-			</tr>
-			<tr>
-				<td><input type="submit" value="Delete" /></td>
-			</tr>
-		</table>
+	<p>Welcome Admin</p>
+	<ul class="nav nav-tabs">
+		<li class="active"><a data-toggle="tab" href="#Drinks">Delete
+				Menu Items</a></li>
+	</ul>
+	<br>
+
+	<div class="tab-content">
+		<div id="Drinks" class="tab-pane fade in active">
+			<table id="deletetable">
+				<c:forEach var="list1" items="${itemlist}" varStatus="status">
+					<tr style="border: 1px solid black;">
+						<td><input id="cb1" type="checkbox" name="checker1" />
+						<td style="border: 1px solid black;"><img alt=""
+							src="data:image/jpeg;base64,${list1.picpath}"
+							style="width: 304px; height: 228px;"></td>
+						<td style="border: 1px solid black;">${list1.category}</td>
+						<td style="border: 1px solid black;">${list1.name}</td>
+						<td style="border: 1px solid black;">${list1.unitprice}</td>
+						<td style="border: 1px solid black;">${list1.calories}</td>
+						<td style="border: 1px solid black;">${list1.preptime}</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+	</div>
+	<br><br>
+	
+	<button id="jqcc">Delete Selected Items</button>
+	<br><br>
+	<form action="deleteMenuItem" method="POST">
+		<input type="hidden" id="itemData" name="itemData"> 
+		<p>Please press confirm delete to make sure you want to delete these items</p><br>
+		<input type="submit" id="next" value="Confirm Delete" />
 	</form>
-	<input type="button" class=button value="back" id="back" name="back"
-		onclick="location.href = 'AdminHome';">
+
+	<div id="demo1"></div>
+
+	<script>
+		$(function() {
+			var tableControl1 = document.getElementById('deletetable');
+			var arrayOfDrinks = [];
+
+			$('#jqcc').click(function() {
+			    $('input:checkbox:checked', tableControl1).each(function() {
+			        arrayOfDrinks.push($(this).closest('tr').find('td').eq(3).text());
+			    }).get();
+			    
+								$('input:checkbox').removeAttr('checked');
+								var arrayOfItemNames = arrayOfDrinks;
+								var dataToSend = arrayOfItemNames.join(";;");
+								document.getElementById("demo1").innerHTML = dataToSend;
+
+								$('#next').click(function() {document.getElementById("itemData").value = dataToSend;});
+							});
+		});
+	</script>
 </body>
 </html>
