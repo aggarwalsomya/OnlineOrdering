@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2016 at 02:34 AM
+-- Generation Time: May 10, 2016 at 09:15 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -93,7 +93,7 @@ INSERT INTO `order` (`userid`, `menuid`, `orderid`, `quantity`, `status`) VALUES
 CREATE TABLE IF NOT EXISTS `orderdetails` (
   `userid` int(11) NOT NULL,
   `orderid` int(11) NOT NULL,
-  `status` varchar(500) NOT NULL,
+  `status` varchar(500) DEFAULT NULL,
   `menu_items` varchar(1000) DEFAULT NULL,
   `pickup_date` varchar(255) DEFAULT NULL,
   `pickup_time` varchar(255) DEFAULT NULL
@@ -104,12 +104,27 @@ CREATE TABLE IF NOT EXISTS `orderdetails` (
 --
 
 INSERT INTO `orderdetails` (`userid`, `orderid`, `status`, `menu_items`, `pickup_date`, `pickup_time`) VALUES
+(0, 2, 'pending', ' Strawberry Chocolate Cupcake::1;;', NULL, NULL),
+(0, 21, 'pending', ' Coke::1;;', NULL, NULL),
+(0, 29, 'pending', ' Coke::1;;', NULL, NULL),
 (4, 2, 'pending', 'brown rice::3;;chocolate fudge::2;;coke::1;;ice tea::2;;spring rolls::4;;', '2016-05-09', '14:00'),
 (4, 8, 'pending', 'brown rice::3;;chocolate fudge::2;;coke::1;;ice tea::2;;spring rolls::4;;', NULL, NULL),
 (4, 9, 'pending', ' ice tea::1;;', NULL, NULL),
 (4, 11, 'pending', 'brown rice::3;;chocolate fudge::2;;coke::1;;ice tea::2;;spring rolls::4;;', NULL, NULL),
 (4, 17, 'pending', 'brown rice::3;;chocolate fudge::2;;coke::1;;ice tea::2;;spring rolls::4;;', NULL, NULL),
-(4, 26, 'pending', ' Ice Tea::1;;', NULL, NULL);
+(4, 26, 'pending', ' Ice Tea::1;;', NULL, NULL),
+(10, 1, 'pending', ' Coke::100;;Ice Tea::10;;', NULL, NULL),
+(10, 2, 'pending', ' Coke::61;;', NULL, NULL),
+(10, 4, 'placed', ' brown rice::3;;chocolate fudge::2;;coke::1;;ice tea::2;;spring rolls::4;;', NULL, NULL),
+(10, 6, 'pending', ' Coke::1;;', NULL, NULL),
+(10, 7, 'pending', ' Coke::60;;', NULL, NULL),
+(10, 9, 'pending', ' Coke::1;;', NULL, NULL),
+(10, 12, 'pending', ' Coke::1;;', NULL, NULL),
+(10, 13, 'pending', ' Coke::60;;', NULL, NULL),
+(10, 22, 'pending', ' Coke::1;;', NULL, NULL),
+(10, 24, 'pending', ' Coke::1;;', NULL, NULL),
+(10, 25, 'pending', ' Coke::1;;', NULL, NULL),
+(10, 28, 'pending', ' Coke::100;;Ice Tea::100;;Orange Juice::50;;', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -135,7 +150,6 @@ INSERT INTO `schedule` (`chefid`, `orderid`, `busystarttime`, `busyendtime`, `da
 (1, 103, 900, 910, '2016-05-03'),
 (1, 104, 910, 920, '2016-05-03'),
 (1, 101, 1000, 1020, '2016-05-05'),
-(1, 999, 490, 600, '2016-05-11'),
 (1, 105, 650, 700, '2016-05-12'),
 (2, 200, 650, 700, '2016-05-12'),
 (1, 201, 600, 650, '2016-05-12'),
@@ -147,7 +161,17 @@ INSERT INTO `schedule` (`chefid`, `orderid`, `busystarttime`, `busyendtime`, `da
 (2, 18, 807, 940, '2016-05-12'),
 (1, 800, 540, 1080, '2016-05-08'),
 (2, 801, 540, 1080, '2016-05-08'),
-(3, 803, 540, 1080, '2016-05-08');
+(3, 803, 540, 1080, '2016-05-08'),
+(1, 21, 300, 1260, '2016-05-10'),
+(2, 22, 300, 1260, '2016-05-10'),
+(1, 21, 300, 1260, '2016-05-10'),
+(2, 22, 300, 1260, '2016-05-10'),
+(3, 23, 300, 1260, '2016-05-10'),
+(1, 31, 300, 1260, '2016-05-11'),
+(2, 32, 300, 1260, '2016-05-11'),
+(3, 33, 300, 1260, '2016-05-11'),
+(1, 26, 483, 548, '2016-05-14'),
+(1, 4, 451, 516, '2016-05-26');
 
 -- --------------------------------------------------------
 
@@ -188,8 +212,8 @@ CREATE TABLE IF NOT EXISTS `usercredentials` (
 --
 
 INSERT INTO `usercredentials` (`user_id`, `email`, `password`, `fullname`, `address`, `phone`) VALUES
-(1, 'sj@gmail.com', 'abcd', 'shagun juneja', 'abcde abcde', '12345'),
 (4, 'saurabhgupta1403@gmail.com', 'XnjrUmJL7cKEwAa8G8tpVuSCZe/jEC9LETtNjVk9kxA=$BOLCFaU4CeJ9bRJFeWfqKsXC0P8uDocl0rF+mO8SdRA=', 'Saurabh Gupta', '555 E Washington Ave', '6502132719'),
+(10, 'mmee91@gmail.com', '1C3uVpXSDG5xtHowYceKRUTNHFMr2ulDAUuYyE9wKWo=$Qup0bTTnmN2ugzSX/2wBLujUMFkZiDw/qFUwdpdFZig=', 'Meera Mali', 'san jose area', '6502838168'),
 (122, 'aggarwal.somya@gmail.com', '9p1pAauUyUG+hbkVFc8dIppwpwfP0f0kGlRY4fHJ32A=$WYNk29TFjHj1JTl4tiNZ67YWXJSWaVbB85k3CLc7x6w=', 'Somya Aggarwal', '1055 East Evelyn Avenue, Sunnyvale, CA 94086', '6506031909');
 
 --
@@ -207,13 +231,15 @@ ALTER TABLE `menuitem`
 -- Indexes for table `order`
 --
 ALTER TABLE `order`
-  ADD PRIMARY KEY (`userid`,`menuid`,`orderid`);
+  ADD PRIMARY KEY (`userid`,`menuid`,`orderid`),
+  ADD KEY `orderid` (`orderid`);
 
 --
 -- Indexes for table `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  ADD PRIMARY KEY (`userid`,`orderid`);
+  ADD PRIMARY KEY (`userid`,`orderid`),
+  ADD KEY `orderid` (`orderid`);
 
 --
 -- Indexes for table `usercredentials`
