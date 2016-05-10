@@ -6,14 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>User Home- Welcome!</title>
 <style>
-
 body {
 	color: #103F53;
 	background: #e6f3ff;
 }
-
-
-
 
 .col2 {
 	width: 195px;
@@ -24,16 +20,17 @@ body {
 	
 }
 
-
-
 .mybutton{
-background-color: #7EB2C8;
-color:black;
-border: 1px solid #031E2A;
-border-radius: 6px;
-padding: 5px 12px;
-font-size: 18px;
+	background-color: #7EB2C8;
+	color:black;
+	border: 1px solid #031E2A;
+	border-radius: 4px;
+	padding: 5px 12px;
+	font-size: 16px;
+	width:150px;
+	text-align:center;
 }
+
 .mybutton:hover {
     background-color: #031E2A;
     color: #7EB2C8;
@@ -44,8 +41,6 @@ font-size: 18px;
 	margin-top: 50px;
 	width: 40%;
 }
-
-
 </style>
 </head>
 <body>
