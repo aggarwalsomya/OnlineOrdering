@@ -182,6 +182,14 @@ text-align:center;
 	 
     <div id="Appetizers" class="tab-pane fade">
 	 <table  id="appetizertable">
+	 <tr>
+    <th></th>
+    <th></th>
+    
+    <th>Item Name</th>
+    <th>Price</th>
+    <th>Calories</th>
+    <th>Quantity</th></tr>
      <c:forEach var="list2" items="${list_appetizer}" varStatus="status">
 				<tr ><td>
 				<input id="cb1" type="checkbox" name="checker1"/>
@@ -197,6 +205,14 @@ text-align:center;
 	
 	<div id="Maincourse" class="tab-pane fade">
 	 <table  id="maincoursetable">
+	 <tr>
+    <th></th>
+    <th></th>
+    
+    <th>Item Name</th>
+    <th>Price</th>
+    <th>Calories</th>
+    <th>Quantity</th></tr>
      <c:forEach var="list3" items="${list_maincourse}" varStatus="status">
 				<tr>
 				<td><input id="cb1" type="checkbox" name="checker1"/>
@@ -212,6 +228,14 @@ text-align:center;
 	
 	<div id="Deserts" class="tab-pane fade">
 	 <table  id="deserttable">
+	 <tr>
+    <th></th>
+    <th></th>
+    
+    <th>Item Name</th>
+    <th>Price</th>
+    <th>Calories</th>
+    <th>Quantity</th></tr>
      <c:forEach var="list4" items="${list_desert}" varStatus="status">
 				<tr>
 				<td><input id="cb1" type="checkbox" name="checker1"/>
