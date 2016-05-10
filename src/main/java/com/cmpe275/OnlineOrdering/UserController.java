@@ -193,8 +193,13 @@ public class UserController {
 	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.POST)
 	public String getEarliestPickUpTime(HttpServletRequest request, Model model)
 			throws ParseException {
-		// TODO: integrate
-		int user_id = 123;
+		int user_id = 0;
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			String username = (String) session.getAttribute("username");
+			user_id = (Integer) session.getAttribute("userID");
+			model.addAttribute("userid", user_id);
+		}
 
 		String menuitems = request.getParameter("itemData");
 		Map<String, Integer> mi = deserializeMenuItems(menuitems);
@@ -219,7 +224,7 @@ public class UserController {
 		String msg = "";
 		boolean found = false;
 
-		if (totalPrepTime > 540) {
+		if (totalPrepTime > 960) {
 			msg = "Order is too long to prepare in one day. Cannot accept the order. Please modify or cancel the order.";
 			model.addAttribute("msg", msg);
 			model.addAttribute("menulist", mi);
@@ -232,10 +237,15 @@ public class UserController {
 			earlytime = getEarliestPickupForDate(totalPrepTime,
 					daterange.get(id), (id == 0 ? currMin : -1));
 
-			if (earlytime >= 540 && earlytime <= 1080) {
+			if (earlytime > 360 && earlytime <= 1260) {
 				earlydate = daterange.get(id);
 				System.out.println("Earliest pick up time is:" + earlytime
 						+ " on:" + daterange.get(id));
+				found = true;
+				break;
+			} else if(earlytime > 300 && earlytime <= 360) {
+				earlydate = daterange.get(id);
+				earlytime = 360;
 				found = true;
 				break;
 			}
@@ -319,8 +329,8 @@ public class UserController {
 			b.add(entry.getValue());
 		}
 
-		int restOpen = Math.max(540, startMin);
-		int restClose = 1080;
+		int restOpen = Math.max(300, startMin);
+		int restClose = 1260;
 
 		// case where chef is all free
 		if (a.size() == 0) {
@@ -397,14 +407,20 @@ public class UserController {
 	 * @return
 	 * @author Somya
 	 */
-	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.GET)
-	public String checkCustomTime() {
+	@RequestMapping(value = "/Menu/FinalCheckout", method = RequestMethod.POST)
+	public String checkCustomTime(HttpServletRequest request, Model model) {
 		// TODO: integrate
 		Map<String, Integer> mi = this.parseMenuItemsFromRequest();
 
 		// TODO: parse the whole request
 		String date = "2016-05-12";
-		int user_id = 123;
+		int user_id = 0;
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			user_id = (Integer) session.getAttribute("userID");
+			model.addAttribute("userid", user_id);
+		}
+		
 		int orderid = this.last_order_id;
 		int pickuptime = 1000;
 
@@ -592,6 +608,17 @@ public class UserController {
 		}
 		return null;
 	}
+
+	@RequestMapping(value = "/Menu", method = RequestMethod.GET)
+	/**
+	 * returns the home page
+	 * 
+	 * @return
+	 * @author Somya
+	 */
+	public String home() {
+		return "DisplayUserMenu";
+	}
 	
 	
 	/**
@@ -604,17 +631,5 @@ public class UserController {
 	System.out.println(request.getParameter("time"));
 	System.out.println("entered checkout!!!");
 	return "";
-	}
-	
-
-	@RequestMapping(value = "/Menu", method = RequestMethod.GET)
-	/**
-	 * returns the home page
-	 * 
-	 * @return
-	 * @author Somya
-	 */
-	public String home() {
-		return "DisplayUserMenu";
 	}
 }
