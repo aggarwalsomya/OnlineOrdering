@@ -420,7 +420,7 @@ public class UserController {
 				totalPrepTime);
 		if (sch != null) {
 			System.out.println("Order Accepted.");
-			String menu_items = mi.toString();
+			String menu_items = serializeMenuItems(mi);
 
 			// update the order status in the database for this order.
 			userSvc.placeOrder(user_id, orderid, menu_items, "placed");

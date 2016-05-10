@@ -78,10 +78,28 @@ public class AdminController {
 			return "ImageUploadError";
 	}
 
+	/**
+	 * This will reset all the orders placed in the system and clear the chef schedule
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/reset", method = RequestMethod.GET)
 	public String adminreset(Model model) {
 		adminSvc.systemreset();
 		return "ResetSuccess";
+	}
+	
+	@RequestMapping(value = "/vieworders", method = RequestMethod.GET)
+	public String viewOrders(Model model) {
+		
+		System.out.println("In view all orders : Admin Controller.");
+		List<Order> od = adminSvc.getAllOrders();
+		if (od == null) {
+			model.addAttribute("msg", "Currently there are no orders to be displayed");
+		} else {
+			model.addAttribute("orderlist", od);
+		}
+		return "ViewAllOrders";
 	}
 
 	
@@ -203,7 +221,7 @@ public class AdminController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/adminLogout", method = RequestMethod.GET)
     public String logout(HttpServletRequest request) {
         System.out.println("entered register home");
         return "Login";

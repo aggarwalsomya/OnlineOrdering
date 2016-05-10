@@ -356,11 +356,15 @@ display: none;
 					</td>
 					
 					<td>
-					 
 					<input type="button" class=button value="System Reset"
-					id="logout" name="logout" onclick="location.href = 'logout';">
-					
+					id="reset" name="reset" onclick="location.href = 'reset';">
 					</td>
+
+					<td>
+					<input type="button" class=button value="View Orders"
+					id="vieworders" name="vieworders" onclick="location.href = 'vieworders';">
+					</td>
+
 					
 		</tr>				
 </table>

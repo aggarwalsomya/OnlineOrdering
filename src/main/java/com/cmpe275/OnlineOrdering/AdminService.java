@@ -3,6 +3,8 @@ package com.cmpe275.OnlineOrdering;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -166,5 +168,50 @@ public class AdminService {
 			ret = null;
 		}
 		return ret;
+	}
+
+	public List<Order> getAllOrders() {		
+		Query q = em.createQuery("SELECT d.orderid, "
+				+ "c.fullname,"
+				+ "c.email,"
+				+ "d.menu_items,"
+				+ "d.status,"
+				+ "d.pickup_date,"
+				+ "d.pickup_time "
+				+ "FROM UserCredentials c, OrderDetails d WHERE c.id = d.userid");
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> resultList = q.getResultList();
+		List<Order> result = new ArrayList<Order>(resultList.size());
+		for (Object[] row : resultList) {
+		    result.add(new Order((Integer) row[0],
+		                            (String) row[1],
+		                            (String) row[2],
+		                            (String) row[3],
+		                            (String) row[4],
+		                            (String) row[5],
+		                            (String) row[6]
+		    		));
+		}
+		
+		for(int i = 0; i < result.size(); i++) {
+			String menuItems = result.get(i).getMenu_items();
+			Map<String, Integer> m = deserializeMenuItems(menuItems);
+			result.get(i).setMenumap(m);
+			System.out.println(result.get(i).getpickup_time());
+			System.out.println(result.get(i).getpickup_time());
+		}
+
+		return result;
+	}
+	
+	private Map<String, Integer> deserializeMenuItems(String mi) {
+		String[] items = mi.split(";;");
+		Map<String, Integer> menu_items = new TreeMap<String, Integer>();
+		for (String item : items) {
+			String[] parts = item.split("::");
+			menu_items.put(parts[0], Integer.parseInt(parts[1]));
+		}
+		return menu_items;
 	}
 }

@@ -1,6 +1,8 @@
 package com.cmpe275.OnlineOrdering;
 
 import java.io.Serializable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -24,6 +26,12 @@ public class OrderDetails implements Serializable{
 	private String menu_items;
 
 	private String status;
+	
+	@Column(name="pickup_date")
+	private String pickup_date;
+	
+	@Column(name="pickup_time")
+	private String pickup_time;
 
 	public int getUserid() {
 		return userid;
@@ -60,6 +68,22 @@ public class OrderDetails implements Serializable{
 	@Override
 	public String toString() {
 		return this.userid + ": " + this.orderid;
+	}
+
+	public String getPickupDate() {
+		return pickup_date;
+	}
+
+	public void setPickupDate(String pickupDate) {
+		this.pickup_date = pickupDate;
+	}
+
+	public String getPickupTime() {
+		return pickup_time;
+	}
+
+	public void setPickupTime(String pickupTime) {
+		this.pickup_time = pickupTime;
 	}
 }
 
