@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -96,18 +97,6 @@ public class UserController {
 	}
 
 	/**
-	 * cancels order for user
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(value = "/cancelOrder", method = RequestMethod.GET) 
-	public String cancelOrder(Model model) {
-		
-		return "";
-	}
-	
-	
-	/**
 	 * This function will take the current date and return a list of dates for
 	 * next 30 days.
 	 * 
@@ -171,6 +160,7 @@ public class UserController {
 		while (true) {
 			int rand_id = rn.nextInt(Integer.SIZE - 1) % 10000;
 			if (!userSvc.orderExists(user_id, rand_id)) {
+				System.out.println("here");
 				return rand_id;
 			}
 		}
@@ -186,6 +176,7 @@ public class UserController {
 	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.POST)
 	public String getEarliestPickUpTime(HttpServletRequest request, Model model)
 			throws ParseException {
+		System.out.println("Entering the controller...");
 		int user_id = 0;
 		HttpSession session = request.getSession(false);
 		try {
@@ -402,6 +393,7 @@ public class UserController {
 	}
 
 	/**
+	 * This function will check if the order can be prepared at the custom time or not
 	 * @param time
 	 * @param date
 	 * @param preptime
@@ -440,9 +432,14 @@ public class UserController {
 			time = null;
 		}
 		
-		//changing the time in minutes from 24hour format
-		int pickuptime = Integer.parseInt(time.substring(0, 2)) * 60 + Integer.parseInt(time.substring(3, 5));
-		System.out.println("Pickup time in mins::"+pickuptime);
+		int pickuptime = 0;
+		try {
+			//changing the time in minutes from 24hour format
+			pickuptime = Integer.parseInt(time.substring(0, 2)) * 60 + Integer.parseInt(time.substring(3, 5));
+			System.out.println("Pickup time in mins::"+pickuptime);
+		} catch(Exception e) {
+			return "OrderErrorException";
+		}
 
 		
 		//getting the userid from the session
@@ -636,15 +633,120 @@ public class UserController {
 		return null;
 	}
 
-	
+	/**
+	 * This function will cancel the unplaced orders by the user.
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author Somya
+	 */
 	@RequestMapping(value = "/Menu/cancelOrder", method = RequestMethod.GET)
 	public String cancelOrder_Unplaced(HttpServletRequest request, Model model) {
-		//int orderid = Integer.parseInt(request.getParameter("orderid"));
-		userSvc.cancelOrderUnplaced(16,0);
-		model.addAttribute("msg", "Order has been successfully cancelled.");
+		int orderid = Integer.parseInt(request.getParameter("orderid"));
+		int user_id = 0;
+		HttpSession session = request.getSession(false);
+		try {
+			if (session != null) {
+				user_id = (Integer) session.getAttribute("userID");
+				userSvc.cancelOrderUnplaced(orderid, user_id);
+				model.addAttribute("msg", "Order has been successfully cancelled.");
+			}
+		} catch (Exception e) {
+			model.addAttribute("msg", "Sorry order could not be cancelled.");
+		}
 		return "OrderSuccess";
-		
 	}
+	
+	/**
+	 * This function will return the menu items ordered by the user in case he wants to revise the order
+	 * @param request
+	 * @param model
+	 * @return
+	 * @author Somya
+	 */
+	@RequestMapping(value = "/Menu/modifyOrder", method = RequestMethod.GET)
+	public String modifyOrder(HttpServletRequest request, Model model) {
+		int orderid = Integer.parseInt(request.getParameter("orderid"));
+		int user_id = 0;
+		HttpSession session = request.getSession(false);
+		try {
+			if (session != null) {
+				user_id = (Integer) session.getAttribute("userID");
+			}
+		} catch(Exception e) {
+		}
+		String menuItemDetails = userSvc.getMenuDetailsForOrder(orderid, user_id);
+		Map<String,Integer> mi = deserializeMenuItems(menuItemDetails);
+		model.addAttribute("menumap",mi);
+		return "GetUserMenuItems";
+	}
+	
+	@RequestMapping(value = "/completedOrders", method = RequestMethod.GET)
+	public String viewCompletedOrders(HttpServletRequest request,Model model){
+		System.out.println("In function - View Completed Orders");
+		int user_id = 0;
+		HttpSession session = request.getSession(false);
+		try {
+			if (session != null) {
+				user_id = (Integer) session.getAttribute("userID");
+			}
+		} catch(Exception e) {
+		}
+		
+		List<OrderDetails> listod = userSvc.getUserOrders(user_id, "completed");
+		System.out.println(listod);
+		List<Order> listo = new ArrayList<Order>();
+		
+		for(int i = 0; i < listod.size(); i++) {
+			Order o = new Order(listod.get(i).getOrderid(),
+					"",
+					"",
+					listod.get(i).getMenu_items(),
+					listod.get(i).getStatus(),
+					listod.get(i).getpickup_date(),
+					listod.get(i).getpickup_time());
+			o.setMenumap(deserializeMenuItems(listod.get(i).getMenu_items()));
+			listo.add(o);
+		}
+		model.addAttribute("orderlist",listo);
+		
+		return "ViewCompletedOrders";
+	}
+	
+	/**
+	 * cancels order for user
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/cancelOrder", method = RequestMethod.GET) 
+	public String cancelOrder(HttpServletRequest request, Model model) {
+		int user_id = 0;
+		HttpSession session = request.getSession(false);
+		try {
+			if (session != null) {
+				user_id = (Integer) session.getAttribute("userID");
+			}
+		} catch(Exception e) {
+		}
+		
+		List<OrderDetails> listod = userSvc.getUserOrders(user_id, "placed");
+		List<Order> listo = new ArrayList<Order>();
+		
+		for(int i = 0; i < listod.size(); i++) {
+			Order o = new Order(listod.get(i).getOrderid(),
+					"",
+					"",
+					listod.get(i).getMenu_items(),
+					listod.get(i).getStatus(),
+					listod.get(i).getpickup_date(),
+					listod.get(i).getpickup_time());
+			o.setMenumap(deserializeMenuItems(listod.get(i).getMenu_items()));
+			listo.add(o);
+		}
+		model.addAttribute("orderlist",listo);
+		return "CancelOrders";
+	}
+	
 	
 	@RequestMapping(value = "/Menu", method = RequestMethod.GET)
 	/**

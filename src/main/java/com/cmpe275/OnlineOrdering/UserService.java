@@ -132,6 +132,7 @@ public class UserService {
 		q.executeUpdate();
 	}
 
+	@Transactional
 	public String getMenuDetailsForOrder(int orderid, int userid) {
 		Query q = em.createQuery("Select od from OrderDetails od where od.orderid=:arg1 and od.userid=:arg2");
 		q.setParameter("arg1", orderid);
@@ -141,6 +142,18 @@ public class UserService {
 		
 		System.out.println(od.getMenu_items());
 		return od.getMenu_items();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<OrderDetails> getUserOrders(int user_id, String status) {
+		System.out.println("user_id is:"+user_id+" status:"+status);
+		Query q = em.createQuery("SELECT od FROM OrderDetails od WHERE od.userid = :arg1 and od.status=:arg2");
+		q.setParameter("arg1", user_id);
+		q.setParameter("arg2", status);
+		List<OrderDetails> orderlist = q.getResultList();
+		System.out.println(orderlist);
+		return orderlist;		
 	}
 	
 }

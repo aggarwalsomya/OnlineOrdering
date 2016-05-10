@@ -5,15 +5,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Cmpe275_Term_Project_5 Order Placement Successful</title>
+<title>Cmpe275_Term_Project_5 Order Placement Error</title>
 </head>
 <body>
-	<h1>Placed Order Successfully</h1>
+	<h1>Error in Placing the order</h1>
 	<br>
 	<br>
-	<p>${msg}</p>
+	<p>Error in Placing the order</p>
 
-	<input type="button" class=button value="Go to Home Page" id="back" name="Go to Home Page"
+	<input type="button" class=button value="Home Page" id="back" name="Home page"
 		onclick="location.href = 'home';">
 </body>
 </html>
