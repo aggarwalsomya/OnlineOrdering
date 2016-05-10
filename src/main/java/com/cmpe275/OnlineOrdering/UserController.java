@@ -409,7 +409,7 @@ public class UserController {
 	@RequestMapping(value = "/Menu/finalCheckout", method = RequestMethod.POST)
 	public String checkCustomTime(HttpServletRequest request, Model model) {
 		System.out.println("In Custom Time function : User Controller");
-		
+		System.out.println(request.getParameter("early"));
 		// TODO: integrate
 		System.out.println("Order Type::"+request.getParameter("type"));
 		Map<String, Integer> mi = this.parseMenuItemsFromRequest();

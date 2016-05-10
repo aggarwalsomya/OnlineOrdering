@@ -29,7 +29,7 @@
 	<p>Total Price: ${totalprice}</p>
 	<input type="radio" style="margin-left: 20px" onclick="confirm()"
 		name="pickup" value="confirm" />Earliest Pickup Time:
-	${earliestpickuptime}
+	<h3 style="margin-left: 20px" id="early">${earliestpickuptime}</h3>
 	<br>
 	<br>
 	<input type="radio" style="margin-left: 20px" onclick="custom()"
@@ -47,8 +47,10 @@
 	<form method="post" action="finalCheckout">
 		<input type="hidden" id="orderid" name="orderid" value="" /> <input
 			type="hidden" id="type" name="type" value="" /> <input type="hidden"
-			id="time" name="time" value="" /> <input type="submit" name="proceed"
-			value="Proceed" />
+			id="time" name="time" value="" /> <input type="hidden"
+			id="earlypickuptime" name="early" value="" /> <input type="submit"
+			name="proceed" value="Proceed" />
+
 	</form>
 
 </body>
@@ -65,9 +67,22 @@
 	src="http://tarruda.github.com/bootstrap-datetimepicker/assets/js/bootstrap-datetimepicker.pt-BR.js">
 </script>
 <script type="text/javascript">
+
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth(); 
+var yyyy = today.getFullYear();
+var future = new Date();
+future.setDate(future.getDate() + 30);
+var ddf = future.getDate();
+var mmf = future.getMonth(); 
+var yyyyf = future.getFullYear();
+
     $('#datetimepicker').datetimepicker({
         format: 'yyyy-MM-dd hh:mm',
-        language: 'en'
+        language: 'en',
+        startDate: new Date(yyyy, mm, dd),
+        endDate: new Date(yyyyf, mmf, ddf)
     });
     var picker = $('#datetimepicker');
     picker.on('changeDate', function(e) {
@@ -76,7 +91,8 @@
     });
      
     document.getElementById("orderid").value = document.getElementById ('id').innerHTML; 
-    
+    document.getElementById("orderid").value = document.getElementById ('id').innerHTML;
+    document.getElementById("earlypickuptime").value = document.getElementById ('early').innerHTML;
     function confirm() {
         document.getElementById("type").value = "confirm";
     }
