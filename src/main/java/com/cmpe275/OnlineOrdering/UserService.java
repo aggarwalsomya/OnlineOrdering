@@ -123,5 +123,13 @@ public class UserService {
 		return time;
 
 	}
+
+	@Transactional
+	public void cancelOrderUnplaced(int orderid, int userid) {
+		Query q = em.createQuery("Delete from OrderDetails where orderid=:arg1 and userid=:arg2");
+		q.setParameter("arg1", orderid);
+		q.setParameter("arg2", userid);
+		q.executeUpdate();
+	}
 	
 }

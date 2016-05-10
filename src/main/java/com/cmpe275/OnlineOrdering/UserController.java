@@ -31,9 +31,6 @@ public class UserController {
 	public final String DRINK = "drink";
 	public final String ORDERPLACED = "PLACED";
 
-	// TODO remove this later
-	public int last_order_id = 0;
-
 	@Autowired
 	private UserService userSvc;
 
@@ -193,8 +190,16 @@ public class UserController {
 	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.POST)
 	public String getEarliestPickUpTime(HttpServletRequest request, Model model)
 			throws ParseException {
-		// TODO: integrate
-		int user_id = 123;
+		int user_id = 0;
+		HttpSession session = request.getSession(false);
+		try {
+			if (session != null) {
+				user_id = (Integer) session.getAttribute("userID");
+				model.addAttribute("userid", user_id);
+			}
+		} catch(Exception e) {
+			return "Login";
+		}
 
 		String menuitems = request.getParameter("itemData");
 		Map<String, Integer> mi = deserializeMenuItems(menuitems);
@@ -210,7 +215,6 @@ public class UserController {
 		List<String> daterange = getNextDates(curDate);
 
 		int orderid = this.getNextNonExistingOrderId(user_id);
-		this.last_order_id = orderid;
 
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
 		float totalPrice = this.getTotalPriceForMenu(mi);
@@ -219,7 +223,7 @@ public class UserController {
 		String msg = "";
 		boolean found = false;
 
-		if (totalPrepTime > 540) {
+		if (totalPrepTime > 960) {
 			msg = "Order is too long to prepare in one day. Cannot accept the order. Please modify or cancel the order.";
 			model.addAttribute("msg", msg);
 			model.addAttribute("menulist", mi);
@@ -232,10 +236,15 @@ public class UserController {
 			earlytime = getEarliestPickupForDate(totalPrepTime,
 					daterange.get(id), (id == 0 ? currMin : -1));
 
-			if (earlytime >= 540 && earlytime <= 1080) {
+			if (earlytime > 360 && earlytime <= 1260) {
 				earlydate = daterange.get(id);
 				System.out.println("Earliest pick up time is:" + earlytime
 						+ " on:" + daterange.get(id));
+				found = true;
+				break;
+			} else if(earlytime > 300 && earlytime <= 360) {
+				earlydate = daterange.get(id);
+				earlytime = 360;
 				found = true;
 				break;
 			}
@@ -319,8 +328,8 @@ public class UserController {
 			b.add(entry.getValue());
 		}
 
-		int restOpen = Math.max(540, startMin);
-		int restClose = 1080;
+		int restOpen = Math.max(300, startMin);
+		int restClose = 1260;
 
 		// case where chef is all free
 		if (a.size() == 0) {
@@ -397,48 +406,73 @@ public class UserController {
 	 * @return
 	 * @author Somya
 	 */
-	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.GET)
-	public String checkCustomTime() {
+	@RequestMapping(value = "/Menu/finalCheckout", method = RequestMethod.POST)
+	public String checkCustomTime(HttpServletRequest request, Model model) {
+		System.out.println("In Custom Time function : User Controller");
+		
 		// TODO: integrate
+		System.out.println("Order Type::"+request.getParameter("type"));
 		Map<String, Integer> mi = this.parseMenuItemsFromRequest();
 
-		// TODO: parse the whole request
-		String date = "2016-05-12";
-		int user_id = 123;
-		int orderid = this.last_order_id;
-		int pickuptime = 1000;
+		//parsing the order id from request
+		int orderid = Integer.parseInt(request.getParameter("orderid"));
+		System.out.println("order id::"+orderid);
+		
+		//parsing the date and time from request
+		String date = "";
+		String time = "";
+		String datetime = request.getParameter("time");
+		String parts[] = datetime.split(" ");
+		if(parts.length == 2) {
+			date = parts[0];
+			System.out.println("Date::"+date);
+			
+			time = parts[1];
+			System.out.println("time::"+time);
+		} else {
+			date = null;
+			time = null;
+		}
+		
+		//changing the time in minutes from 24hour format
+		int pickuptime = Integer.parseInt(time.substring(0, 2)) * 60 + Integer.parseInt(time.substring(3, 5));
+		System.out.println("Pickup time in mins::"+pickuptime);
 
-		// get the post/get data. // TODO:
-		// parse post/get data. you will get menu items here. // TODO
-		// output of parsing should be a struct filled with request data
-
+		
+		//getting the userid from the session
+		int user_id = 0;
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			user_id = (Integer) session.getAttribute("userID");
+			System.out.println("user id::"+user_id);
+			model.addAttribute("userid", user_id);
+		}
+		
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
-		System.out.println("Pickup time:" + pickuptime);
-		System.out.println("Date:" + date);
-
-		Schedule sch = getAvailableScheduleForOrder(pickuptime, date,
-				totalPrepTime);
+		System.out.println("Total prep time for order::"+totalPrepTime);
+		
+		Schedule sch = getAvailableScheduleForOrder(pickuptime, date,totalPrepTime);
 		if (sch != null) {
-			System.out.println("Order Accepted.");
+			System.out.println("Order Accepted..");
 			String menu_items = serializeMenuItems(mi);
 
 			// update the order status in the database for this order.
 			userSvc.placeOrder(user_id, orderid, menu_items, "placed");
 
-			// add the order to the chef's schedule as well.
-			// fill the class here. TODO:
 			sch.setOrderid(orderid);
 			sch.setDate(date);
-
 			System.out.println("Start Time:" + sch.getBusystarttime());
 			System.out.println("End Time:" + sch.getBusyendtime());
 			System.out.println("Chef:" + sch.getChefid());
-
+			
+			// add the order to the chef's schedule as well.
 			userSvc.addOrderToChefSchedule(sch);
-			return "success";
+			
+			model.addAttribute("msg","Order has been successfully placed");
+			return "OrderSuccess";
 		} else {
 			System.out.println("No chef is free, ask him to modify the order");
-			return "customTimeOrderError";
+			return "OrderError";
 		}
 	}
 
@@ -593,6 +627,16 @@ public class UserController {
 		return null;
 	}
 
+	
+	@RequestMapping(value = "/Menu/cancelOrder", method = RequestMethod.GET)
+	public String cancelOrder_Unplaced(HttpServletRequest request, Model model) {
+		//int orderid = Integer.parseInt(request.getParameter("orderid"));
+		userSvc.cancelOrderUnplaced(16,0);
+		model.addAttribute("msg", "Order has been successfully cancelled.");
+		return "OrderSuccess";
+		
+	}
+	
 	@RequestMapping(value = "/Menu", method = RequestMethod.GET)
 	/**
 	 * returns the home page
