@@ -70,19 +70,19 @@ public class OrderDetails implements Serializable{
 		return this.userid + ": " + this.orderid;
 	}
 
-	public String getPickupDate() {
+	public String getpickup_date() {
 		return pickup_date;
 	}
 
-	public void setPickupDate(String pickupDate) {
+	public void setpickup_date(String pickupDate) {
 		this.pickup_date = pickupDate;
 	}
 
-	public String getPickupTime() {
+	public String getpickup_time() {
 		return pickup_time;
 	}
 
-	public void setPickupTime(String pickupTime) {
+	public void setpickup_time(String pickupTime) {
 		this.pickup_time = pickupTime;
 	}
 }

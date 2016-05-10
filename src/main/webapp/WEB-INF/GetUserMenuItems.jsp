@@ -11,28 +11,170 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+
+body {
+	color: #103F53;
+	background: #e6f3ff;
+}
+
+#title {
+	width: 350px;
+	height: 26px;	
+	padding-top: 15px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+	font-size: 22px;
+	margin-left:90px;
+}
+
+form {
+	width: 335px;
+}
+
+.col1 {
+	text-align: right;
+	width: 170px;
+	height: 31px;
+	margin: 0;
+	float: left;
+	margin-right: 2px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	
+}
+
+.col2 {
+	width: 195px;
+	height: 40px;
+	display: block;
+	float: left;
+	margin: 0;
+	
+}
+
+.col2comment {
+	width: 195px;
+	height: 98px;
+	margin: 0;
+	display: block;
+	float: left;
+	
+}
+
+.col1comment {
+	text-align: right;
+	width: 135px;
+	height: 98px;
+	float: left;
+	display: block;
+	margin-right: 2px;
+	
+}
+
+div.row {
+	clear: both;
+	width: 435px;
+}
+
+
+.button:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+} 
+
+.bodycontent {
+	margin: auto;
+	margin-top: 50px;
+	width: 40%;
+}
+
+.mybutton{
+background-color: #7EB2C8;
+color:black;
+border: 1px solid #031E2A;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 14px;
+}
+.mybutton:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+}
+img{
+height:100px;
+width:100px;
+}
+
+input[type=checkbox] {
+    zoom: 1.5;
+}
+
+.nav-tabs{
+  background-color:#ffffff;
+}
+.tab-content{
+    background-color:#ffffff;
+
+    padding:5px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
+{
+background-color:#ffffff;
+}
+
+td{
+min-width:70px;
+text-align:center;
+padding:7px;
+}
+
+tr{
+padding:15px;
+}
+th{
+padding:15px;
+text-align:center;
+}
+</style>
+
+
 </head>
 <body>
-<p>hello ${user} ! </p>
+<p>hello ${user} ! </p><div class="bodycontent">
+
+<div id="title"><b>Select Your Order</b></div>
+<br><br>
 		<ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#Drinks">Drinks</a></li>
   <li><a data-toggle="tab" href="#Appetizers">Appetizers</a></li>
   <li><a data-toggle="tab" href="#Maincourse">Main Course</a></li>
   <li><a data-toggle="tab" href="#Deserts">Deserts</a></li>
+ 
 </ul>          
-<br>
-
  <div class="tab-content">
+  <br><br>
+ 
     <div id="Drinks" class="tab-pane fade in active">
     <table id="drinktable">
+    <tr>
+    <th></th>
+    <th></th>
+    
+    <th>Item Name</th>
+    <th>Price</th>
+    <th>Calories</th>
+    <th>Quantity</th></tr>
      <c:forEach var="list1" items="${list_drink}" varStatus="status">
-				<tr style="border:1px solid black;" >
+				<tr>
 				<td><input id="cb1" type="checkbox" name="checker1"/>
-				<td style="border:1px solid black;"><img alt="" src="data:image/jpeg;base64,${list1.picpath}" style="width:304px;height:228px;"></td>
-				<td style="border:1px solid black;">${list1.name}</td>
-				<td style="border:1px solid black;">${list1.unitprice}</td>
-				<td style="border:1px solid black;">${list1.calories}</td>
-				<td style="border:1px solid black;"><select class="1-100" id="quan_1"></select></td>
+				<td><img alt="" src="data:image/jpeg;base64,${list1.picpath}"></td>
+				<td>${list1.name}</td>
+				<td>${list1.unitprice}</td>
+				<td>${list1.calories}</td>
+				<td><select class="1-100" id="quan_1"></select></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -41,13 +183,13 @@
     <div id="Appetizers" class="tab-pane fade">
 	 <table  id="appetizertable">
      <c:forEach var="list2" items="${list_appetizer}" varStatus="status">
-				<tr style="border:1px solid black;" ><td>
+				<tr ><td>
 				<input id="cb1" type="checkbox" name="checker1"/>
-				<td style="border:1px solid black;"><img alt="" src="data:image/jpeg;base64,${list2.picpath}" style="width:304px;height:228px;"></td>
-				<td style="border:1px solid black;">${list2.name}</td>
-				<td style="border:1px solid black;">${list2.unitprice}</td>
-				<td style="border:1px solid black;">${list2.calories}</td>
-				<td style="border:1px solid black;"><select class="1-100" id="quan_2"></select></td>
+				<td><img alt="" src="data:image/jpeg;base64,${list2.picpath}"></td>
+				<td>${list2.name}</td>
+				<td>${list2.unitprice}</td>
+				<td>${list2.calories}</td>
+				<td><select class="1-100" id="quan_2"></select></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -56,13 +198,13 @@
 	<div id="Maincourse" class="tab-pane fade">
 	 <table  id="maincoursetable">
      <c:forEach var="list3" items="${list_maincourse}" varStatus="status">
-				<tr style="border:1px solid black;" >
+				<tr>
 				<td><input id="cb1" type="checkbox" name="checker1"/>
-				<td style="border:1px solid black;"><img alt="" src="data:image/jpeg;base64,${list3.picpath}" style="width:304px;height:228px;"></td>
-				<td style="border:1px solid black;">${list3.name}</td>
-				<td style="border:1px solid black;">${list3.unitprice}</td>
-				<td style="border:1px solid black;">${list3.calories}</td>
-				<td style="border:1px solid black;"><select class="1-100" id="quan_3"></select></td>
+				<td><img alt="" src="data:image/jpeg;base64,${list3.picpath}"></td>
+				<td>${list3.name}</td>
+				<td>${list3.unitprice}</td>
+				<td>${list3.calories}</td>
+				<td><select class="1-100" id="quan_3"></select></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -71,26 +213,25 @@
 	<div id="Deserts" class="tab-pane fade">
 	 <table  id="deserttable">
      <c:forEach var="list4" items="${list_desert}" varStatus="status">
-				<tr style="border:1px solid black;" >
+				<tr>
 				<td><input id="cb1" type="checkbox" name="checker1"/>
-				<td style="border:1px solid black;"><img alt="" src="data:image/jpeg;base64,${list4.picpath}" style="width:304px;height:228px;"></td>
-				<td style="border:1px solid black;">${list4.name}</td>
-				<td style="border:1px solid black;">${list4.unitprice}</td>
-				<td style="border:1px solid black;">${list4.calories}</td>
-				<td style="border:1px solid black;"><select class="1-100" id="quan_4"></select></td>
+				<td ><img alt="" src="data:image/jpeg;base64,${list4.picpath}"></td>
+				<td >${list4.name}</td>
+				<td >${list4.unitprice}</td>
+				<td >${list4.calories}</td>
+				<td ><select class="1-100" id="quan_4"></select></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
 	
-  </div>
-  <button id="jqcc">Add to cart</button>
-  
+  </div><br><br>
+  <button class="mybutton" id="jqcc">Add to cart</button>
+  <br>
   <form action="Checkout" method="POST">
-  	<input type="hidden" id="itemData" name="itemData">
-  	<input type="submit" id="next" value="Proceed to checkout"/>
-  </form>
-   
+  	<input type="hidden" id="itemData" name="itemData"><br/>
+  	<input type="submit" class="mybutton" id="next" value="Proceed to checkout"/>
+  </form></div>  
   <div id="demo1"></div>
 
 <script>

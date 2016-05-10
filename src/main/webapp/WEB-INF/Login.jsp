@@ -11,17 +11,19 @@
 <style>
 
 body {
-	color: #5A698B;
+	color: #103F53;
+	background: #e6f3ff;
 }
 
 #title {
 	width: 330px;
-	height: 26px;
-	color: #5A698B;
-	padding-top: 5px;
+	height: 26px;	
+	padding-top: 15px;
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	text-align: center;
+	font-size: 22px;
+	
 }
 
 form {
@@ -35,12 +37,14 @@ form {
 	margin: 0;
 	float: left;
 	margin-right: 2px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
 	
 }
 
 .col2 {
 	width: 195px;
-	height: 31px;
+	height: 40px;
 	display: block;
 	float: left;
 	margin: 0;
@@ -75,6 +79,7 @@ div.row {
 	margin: 4px 0 5px 8px;
 	padding: 1px;
 	border: 1px solid #8595B2;
+	height:30px;
 }
 
 .textarea {
@@ -82,9 +87,23 @@ div.row {
 	margin: 4px 0 5px 8px;
 }
 
+.button:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+} 
 .mybutton
 {
    margin-left : 140px;
+}
+
+.button{
+margin-left : 100px;
+background-color: #7EB2C8;
+color:black;
+border: 1px solid #031E2A;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 16px;
 }
 
 .bodycontent {
@@ -96,12 +115,27 @@ div.row {
 margin-left : 155px;
 }
 
+
+.mybutton{
+background-color: #7EB2C8;
+color:black;
+border: 1px solid #031E2A;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 16px;
+}
+.mybutton:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+}
+
 </style>
 
 <body>
 <div class="bodycontent">
 
-<div id="title">CMPE275_TermProject_Group5:Login</div>
+<div id="title"><b>CMPE275_TermProject_Group5</b></div>
+<div id="title" style="font-size: 20px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login</b></div>
 <form method="post" action="userLogin"  >
 	<br>
 	<div class="row"><label class="col1"> Email:&nbsp;&nbsp;</label>
@@ -112,7 +146,8 @@ margin-left : 155px;
 	<br>
 		<input class="mybutton" type="submit" name="login" value="Login">
 	<br><br><br>
-	<div class="exist">New user? <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/register';"></div>
+	<div class="row">
+	<div class="exist"><span class="col1">New user?</span> <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/register';"></div></div>
 	</form>
 	
 	</div>
