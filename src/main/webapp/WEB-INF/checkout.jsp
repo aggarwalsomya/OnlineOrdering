@@ -33,7 +33,7 @@
 	<br>
 	<br>
 	<input type="radio" style="margin-left: 20px" onclick="custom()"
-		name="pickup" value="custom" />Pick your own time
+		name="pickup" value="custom" />Pick your own date & time. (Should be between 6am to 9pm, in the next 30 days.)
 	<br>
 	<br>
 
@@ -86,7 +86,13 @@ var yyyyf = future.getFullYear();
     });
     var picker = $('#datetimepicker');
     picker.on('changeDate', function(e) {
-
+    	 var time = document.getElementById("in").value;
+         var spl = time.split(" ");
+         var hour = spl[1].split(":");
+         if (parseInt(hour[0])<6 || parseInt(hour[0])>21 )  {
+             alert("Please select a valid time between 06:00 and 21:00 ");
+             document.getElementById("in").value = "";
+         }
         document.getElementById("time").value = document.getElementById("in").value;
     });
      
