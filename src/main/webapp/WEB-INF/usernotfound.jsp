@@ -5,11 +5,34 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Cmpe275_Term_Project_5 : 404 Error</title>
+<style>
+body {
+	color: #103F53;
+	background: #e6f3ff;
+}
+.bodycontent {
+	margin: auto;
+	margin-top: 80px;
+	width: 25%;
+}
+.mybutton{
+background-color: #7EB2C8;
+color:black;
+border: 1px solid #031E2A;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 14px;
+}
+.mybutton:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+}
+</style>
 </head>
-<body>
-<h1>Error 404</h1><br>
+<body class="bodycontent">
+<h3>Error 404</h3>
 <p>${msg}</p>
-<input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'register';"> 
-<input type="button" class=button id="login" name="login" value="Login" onclick="location.href = 'home';"> 
+<input type="button" class=mybutton id="register" name="register" value="Register" onclick="location.href = 'register';"> 
+<input type="button" class=mybutton id="login" name="login" value="Login" style="margin-left:30px;" onclick="location.href = 'home';"> 
 </body>
 </html>
