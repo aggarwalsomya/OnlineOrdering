@@ -592,6 +592,20 @@ public class UserController {
 		}
 		return null;
 	}
+	
+	
+	/**
+	* this will compute final checkout , placing an order etc.
+	*/
+	@RequestMapping(value = "/Menu/finalCheckout", method = RequestMethod.POST)
+	public String finalCheckout (Model model, HttpServletRequest request) {
+	System.out.println(request.getParameter("orderid"));
+	System.out.println(request.getParameter("type"));
+	System.out.println(request.getParameter("time"));
+	System.out.println("entered checkout!!!");
+	return "";
+	}
+	
 
 	@RequestMapping(value = "/Menu", method = RequestMethod.GET)
 	/**
