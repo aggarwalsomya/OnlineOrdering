@@ -131,5 +131,16 @@ public class UserService {
 		q.setParameter("arg2", userid);
 		q.executeUpdate();
 	}
+
+	public String getMenuDetailsForOrder(int orderid, int userid) {
+		Query q = em.createQuery("Select od from OrderDetails od where od.orderid=:arg1 and od.userid=:arg2");
+		q.setParameter("arg1", orderid);
+		q.setParameter("arg2", userid);
+		OrderDetails od = new OrderDetails();
+		od = (OrderDetails) q.getSingleResult();
+		
+		System.out.println(od.getMenu_items());
+		return od.getMenu_items();
+	}
 	
 }

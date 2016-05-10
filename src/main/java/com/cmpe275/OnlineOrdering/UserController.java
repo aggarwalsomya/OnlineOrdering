@@ -152,15 +152,11 @@ public class UserController {
 		return serializedString;
 	}
 
-	private Map<String, Integer> parseMenuItemsFromRequest() {
-		// TODO: Integrate .dummy data for now
-		Map<String, Integer> menuItems = new TreeMap<String, Integer>();
-		menuItems.put("coke", 1);
-		menuItems.put("chocolate fudge", 2);
-		menuItems.put("brown rice", 3);
-		menuItems.put("spring rolls", 4);
-		menuItems.put("ice tea", 2);
-		return menuItems;
+	private Map<String, Integer> parseMenuItemsFromRequest(int orderid, int userid) {
+		Map<String, Integer> menuitemMap = new TreeMap<String, Integer>();
+		String menuitems = userSvc.getMenuDetailsForOrder(orderid, userid);
+		menuitemMap = deserializeMenuItems(menuitems);
+		return menuitemMap;
 	}
 
 	/**
@@ -267,10 +263,18 @@ public class UserController {
 		model.addAttribute("totalprice", totalPrice);
 
 		String startTime = "00:00";
-		int h = earlytime / 60 + Integer.parseInt(startTime.substring(0, 1));
-		int m = earlytime % 60 + Integer.parseInt(startTime.substring(3, 4));
-		String newtime = h + ":" + m;
-		model.addAttribute("earliestpickuptime", newtime);
+		int h = earlytime / 60 + Integer.parseInt(startTime.substring(0, 2));
+		int m = earlytime % 60 + Integer.parseInt(startTime.substring(3, 5));
+		String hr = String.valueOf(h);
+		String min = String.valueOf(m);
+		
+		if(h <= 9)
+			hr = "0"+h;
+		if(m <= 9)
+			min = "0"+m;
+		
+		String newtime = hr + ":" + min;
+		model.addAttribute("earliestpickuptime", earlydate+" "+ newtime);
 
 		model.addAttribute("menulist", mi);
 
@@ -367,14 +371,12 @@ public class UserController {
 	private int getTotalPrepTimeForMenu(Map<String, Integer> MenuItemNames) {
 		int totalPrepTime = 0;
 		for (Map.Entry<String, Integer> entry : MenuItemNames.entrySet()) {
-			// parse the order and get the total prep time for all items from
-			// database.
+			// parse the order and get the total prep time for all items from database.
 			int prepTime = adminSvc.getTotalPrepTimeForMenuItem(entry.getKey())
 					* entry.getValue();
 			totalPrepTime += prepTime;
 		}
 
-		System.out.println("Total prep time for the order is:" + totalPrepTime);
 		return totalPrepTime;
 	}
 
@@ -408,20 +410,24 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/Menu/finalCheckout", method = RequestMethod.POST)
 	public String checkCustomTime(HttpServletRequest request, Model model) {
+
 		System.out.println("In Custom Time function : User Controller");
 		
-		// TODO: integrate
-		System.out.println("Order Type::"+request.getParameter("type"));
-		Map<String, Integer> mi = this.parseMenuItemsFromRequest();
+		String datetime = "";
+		String ordertype = request.getParameter("type");
+		System.out.println("Order Type::"+ ordertype);
+		if(ordertype.equals("confirm"))
+			datetime = request.getParameter("early");
+		else
+			datetime = request.getParameter("time");
 
 		//parsing the order id from request
 		int orderid = Integer.parseInt(request.getParameter("orderid"));
 		System.out.println("order id::"+orderid);
-		
+				
 		//parsing the date and time from request
 		String date = "";
 		String time = "";
-		String datetime = request.getParameter("time");
 		String parts[] = datetime.split(" ");
 		if(parts.length == 2) {
 			date = parts[0];
@@ -448,6 +454,9 @@ public class UserController {
 			model.addAttribute("userid", user_id);
 		}
 		
+		Map<String, Integer> mi = this.parseMenuItemsFromRequest(orderid, user_id);
+		System.out.println("Menu Order Items:"+mi);
+		
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
 		System.out.println("Total prep time for order::"+totalPrepTime);
 		
@@ -461,9 +470,10 @@ public class UserController {
 
 			sch.setOrderid(orderid);
 			sch.setDate(date);
-			System.out.println("Start Time:" + sch.getBusystarttime());
-			System.out.println("End Time:" + sch.getBusyendtime());
-			System.out.println("Chef:" + sch.getChefid());
+			System.out.println("Prep Start Time:" + sch.getBusystarttime());
+			System.out.println("Prep End Time:" + sch.getBusyendtime());
+			System.out.println("Chef ID:" + sch.getChefid());
+			System.out.println("Pickup time in mins:"+pickuptime);
 			
 			// add the order to the chef's schedule as well.
 			userSvc.addOrderToChefSchedule(sch);
@@ -516,9 +526,9 @@ public class UserController {
 	 * @return
 	 * @author Somya
 	 */
-	private Schedule isChefFree(int chefid, int pickuptime, String date,
-			int preptime) {
+	private Schedule isChefFree(int chefid, int pickuptime, String date,int preptime) {
 
+		System.out.println("<------In function ischeffree---->");
 		Map<Integer, Integer> time = new TreeMap<Integer, Integer>();
 		time = userSvc.getScheduleForChef(chefid, date);
 
@@ -530,10 +540,10 @@ public class UserController {
 			b[id] = entry.getValue();
 			id++;
 		}
-		// for(int i=0; i<a.length; i++)
-		// System.out.print(a[i]+"-"+b[i]+" ");
+		System.out.println("Chef:"+chefid+" schedule for:"+date);
+		for(int i=0;i<a.length;i++)
+			System.out.print(a[i]+"-"+b[i]);
 
-		// cases failing : 610-640-30 ; 640-750-10; 610-670-30; 950-1000
 		int minStartTime = pickuptime - preptime - 60;
 		int maxStartTime = pickuptime - preptime;
 		System.out.println("\nMinStartTime:" + minStartTime);
@@ -549,8 +559,7 @@ public class UserController {
 			return sch;
 		} else {
 			// assuming all the start times are valid.
-			// cases where the start time lies before the chef schedule start
-			// time
+			// cases where the start time lies before the chef schedule start time
 			if (minStartTime < a[0]) {
 				if (maxStartTime <= a[0]) {
 					if (maxStartTime == a[0]) {
@@ -588,7 +597,7 @@ public class UserController {
 
 				// check if it is the last schedule of the day for this chef
 				if (i == a.length - 1)
-					maxLimit = 1080; // 6pm
+					maxLimit = 1260; // 9pm
 				else
 					maxLimit = a[i + 1];
 
