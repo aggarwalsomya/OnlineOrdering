@@ -210,9 +210,10 @@ public class UserController {
 
 		String menuitems = request.getParameter("itemData");
 		System.out.println("menuitems is" + menuitems);
-		if(menuitems.length() == 0)
+		if(menuitems.length() == 0) {
+			session.removeAttribute("orderID");
 			return "OrderErrorException";
-		
+		}
 		Map<String, Integer> mi = deserializeMenuItems(menuitems);
 
 		Date date = new Date();
@@ -224,8 +225,18 @@ public class UserController {
 		int currMin = cal.get(Calendar.HOUR_OF_DAY) * 60
 				+ cal.get(Calendar.MINUTE);
 		List<String> daterange = getNextDates(curDate);
-
-		int orderid = this.getNextNonExistingOrderId(user_id);
+		
+		int orderid;
+		if (session.getAttribute("orderID") != null) {
+			orderid = (Integer) session.getAttribute("orderID");
+			System.out.println("orderid is already set");
+		} else {
+			orderid = this.getNextNonExistingOrderId(user_id);
+			session.setAttribute("orderID", orderid);
+			System.out.println("orderid is set");
+		}
+	    
+		
 
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
 		float totalPrice = this.getTotalPriceForMenu(mi);
@@ -437,9 +448,18 @@ public class UserController {
 		else
 			datetime = request.getParameter("time");
 
-		//parsing the order id from request
-		System.out.println(request.getParameter("orderid"));
-		int orderid = Integer.parseInt(request.getParameter("orderid"));
+		//order id from session.
+		int orderid;
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			 orderid = (Integer)session.getAttribute("orderID");
+			 System.out.println("orderis id set in final checkout");
+		} else {
+			
+			return "OrderErrorException";
+		}
+		//System.out.println(request.getParameter("orderid"));
+		
 		System.out.println("order id::"+orderid);
 				
 		//parsing the date and time from request
@@ -463,13 +483,14 @@ public class UserController {
 			pickuptime = Integer.parseInt(time.substring(0, 2)) * 60 + Integer.parseInt(time.substring(3, 5));
 			System.out.println("Pickup time in mins::"+pickuptime);
 		} catch(Exception e) {
+			session.removeAttribute("orderID");
 			return "OrderErrorException";
 		}
 
 		
 		//getting the userid from the session
 		int user_id = 0;
-		HttpSession session = request.getSession(false);
+		
 		if (session != null) {
 			user_id = (Integer) session.getAttribute("userID");
 			System.out.println("user id::"+user_id);
@@ -480,6 +501,7 @@ public class UserController {
 		System.out.println("Menu Order Items:"+mi);
 		if(mi.isEmpty() || mi == null) {
 			model.addAttribute("msg", "Error occured in placing the order");
+			session.removeAttribute("orderID");
 			return "OrderErrorException";
 		}
 		
@@ -519,6 +541,7 @@ public class UserController {
 			userSvc.addOrderToChefSchedule(sch);
 			
 			model.addAttribute("msg","Order has been successfully placed");
+			session.removeAttribute("orderID");
 			return "OrderSuccess";
 		} else {
 			System.out.println("No chef is free, ask him to modify the order");
@@ -694,10 +717,14 @@ public class UserController {
 			if (session != null) {
 				user_id = (Integer) session.getAttribute("userID");
 				userSvc.cancelOrderUnplaced(orderid, user_id);
+				
 				model.addAttribute("msg", "Order has been successfully cancelled.");
 			}
 		} catch (Exception e) {
 			model.addAttribute("msg", "Sorry order could not be cancelled.");
+		} finally{
+			session.removeAttribute("orderID");
+			System.out.println("orderis removed after cancellation");
 		}
 		return "OrderSuccess";
 	}
@@ -711,23 +738,30 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/Menu/modifyOrder", method = RequestMethod.POST)
 	public String modifyOrder(HttpServletRequest request, Model model) {
-		int orderid = Integer.parseInt(request.getParameter("orderId"));
+		int orderid = -1;
 		int user_id = 0;
 		HttpSession session = request.getSession(false);
 		try {
 			if (session != null) {
 				user_id = (Integer) session.getAttribute("userID");
+				orderid = (Integer)session.getAttribute("orderID");
+				System.out.println("got orderid for modifying");
 			}
 		} catch(Exception e) {
+			
+			return "OrderErrorException";
+			
 		}
 		String menuItemDetails = userSvc.getMenuDetailsForOrder(orderid, user_id);
-		if(menuItemDetails.length() == 0)
+		if(menuItemDetails.length() == 0) {
+			session.removeAttribute("orderID");
 			return "OrderErrorException";
+		}
 		
 		Map<String,Integer> mi = deserializeMenuItems(menuItemDetails);
 		model.addAttribute("BulkList",mi);
 		for(String s: mi.keySet()) {
-			System.out.println("final is" + s );
+			System.out.println("final is" + s + mi.get(s));
 		}
 		
 		String category[] = { MAINCOURSE, DRINK, DESERT, APPETIZER };
@@ -737,6 +771,7 @@ public class UserController {
 				milist = userSvc.getMenuItems(category[i]);
 				model.addAttribute("list_" + category[i].toString(), milist);
 			} catch (UnsupportedEncodingException e) {
+				session.removeAttribute("orderID");
 				return "OrderErrorException";
 			}
 		}
