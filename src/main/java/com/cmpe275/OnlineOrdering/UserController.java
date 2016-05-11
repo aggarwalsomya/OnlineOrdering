@@ -718,6 +718,26 @@ public class UserController {
 	 * @param model
 	 * @return
 	 */
+	@RequestMapping(value = "/deleteOrders", method = RequestMethod.POST) 
+	public String deleteOrders(HttpServletRequest request, Model model) {
+		String itemdata = request.getParameter("itemData");
+		System.out.println(itemdata);
+		
+		String[] data = itemdata.split(";;");
+		for(int i = 0; i < data.length; i++) {
+			System.out.println("Data selected for delete is:"+ data[i]);
+			adminSvc.deleteOrder(Integer.parseInt(data[i]));
+			model.addAttribute("msg","Queued Orders have been cancelled successfully.");
+		}
+		return "OrderCancelSuccess";
+	}
+	
+	
+	/**
+	 * cancels order for user
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/cancelOrder", method = RequestMethod.GET) 
 	public String cancelOrder(HttpServletRequest request, Model model) {
 		int user_id = 0;
@@ -729,7 +749,7 @@ public class UserController {
 		} catch(Exception e) {
 		}
 		
-		List<OrderDetails> listod = userSvc.getUserOrders(user_id, "placed");
+		List<OrderDetails> listod = userSvc.getUserOrders(user_id, "Queued");
 		List<Order> listo = new ArrayList<Order>();
 		
 		for(int i = 0; i < listod.size(); i++) {
