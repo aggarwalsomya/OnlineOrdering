@@ -435,7 +435,7 @@ th {
 									arrayOfAppetizers, arrayOfMaincourse,
 									arrayOfDeserts);
 							var dataToSend = arrayOfItemNames.join(";;");
-							document.getElementById("demo1").innerHTML = dataToSend;
+							//document.getElementById("demo1").innerHTML = dataToSend;
 
 							$('#next')
 									.click(
