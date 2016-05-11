@@ -14,7 +14,7 @@ body {
 .bodycontent {
 	margin: auto;
 	margin-top: 50px;
-	width: 20%;
+	width: 50%;
 }
 .mybutton{
 background-color: #7EB2C8;
@@ -24,6 +24,9 @@ border-radius: 4px;
 padding: 5px 12px;
 font-size: 14px;
 margin-left:50px;
+width:80px;
+text-align:center;
+margin-left:120px;
 }
 .mybutton:hover {
     background-color: #031E2A;
@@ -37,11 +40,11 @@ margin-left:50px;
 
 	<br>
 	<br>
-	<h3>Error in Placing the order. You can place a new order again from Home Page.</h3>
-
-	<input type="button" class=mybutton value="Home Page" id="back" name="Home page"
+	<h3>Error in placing the order. You can place a new order again from Home Page.</h3>
+<br>
+	<input type="mybutton" class=mybutton value="Home Page" id="back" name="Home page"
 		onclick="location.href = '../home';">
-	<input type="button" class=mybutton value="Logout" id="logout" name="Logout"
+	<input type="mybutton" class=mybutton value="Logout" id="logout" name="Logout"
 		onclick="location.href = '../logout';">
 </body>
 </html>
