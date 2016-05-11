@@ -85,6 +85,7 @@ padding:7px;
 
 tr{
 padding:15px;
+style="border: 1px solid black;"
 }
 th{
 padding:15px;
@@ -107,26 +108,26 @@ text-align:center;
     <th>Pickup Date</th>
     <th> Pickup Time</th>
     <th>Status</th>
-    <th colspan=2>OrderDetails</th></tr>
-    <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-     <th>Item Name</th>
-      <th>Quantity</th>
+    <th>Item Name</th>
+    <th>Quantity</th>
+   </tr>
 				<c:forEach var="list1" items="${orderlist}" varStatus="status">
-					<tr>
+					<tr style="border:1px solid black;">
 						<td>${list1.orderid}</td>
 								
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>
-						<td>${list1.status}</td><br></tr>
-						<c:forEach var="list" items="${list1.menumap}" varStatus="status">
-						<tr></tr>
-								<tr><td></td><td></td><td></td><td></td><td>${list.key}</td>
-								<td>${list.value}</td></tr>
-						</c:forEach>	
+						<td>${list1.status}</td>
+						<td colspan=2>
+							<table>
+								<c:forEach var="list" items="${list1.menumap}" varStatus="status">
+								<tr>
+									<td style="text-align:center;">${list.key}</td>
+									<td>${list.value}</td>
+								</tr>
+								</c:forEach>
+							</table>	
+						</td>
 					</tr>
 				</c:forEach>
 			</table>
