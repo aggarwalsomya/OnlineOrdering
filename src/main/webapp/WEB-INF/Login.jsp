@@ -140,7 +140,7 @@ width:75px;
 <form method="post" action="userLogin"  >
 	<br>
 	<div class="row"><label class="col1"> Email:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" name="email" value="" required/></span></div>
+	<span class="col2"><input type="email" name="email" value="" required/></span></div>
 	<div class="row"><label class="col1"> Password:&nbsp;&nbsp;</label>
 	<span class="col2"><input type="password" name="password" value="" required/></span></div>
 	<br>
