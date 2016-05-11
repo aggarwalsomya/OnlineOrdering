@@ -15,7 +15,7 @@ body {
 .bodycontent {
 	margin: auto;
 	margin-top: 50px;
-	width: 20%;
+	width: 30%;
 }
 .mybutton{
 background-color: #7EB2C8;
@@ -25,6 +25,7 @@ border-radius: 4px;
 padding: 5px 12px;
 font-size: 14px;
 margin-left:45px;
+width:70px;
 }
 .mybutton:hover {
     background-color: #031E2A;
@@ -36,9 +37,11 @@ margin-left:45px;
 <body class="bodycontent">
 	<br>
 	<br>
-	<p>${msg}</p>
-
-	<input type="button" class=mybutton value="Go to Home Page" id="back" name="Go to Home Page"
+	<h3>${msg}</h3>
+<br>
+	<input type="button" class=mybutton value="Home" id="back" name="Go to Home Page"
 		onclick="location.href = '../home';">
+		<input type="button" class=mybutton value="Logout" id="Logout"
+			name="Logout" onclick="location.href = 'logout';"><br />
 </body>
 </html>
