@@ -136,7 +136,9 @@ text-align:center;
 	<form action="deleteOrders" method="POST">
 		<input type="hidden" id="itemData" name="itemData"> 
 		<p>Please press confirm delete to make sure you want to delete these items</p><br>
-		<input type="submit" class=mybutton id="next" value="Confirm Delete" />
+		<input type="submit" class=mybutton id="next" value="Confirm Delete">
+		<input type="button" class=mybutton value="User Home" id="Logout"
+			name="Logout" onclick="location.href = 'home';"/>
 	</form>
 
 	<div id="demo1"></div>
