@@ -180,27 +180,36 @@ th {
 						<th></th>
 						<th></th>
 
-						<th>Item Name</th>
-						<th>Price</th>
-						<th>Calories</th>
-						<th>Quantity</th>
-					</tr>
-					<c:forEach var="list1" items="${list_drink}" varStatus="status">
-						<tr>
-							<td><input id="cb1" type="checkbox" name="checker1"
-								<c:if test="${not empty BulkList}"><c:if test="${BulkList.containsKey(list1.name)}">checked="checked" </c:if>
-							</c:if>
-							/>
-							<td><img alt=""
-								src="data:image/jpeg;base64,${list1.picpath}"></td>
-							<td>${list1.name}</td>
-							<td>${list1.unitprice}</td>
-							<td>${list1.calories}</td>
-							<td><select class="1-100" id="quan_1"></select></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Calories</th>
+                    <th>Quantity</th>
+                </tr>
+                <c:forEach var="list1" items="${list_drink}" varStatus="status">
+                    <tr>
+                        <td><input id="cb1" type="checkbox" name="checker1"
+                            <c:if test="${not empty BulkList}">
+                                <c:if test="${BulkList.containsKey(list1.name)}">checked="checked"</c:if>
+                            </c:if>
+                            />
+                        <td><img alt=""
+                                 src="data:image/jpeg;base64,${list1.picpath}"></td>
+                        <td>${list1.name}</td>
+                        <td>${list1.unitprice}</td>
+                        <td>${list1.calories}</td>
+                        <c:set var="quan" value="1"/>
+                        <c:if test="${not empty BulkList}">
+                            <c:if test="${BulkList.containsKey(list1.name)}">
+                                <c:set var="quan" value="${BulkList[list1.name]}"/>
+                            </c:if>
+                        </c:if>
+                        <td><select class="1-100" id="quan_1">
+                            <option selected="selected">${quan}</option>
+                        </select></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
 
 			<div id="Appetizers" class="tab-pane fade">
 				<table id="appetizertable">
@@ -223,12 +232,20 @@ th {
 							<td>${list2.name}</td>
 							<td>${list2.unitprice}</td>
 
-							<td>${list2.calories}</td>
-							<td><select class="1-100" id="quan_2"></select></td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>
+                        <td>${list2.calories}</td>
+                        <c:set var="quan" value="1"/>
+                        <c:if test="${not empty BulkList}">
+                            <c:if test="${BulkList.containsKey(list2.name)}">
+                                <c:set var="quan" value="${BulkList[list2.name]}"/>
+                            </c:if>
+                        </c:if>
+                        <td><select class="1-100" id="quan_2">
+                            <option selected="selected">${quan}</option>
+                        </select></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
 
 			<div id="Maincourse" class="tab-pane fade">
 				<table id="maincoursetable">
@@ -236,57 +253,78 @@ th {
 						<th></th>
 						<th></th>
 
-						<th>Item Name</th>
-						<th>Price</th>
-						<th>Calories</th>
-						<th>Quantity</th>
-					</tr>
-					<c:forEach var="list3" items="${list_maincourse}"
-						varStatus="status">
-						<tr><td>
-							<input id="cb1" type="checkbox" name="checker1"
-								<c:if test="${not empty BulkList}"><c:if test="${BulkList.containsKey(list3.name)}">checked="checked" </c:if>
-							</c:if>
-							/>
-							<td><img alt=""
-								src="data:image/jpeg;base64,${list3.picpath}"></td>
-				<td>${list3.name}</td>
-				<td>${list3.unitprice}</td>
-				<td>${list3.calories}</td>
-				<td><select class="1-100" id="quan_3"></select></td>
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
-	
-	<div id="Deserts" class="tab-pane fade">
-	 <table id="deserttable">
-	 <tr>
-    <th></th>
-    <th></th>
-    
-    <th>Item Name</th>
-    <th>Price</th>
-    <th>Calories</th>
-    <th>Quantity</th>
-					</tr>
-     <c:forEach var="list4" items="${list_desert}" varStatus="status">
-				<tr><td>
-			    <input id="cb1" type="checkbox" name="checker1"
-								<c:if test="${not empty BulkList}"><c:if test="${BulkList.containsKey(list4.name)}">checked="checked" </c:if>
-							</c:if> />
-			    <td><img alt=""
-								src="data:image/jpeg;base64,${list4.picpath}"></td>
-				<td>${list4.name}</td>
-				<td>${list4.unitprice}</td>
-				
-				<td>${list4.calories}</td>
-				<td><select class="1-100" id="quan_4"></select></td>
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
-	
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Calories</th>
+                    <th>Quantity</th>
+                </tr>
+                <c:forEach var="list3" items="${list_maincourse}"
+                           varStatus="status">
+                    <tr>
+                        <td>
+                            <input id="cb1" type="checkbox" name="checker1"
+                            <c:if test="${not empty BulkList}">
+                                <c:if test="${BulkList.containsKey(list3.name)}">checked="checked"</c:if>
+                            </c:if>
+                            />
+                        <td><img alt=""
+                                 src="data:image/jpeg;base64,${list3.picpath}"></td>
+                        <td>${list3.name}</td>
+                        <td>${list3.unitprice}</td>
+                        <td>${list3.calories}</td>
+                        <c:set var="quan" value="1"/>
+                        <c:if test="${not empty BulkList}">
+                            <c:if test="${BulkList.containsKey(list3.name)}">
+                                <c:set var="quan" value="${BulkList[list3.name]}"/>
+                            </c:if>
+                        </c:if>
+                        <td><select class="1-100" id="quan_3">
+                            <option selected="selected">${quan}</option>
+                        </select></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+
+        <div id="Deserts" class="tab-pane fade">
+            <table id="deserttable">
+                <tr>
+                    <th></th>
+                    <th></th>
+
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Calories</th>
+                    <th>Quantity</th>
+                </tr>
+                <c:forEach var="list4" items="${list_desert}" varStatus="status">
+                    <tr>
+                        <td>
+                            <input id="cb1" type="checkbox" name="checker1"
+                            <c:if test="${not empty BulkList}">
+                                <c:if test="${BulkList.containsKey(list4.name)}">checked="checked"</c:if>
+                            </c:if>
+                            />
+                        <td><img alt=""
+                                 src="data:image/jpeg;base64,${list4.picpath}"></td>
+                        <td>${list4.name}</td>
+                        <td>${list4.unitprice}</td>
+
+                        <td>${list4.calories}</td>
+                        <c:set var="quan" value="1"/>
+                        <c:if test="${not empty BulkList}">
+                            <c:if test="${BulkList.containsKey(list4.name)}">
+                                <c:set var="quan" value="${BulkList[list4.name]}"/>
+                            </c:if>
+                        </c:if>
+                        <td><select class="1-100" id="quan_4">
+                            <option selected="selected">${quan}</option>
+                        </select></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
+
 
 
 	
