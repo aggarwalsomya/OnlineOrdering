@@ -16,17 +16,102 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+
+body {
+	color: #103F53;
+	background: #e6f3ff;
+}
+
+#title {
+	width: 350px;
+	height: 26px;	
+	padding-top: 15px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+	font-size: 22px;
+	margin-left:90px;
+}
+
+ 
+
+.bodycontent {
+	margin: auto;
+	margin-top: 70px;
+	width: 50%;
+}
+
+.mybutton{
+background-color: #7EB2C8;
+color:black;
+border: 1px solid #031E2A;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 14px;
+}
+.mybutton:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+}
+img{
+height:100px;
+width:100px;
+}
+
+input[type=checkbox] {
+    zoom: 1.5;
+}
+
+.nav-tabs{
+  background-color:#ffffff;
+}
+.tab-content{
+    background-color:#ffffff;
+width:740px;
+    padding:15px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
+{
+background-color:#ffffff;
+}
+
+td{
+min-width:70px;
+text-align:center;
+padding:7px;
+}
+
+tr{
+padding:15px;
+}
+th{
+padding:15px;
+text-align:center;
+}
+</style>
+
+
 </head>
 <body>
-	<p>Welcome Administrator</p>
-	<ul class="nav nav-tabs">
-		<li class="active"><a data-toggle="tab" href="#Drinks">View All Orders</a></li>
-	</ul>
-	<br>
+<div class="bodycontent">
 
+<div id="title" style="margin-left:180px;"><b>View all orders</b></div>
+<br><br>
 	<div class="tab-content">
 		<div id="Drinks" class="tab-pane fade in active">
 			<table id="viewallorders">
+			 <tr>
+    <th>Order Id</th>
+    <th>User Name</th>
+    <th>User Email</th>
+    <th>Status</th>
+    <th>Pickup Date</th>
+    <th> Pickup Time</th>
+    <th>Item Name</th>
+    <th>Quantity</th>
+   </tr>
 				<c:forEach var="list1" items="${orderlist}" varStatus="status">
 					<tr style="border: 2px solid #103F53;" >
 						<td>${list1.orderid}</td>
@@ -35,9 +120,9 @@
 						<td>${list1.status}</td>
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>
-						<td><c:forEach var="list" items="${list1.menumap}" varStatus="status">
-								<td>${list.key}</td>
-								<td>${list.value}</td>
+						<td colspan=2><c:forEach var="list" items="${list1.menumap}" varStatus="status">
+								<table><tr>	<td>${list.key}</td>
+								<td>${list.value}</td></tr></table>
 						</c:forEach></td>			
 					</tr>
 				</c:forEach>
@@ -45,5 +130,6 @@
 		</div>
 	</div>
 	<br><br>
+	</div>
 </body>
 </html>
