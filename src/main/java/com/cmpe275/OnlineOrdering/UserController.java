@@ -248,7 +248,6 @@ public class UserController {
 		}
 
 		String menu_items_str = this.serializeMenuItems(mi);
-		userSvc.placeOrder(user_id, orderid, menu_items_str, "pending");
 
 		// Adding Items to Model as well
 		model.addAttribute("orderid", orderid);
@@ -267,12 +266,13 @@ public class UserController {
 		
 		String newtime = hr + ":" + min;
 		model.addAttribute("earliestpickuptime", earlydate+" "+ newtime);
-
 		model.addAttribute("menulist", mi);
 
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		model.addAttribute("earlydate", format.parse(earlydate).toString()
 				.substring(0, 11));
+		
+		userSvc.placeOrder(user_id, orderid, menu_items_str,"pending",earlydate, newtime);
 
 		return "checkout";
 	}
@@ -464,8 +464,22 @@ public class UserController {
 			System.out.println("Order Accepted..");
 			String menu_items = serializeMenuItems(mi);
 
+			//changing the pickup time in hr:min format
+			String startTime = "00:00";
+			int h = pickuptime / 60 + Integer.parseInt(startTime.substring(0, 2));
+			int m = pickuptime % 60 + Integer.parseInt(startTime.substring(3, 5));
+			String hr = String.valueOf(h);
+			String min = String.valueOf(m);
+			
+			if(h <= 9)
+				hr = "0"+h;
+			if(m <= 9)
+				min = "0"+m;
+			
+			String newtime = hr + ":" + min;
+			
 			// update the order status in the database for this order.
-			userSvc.placeOrder(user_id, orderid, menu_items, "placed");
+			userSvc.placeOrder(user_id, orderid, menu_items, "Queued",date,newtime);
 
 			sch.setOrderid(orderid);
 			sch.setDate(date);

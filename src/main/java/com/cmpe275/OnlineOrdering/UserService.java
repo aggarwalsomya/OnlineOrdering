@@ -85,15 +85,25 @@ public class UserService {
 	 * Update the database rows for the order id with the status confirmed (placed order)
 	 * @param orderid
 	 * @param status
+	 * @param string 
+	 * @param earlytime 
 	 */
 	@Transactional
-	public void placeOrder(int userid, int orderid, String menu_items, String status) {
+	public void placeOrder(int userid, 
+			int orderid, 
+			String menu_items, 
+			String status,
+			String earlydate, 
+			String earlytime) {
 		
 		OrderDetails od = new OrderDetails();
 		od.setUserid(userid);
 		od.setOrderid(orderid);
 		od.setStatus(status);
 		od.setMenu_items(menu_items);
+		od.setpickup_date(earlydate);
+		od.setpickup_time(earlytime);
+	
 		em.merge(od);
 	}
 	
