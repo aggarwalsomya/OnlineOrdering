@@ -37,9 +37,11 @@ margin-left:50px;
 
 	<br>
 	<br>
-	<h3>Error in Placing the order</h3>
+	<h3>Error in Placing the order. You can place a new order again from Home Page.</h3>
 
 	<input type="button" class=mybutton value="Home Page" id="back" name="Home page"
 		onclick="location.href = '../home';">
+	<input type="button" class=mybutton value="Logout" id="logout" name="Logout"
+		onclick="location.href = '../logout';">
 </body>
 </html>
