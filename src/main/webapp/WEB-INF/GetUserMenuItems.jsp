@@ -112,7 +112,6 @@ input[type=checkbox] {
 	zoom: 1.5;
 }
 
-<<<<<<< HEAD
 .nav-tabs{
   background-color:#ffffff;
   width:520px;
@@ -121,7 +120,7 @@ input[type=checkbox] {
     background-color:#ffffff;
 	width:520px;
     padding:5px;
-=======
+}
 .nav-tabs {
 	background-color: #ffffff;
 }
@@ -129,7 +128,7 @@ input[type=checkbox] {
 .tab-content {
 	background-color: #ffffff;
 	padding: 5px;
->>>>>>> 2105daf0c840fc2d8655f45bcd341a908bb1ac7f
+
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
