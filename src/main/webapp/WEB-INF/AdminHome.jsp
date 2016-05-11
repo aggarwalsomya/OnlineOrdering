@@ -56,16 +56,19 @@ body {
            <div class="bodycontent">
           					<input type="button" class=mybutton value="Add Menu Item"
 					id="addMenuItem" name="addMenuItem" onclick="location.href = 'addIt';">
-					<br><br>
+		<br><br>
 			
 					<input type="button" class=mybutton value="Delete Menu Item"
 					id="delete" name="delete" onclick="location.href = 'AdminDelete';">
 		<br><br>
 					<input type="button" class=mybutton value="System Reset"
 					id="reset" name="reset" onclick="location.href = 'reset';">
-				<br><br>
+		<br><br>
 					<input type="button" class=mybutton value="View Orders"
 					id="vieworders" name="vieworders" onclick="location.href = 'vieworders';">
+		<br><br>			
+					<input type="button" class=mybutton value="Logout" id="Logout"
+			name="Logout" onclick="location.href = 'logout';">
 				
 </div>
 </body>
