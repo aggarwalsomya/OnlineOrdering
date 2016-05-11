@@ -105,7 +105,7 @@ input[type=checkbox] {
 
 	<div class="row">
 	<label class="col1"><b>Order Id: </b></label>
-	<span class="col2" id="id"> ${orderid}</span>
+	<span class="col2" id="id">${orderid}</span>
 	</div>
 
 	<table>
@@ -118,10 +118,10 @@ input[type=checkbox] {
 			</tr><br>
 		</c:forEach>
 	</table>
-
+	<br><br>
 	<div class="row">
 	<label class="col1">Total Price:&nbsp;&nbsp;</label>
-	<span class="col2"> ${totalprice}</span>
+	<span class="col2">$ ${totalprice}</span>
 	</div>
 	
 	<div class="row">
@@ -187,10 +187,31 @@ var yyyyf = future.getFullYear();
     	 var time = document.getElementById("in").value;
          var spl = time.split(" ");
          var hour = spl[1].split(":");
+         var date = spl[0].split("-");
+         
          if (parseInt(hour[0])<6 || parseInt(hour[0])>21 )  {
              alert("Please select a valid time between 06:00 and 21:00 ");
              document.getElementById("in").value = "";
          }
+         if(parseInt(hour[0]) == 21) {
+        	 if(parseInt(hour[1]) > 0) {
+        		 alert("Please select a valid time between 06:00 and 21:00 ");
+                 document.getElementById("in").value = "";
+        	 }
+         }
+
+         var now = new Date(); 
+		 var setDate = e.date;
+		 
+		 console.log("now time is:", now.getTime());
+		 console.log("set time is:", setDate.getTime());
+		 
+		 if (now.getTime() > setDate.getTime()) {
+			 alert("Selected time is in past. Try Again!");
+             document.getElementById("in").value = "";
+         }
+         
+         
         document.getElementById("time").value = document.getElementById("in").value;
     });
      

@@ -14,6 +14,6 @@
 	<p>${msg}</p>
 
 	<input type="button" class=button value="Go to Home Page" id="back" name="Go to Home Page"
-		onclick="location.href = 'home';">
+		onclick="location.href = '../home';">
 </body>
 </html>
