@@ -16,10 +16,32 @@ body {
 	margin-top: 150px;
 	width: 50%;
 }
+
+.mybutton{
+	background-color: #7EB2C8;
+	color:black;
+	border: 1px solid #031E2A;
+	border-radius: 4px;
+	padding: 5px 12px;
+	font-size: 16px;
+	width:150px;
+	text-align:center;
+}
+
+.mybutton:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+}
 </style>
 
 </head>
 <body><div class="bodycontent">
 <h3>Thank you for your visit ${user}! You have successfully logged out.</h3>
-</div></body>
+<br><br>
+<input type="button" class=mybutton value="Home" id="Logout"
+			name="Logout" onclick="location.href = 'home';">
+</div>
+
+
+</body>
 </html>
