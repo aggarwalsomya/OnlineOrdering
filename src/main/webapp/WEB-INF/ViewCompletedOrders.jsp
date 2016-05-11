@@ -16,27 +16,117 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</head>
-<body>
-	<p>Welcome User</p>
-	<ul class="nav nav-tabs">
-		<li class="active"><a data-toggle="tab" href="#Drinks">View All Orders</a></li>
-	</ul>
-	<br>
+<style>
 
+body {
+	color: #103F53;
+	background: #e6f3ff;
+}
+
+#title {
+	width: 350px;
+	height: 26px;	
+	padding-top: 15px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+	font-size: 22px;
+	margin-left:90px;
+}
+
+ 
+
+.bodycontent {
+	margin: auto;
+	margin-top: 70px;
+	width: 40%;
+}
+
+.mybutton{
+background-color: #7EB2C8;
+color:black;
+border: 1px solid #031E2A;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 14px;
+}
+.mybutton:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+}
+img{
+height:100px;
+width:100px;
+}
+
+input[type=checkbox] {
+    zoom: 1.5;
+}
+
+.nav-tabs{
+  background-color:#ffffff;
+}
+.tab-content{
+    background-color:#ffffff;
+width:640px;
+    padding:15px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
+{
+background-color:#ffffff;
+}
+
+td{
+min-width:70px;
+text-align:center;
+padding:7px;
+}
+
+tr{
+padding:15px;
+}
+th{
+padding:15px;
+text-align:center;
+}
+</style>
+
+
+</head>
+<div class="bodycontent">
+
+<div id="title" style="margin-left:125px;"><b>View All Orders</b></div>
+<br><br>
 	<div class="tab-content">
 		<div id="Drinks" class="tab-pane fade in active">
 			<table id="viewallorders">
+			
+			 <tr>
+    <th>Order Id</th>
+    <th>Pickup Date</th>
+    <th> Pickup Time</th>
+    <th>Status</th>
+    <th colspan=2>OrderDetails</th></tr>
+    <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+     <th>Item Name</th>
+      <th>Quantity</th>
 				<c:forEach var="list1" items="${orderlist}" varStatus="status">
-					<tr style="border: 1px solid black;">
-						<td style="border: 1px solid black;">${list1.orderid}</td>
+					<tr>
+						<td>${list1.orderid}</td>
+								
+						<td>${list1.pickup_date}</td>
+						<td>${list1.pickup_time}</td>
+						<td>${list1.status}</td><br></tr>
 						<c:forEach var="list" items="${list1.menumap}" varStatus="status">
-								<td>${list.key}</td>
-								<td>${list.value}</td>
-						</c:forEach>			
-						<td style="border: 1px solid black;">${list1.pickup_date}</td>
-						<td style="border: 1px solid black;">${list1.pickup_time}</td>
-						<td style="border: 1px solid black;">${list1.status}</td>
+						<tr></tr>
+								<tr><td></td><td></td><td></td><td></td><td>${list.key}</td>
+								<td>${list.value}</td></tr>
+						</c:forEach>	
 					</tr>
 				</c:forEach>
 			</table>
