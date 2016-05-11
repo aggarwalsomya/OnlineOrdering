@@ -154,7 +154,7 @@ text-align:center;
 								$('input:checkbox').removeAttr('checked');
 								var arrayOfItemNames = arrayOfDrinks;
 								var dataToSend = arrayOfItemNames.join(";;");
-								document.getElementById("demo1").innerHTML = dataToSend;
+								//document.getElementById("demo1").innerHTML = dataToSend;
 
 								$('#next').click(function() {document.getElementById("itemData").value = dataToSend;});
 							});
