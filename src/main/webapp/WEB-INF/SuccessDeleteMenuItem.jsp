@@ -5,12 +5,37 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Cmpe275_Term_Project_5 : Successful</title>
+<style>
+body {
+	color: #103F53;
+	background: #e6f3ff;
+}
+.bodycontent {
+	margin: auto;
+	margin-top: 50px;
+	width: 50%;
+}
+.mybutton{
+background-color: #7EB2C8;
+color:black;
+border: 1px solid #031E2A;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 14px;
+}
+.mybutton:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+}
+</style>
+</head>
+<body class="bodycontent">
 </head>
 <body>
-	<h1>Menu Items deleted successfully</h1>
+	<h3>Menu Items deleted successfully</h3>
 	<br>
-	<br>
-	<input type="button" class=button value="Admin Home" id="back"
+	
+	<input type="button" class=mybutton value="Admin Home" id="back"
 		name="Admin Home" onclick="location.href = 'AdminHome';">
 </body>
 </html>
