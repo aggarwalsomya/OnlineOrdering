@@ -28,17 +28,17 @@
 		<div id="Drinks" class="tab-pane fade in active">
 			<table id="viewallorders">
 				<c:forEach var="list1" items="${orderlist}" varStatus="status">
-					<tr style="border: 1px solid black;">
-						<td style="border: 1px solid black;">${list1.orderid}</td>
-						<td style="border: 1px solid black;">${list1.username}</td>
-						<td style="border: 1px solid black;">${list1.email}</td>
-						<td style="border: 1px solid black;">${list1.status}</td>
-						<td style="border: 1px solid black;">${list1.pickup_date}</td>
-						<td style="border: 1px solid black;">${list1.pickup_time}</td>
-						<c:forEach var="list" items="${list1.menumap}" varStatus="status">
+					<tr style="border: 2px solid #103F53;" >
+						<td>${list1.orderid}</td>
+						<td>${list1.username}</td>
+						<td>${list1.email}</td>
+						<td>${list1.status}</td>
+						<td>${list1.pickup_date}</td>
+						<td>${list1.pickup_time}</td>
+						<td><c:forEach var="list" items="${list1.menumap}" varStatus="status">
 								<td>${list.key}</td>
 								<td>${list.value}</td>
-						</c:forEach>			
+						</c:forEach></td>			
 					</tr>
 				</c:forEach>
 			</table>

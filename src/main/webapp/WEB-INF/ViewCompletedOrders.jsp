@@ -78,7 +78,7 @@ background-color:#ffffff;
 }
 
 td{
-min-width:70px;
+min-width:100px;
 text-align:center;
 padding:7px;
 }
@@ -112,9 +112,8 @@ text-align:center;
     <th>Quantity</th>
    </tr>
 				<c:forEach var="list1" items="${orderlist}" varStatus="status">
-					<tr style="border:1px solid black;">
-						<td>${list1.orderid}</td>
-								
+					<tr style="border: 2px solid #103F53;" >
+						<td>${list1.orderid}</td>	
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>
 						<td>${list1.status}</td>
@@ -122,7 +121,7 @@ text-align:center;
 							<table>
 								<c:forEach var="list" items="${list1.menumap}" varStatus="status">
 								<tr>
-									<td style="text-align:center;">${list.key}</td>
+									<td>${list.key}</td>
 									<td>${list.value}</td>
 								</tr>
 								</c:forEach>
