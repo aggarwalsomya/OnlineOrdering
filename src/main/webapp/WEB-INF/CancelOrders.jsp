@@ -47,7 +47,7 @@
 	
 	<button id="jqcc">Delete Selected Items</button>
 	<br><br>
-	<form action="deleteMenuItem" method="POST">
+	<form action="deleteOrders" method="POST">
 		<input type="hidden" id="itemData" name="itemData"> 
 		<p>Please press confirm delete to make sure you want to delete these items</p><br>
 		<input type="submit" id="next" value="Confirm Delete" />
@@ -62,7 +62,7 @@
 
 			$('#jqcc').click(function() {
 			    $('input:checkbox:checked', tableControl1).each(function() {
-			        arrayOfDrinks.push($(this).closest('tr').find('td').eq(3).text());
+			        arrayOfDrinks.push($(this).closest('tr').find('td').eq(1).text());
 			    }).get();
 			    
 								$('input:checkbox').removeAttr('checked');
