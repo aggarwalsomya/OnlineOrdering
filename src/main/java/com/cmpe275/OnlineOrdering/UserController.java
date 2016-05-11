@@ -122,6 +122,19 @@ public class UserController {
 		return dateList;
 	}
 
+	// Removes whitespace from the beginning of menuitem name
+	private String removeSpace(String part) {
+
+		if (Character.isWhitespace(part.charAt(0))) {
+			System.out.println("inside removespace:" + part);
+			part = part.substring(1);
+			System.out.println("inside removespace:" + part);
+			return part;
+		} else
+			return part;
+
+	}
+	
 	private Map<String, Integer> deserializeMenuItems(String mi) {
 		if(mi.length() == 0 || mi == null)
 			return new HashMap<String, Integer>();
@@ -130,6 +143,8 @@ public class UserController {
 		Map<String, Integer> menu_items = new TreeMap<String, Integer>();
 		for (String item : items) {
 			String[] parts = item.split("::");
+			System.out.println("items are: " + parts[0]);
+			parts[0] = removeSpace(parts[0]);
 			menu_items.put(parts[0], Integer.parseInt(parts[1]));
 		}
 		return menu_items;
@@ -148,6 +163,7 @@ public class UserController {
 	private Map<String, Integer> parseMenuItemsFromRequest(int orderid, int userid) {
 		Map<String, Integer> menuitemMap = new TreeMap<String, Integer>();
 		String menuitems = userSvc.getMenuDetailsForOrder(orderid, userid);
+		System.out.println("inside paresmenuitems" + menuitems);
 		menuitemMap = deserializeMenuItems(menuitems);
 		return menuitemMap;
 	}
@@ -193,6 +209,7 @@ public class UserController {
 		}
 
 		String menuitems = request.getParameter("itemData");
+		System.out.println("menuitems is" + menuitems);
 		if(menuitems.length() == 0)
 			return "OrderErrorException";
 		
@@ -709,6 +726,9 @@ public class UserController {
 		
 		Map<String,Integer> mi = deserializeMenuItems(menuItemDetails);
 		model.addAttribute("BulkList",mi);
+		for(String s: mi.keySet()) {
+			System.out.println("final is" + s );
+		}
 		
 		String category[] = { MAINCOURSE, DRINK, DESERT, APPETIZER };
 		for (int i = 0; i < category.length; i++) {
