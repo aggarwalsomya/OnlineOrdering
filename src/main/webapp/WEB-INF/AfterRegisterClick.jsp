@@ -11,7 +11,7 @@
 <body>
 <form method="post" name="myform">
 <p>${msg}</p>
-<input class=button type="button" name="login" value="Login" onclick="location.href = 'user';">
+<input class=button type="button" name="login" value="Login" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/';">
  <input class=button type="button" name="register" value="Register" onclick="location.href = 'register';">
 </form>
 

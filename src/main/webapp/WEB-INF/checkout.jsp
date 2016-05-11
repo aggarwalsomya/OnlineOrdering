@@ -115,7 +115,7 @@ input[type=checkbox] {
 	<div class="row">
 	<label class="col1"><input type="radio" onclick="confirm()"
 		name="pickup" value="confirm" />&nbsp;&nbsp;Earliest Pickup Time: &nbsp;&nbsp;</label>
-		<span class="col2">${earliestpickuptime}</span>
+		<span class="col2" id="early">${earliestpickuptime}</span>
 	</div>
 	
 	<div class="row">

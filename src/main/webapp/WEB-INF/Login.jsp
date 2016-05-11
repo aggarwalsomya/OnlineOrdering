@@ -147,7 +147,7 @@ font-size: 16px;
 		<input class="mybutton" type="submit" name="login" value="Login">
 	<br><br><br>
 	<div class="row">
-	<div class="exist"><span class="col1">New user?</span> <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'http://127.0.0.1:8081/OnlineOrdering/register';"></div></div>
+	<div class="exist"><span class="col1">New user?</span> <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/register';"></div></div>
 	</form>
 	
 	</div>
