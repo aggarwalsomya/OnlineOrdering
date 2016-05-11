@@ -10,49 +10,146 @@
 	rel="stylesheet">
 <link rel="stylesheet" type="text/css" media="screen"
 	href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
+<style>
+td{
+min-width:70px;
+text-align:center;
+padding:7px;
+}
+
+tr{
+padding:15px;
+}
+th{
+padding:15px;
+text-align:center;
+}
+body {
+	color: #103F53;
+	background: #e6f3ff;
+}
+
+#title {
+	width: 350px;
+	height: 26px;	
+	padding-top: 15px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	text-align: center;
+	font-size: 22px;
+	margin-left:90px;
+}
+
+form {
+	width: 335px;
+}
+
+.col1 {
+	text-align: left;
+	width: 250px;
+	height: 31px;
+	margin: 0;
+	float: left;
+	margin-right: 2px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	
+}
+
+.col2 {
+	width: 195px;
+	height: 40px;
+	display: block;
+	float: left;
+	margin: 0;
+	
+}
+
+div.row {
+	clear: both;
+	width: 675px;
+}
+
+
+.bodycontent {
+	margin: auto;
+	margin-top: 50px;
+	width: 40%;
+}
+
+.mybutton{
+	background-color: #7EB2C8;
+	color:black;
+	border: 1px solid #031E2A;
+	border-radius: 4px;
+	padding: 5px 12px;
+	font-size: 14px;
+}
+.mybutton:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+}
+
+
+input[type=checkbox] {
+    zoom: 1.5;
+}
+
+</style>
+
+
 </head>
 <body>
+<div class="bodycontent">
 
 
-	<h2>Order Id:</h2>
-	<h3 id="id">${orderid}</h3>
+	<div class="row">
+	<label class="col1"><b>Order Id: </b></label>
+	<span class="col2" id="id"> ${orderid}</span>
+	</div>
 
 	<table>
+	<tr><th>Item Name</th>
+	<th>Quantity</th></tr>
 		<c:forEach var="list" items="${menulist}" varStatus="status">
 			<tr>
-				<td>Item name : ${list.key}</td>
-				<td>Item Value: ${list.value}</td>
-			</tr>
+				<td>${list.key}</td>
+				<td>${list.value}</td>
+			</tr><br>
 		</c:forEach>
 	</table>
 
-	<p>Total Price: ${totalprice}</p>
-	<input type="radio" style="margin-left: 20px" onclick="confirm()"
-		name="pickup" value="confirm" />Earliest Pickup Time:
-	<h3 style="margin-left: 20px" id="early">${earliestpickuptime}</h3>
-	<br>
-	<br>
-	<input type="radio" style="margin-left: 20px" onclick="custom()"
-		name="pickup" value="custom" />Pick your own date & time. (Should be between 6am to 9pm, in the next 30 days.)
-	<br>
-	<br>
-
-
+	<div class="row">
+	<label class="col1">Total Price:&nbsp;&nbsp;</label>
+	<span class="col2"> ${totalprice}</span>
+	</div>
+	
+	<div class="row">
+	<label class="col1"><input type="radio" onclick="confirm()"
+		name="pickup" value="confirm" />&nbsp;&nbsp;Earliest Pickup Time: &nbsp;&nbsp;</label>
+		<span class="col2">${earliestpickuptime}</span>
+	</div>
+	
+	<div class="row">
+	<label class="col1">
+	<input type="radio" onclick="custom()"
+		name="pickup" value="custom" />&nbsp;&nbsp;<span>Pick your own date & time.(Between 6am-9pm, within next 30 days.)</span>&nbsp;&nbsp;</label>
+		<span class="col2">
 	<div id="datetimepicker" class="input-append date">
-		<input type="text" id="in"></input> <span class="add-on"> <i
+		<input type="text" id="in"></input> <span class="add-on" id="in1"> <i
 			data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
 		</span>
-	</div>
-
+	</div></span></div>
+<br><br><br><br>
 	<form method="post" action="finalCheckout">
 		<input type="hidden" id="orderid" name="orderid" value="" /> <input
 			type="hidden" id="type" name="type" value="" /> <input type="hidden"
 			id="time" name="time" value="" /> <input type="hidden"
 			id="earlypickuptime" name="early" value="" /> <input type="submit"
-			name="proceed" value="Proceed" />
+			name="proceed" class=mybutton value="Proceed" />
 
 	</form>
-
+</div>
 </body>
 <script type="text/javascript"
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
@@ -82,7 +179,8 @@ var yyyyf = future.getFullYear();
         format: 'yyyy-MM-dd hh:mm',
         language: 'en',
         startDate: new Date(yyyy, mm, dd),
-        endDate: new Date(yyyyf, mmf, ddf)
+        endDate: new Date(yyyyf, mmf, ddf),
+        pickSeconds: false
     });
     var picker = $('#datetimepicker');
     picker.on('changeDate', function(e) {
@@ -96,14 +194,17 @@ var yyyyf = future.getFullYear();
         document.getElementById("time").value = document.getElementById("in").value;
     });
      
-    document.getElementById("orderid").value = document.getElementById ('id').innerHTML; 
     document.getElementById("orderid").value = document.getElementById ('id').innerHTML;
     document.getElementById("earlypickuptime").value = document.getElementById ('early').innerHTML;
     function confirm() {
         document.getElementById("type").value = "confirm";
+        document.getElementById("in").disabled=true;
+        document.getElementById("in1").style.visibility = "hidden";
     }
     function custom() {
 	   document.getElementById("type").value = "custom";
+	   document.getElementById("in").disabled=false;
+       document.getElementById("in1").style.visibility = "visible";
     }
  
 </script>
