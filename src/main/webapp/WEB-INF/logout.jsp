@@ -14,7 +14,7 @@ body {
 .bodycontent {
 	margin: auto;
 	margin-top: 150px;
-	width: 50%;
+	width: 40%;
 }
 
 .mybutton{
@@ -24,8 +24,9 @@ body {
 	border-radius: 4px;
 	padding: 5px 12px;
 	font-size: 16px;
-	width:150px;
+	width:100px;
 	text-align:center;
+	margin-left:170px;
 }
 
 .mybutton:hover {
@@ -37,7 +38,7 @@ body {
 </head>
 <body><div class="bodycontent">
 <h3>Thank you for your visit ${user}! You have successfully logged out.</h3>
-<br><br>
+<br>
 <input type="button" class=mybutton value="Home" id="Logout"
 			name="Logout" onclick="location.href = 'home';">
 </div>
