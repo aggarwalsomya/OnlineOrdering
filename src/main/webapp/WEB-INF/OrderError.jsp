@@ -5,15 +5,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Cmpe275_Term_Project_5 Order Placement Successful</title>
+<title>Cmpe275_Term_Project_5 Error- Order</title>
 </head>
 <body>
 	<h1>Error in Placing the order</h1>
 	<br>
 	<br>
-	<p>Error in Placing the order</p>
+	<p>Error in Placing the order for Orderid: ${orderid}</p>
 
 	<input type="button" class=button value="Cancel Order" id="back" name="Cancel Order"
 		onclick="location.href = 'cancelOrder';">
+	<input type="button" class=button value="Modify Order" id="back" name="Modify Order"
+		onclick="location.href = 'modifyOrder';">
 </body>
 </html>

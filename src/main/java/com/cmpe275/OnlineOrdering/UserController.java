@@ -216,7 +216,7 @@ public class UserController {
 			model.addAttribute("menulist", mi);
 			model.addAttribute("orderid", orderid);
 			model.addAttribute("totalprice", totalPrice);
-			return "checkouterror";
+			return "OrderError";
 		}
 
 		for (int id = 0; id < 30; id++) {
@@ -243,7 +243,7 @@ public class UserController {
 			model.addAttribute("menulist", mi);
 			model.addAttribute("orderid", orderid);
 			model.addAttribute("totalprice", totalPrice);
-			return "checkouterror";
+			return "OrderError";
 		}
 
 		String menu_items_str = this.serializeMenuItems(mi);
@@ -479,6 +479,8 @@ public class UserController {
 			return "OrderSuccess";
 		} else {
 			System.out.println("No chef is free, ask him to modify the order");
+			model.addAttribute("msg", "Order cannot be placed due to too many other orders at this time");
+			model.addAttribute("orderid",orderid);
 			return "OrderError";
 		}
 	}
@@ -640,7 +642,7 @@ public class UserController {
 	 * @return
 	 * @author Somya
 	 */
-	@RequestMapping(value = "/Menu/cancelOrder", method = RequestMethod.GET)
+	@RequestMapping(value = "/Menu/cancelOrder", method = RequestMethod.POST)
 	public String cancelOrder_Unplaced(HttpServletRequest request, Model model) {
 		int orderid = Integer.parseInt(request.getParameter("orderid"));
 		int user_id = 0;
