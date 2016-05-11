@@ -123,6 +123,9 @@ public class UserController {
 	}
 
 	private Map<String, Integer> deserializeMenuItems(String mi) {
+		if(mi.length() == 0 || mi == null)
+			return new HashMap<String, Integer>();
+		
 		String[] items = mi.split(";;");
 		Map<String, Integer> menu_items = new TreeMap<String, Integer>();
 		for (String item : items) {
@@ -190,6 +193,9 @@ public class UserController {
 		}
 
 		String menuitems = request.getParameter("itemData");
+		if(menuitems.length() == 0)
+			return "OrderErrorException";
+		
 		Map<String, Integer> mi = deserializeMenuItems(menuitems);
 
 		Date date = new Date();
@@ -455,6 +461,10 @@ public class UserController {
 		
 		Map<String, Integer> mi = this.parseMenuItemsFromRequest(orderid, user_id);
 		System.out.println("Menu Order Items:"+mi);
+		if(mi.isEmpty() || mi == null) {
+			model.addAttribute("msg", "Error occured in placing the order");
+			return "OrderErrorException";
+		}
 		
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
 		System.out.println("Total prep time for order::"+totalPrepTime);
@@ -694,6 +704,9 @@ public class UserController {
 		} catch(Exception e) {
 		}
 		String menuItemDetails = userSvc.getMenuDetailsForOrder(orderid, user_id);
+		if(menuItemDetails.length() == 0)
+			return "OrderErrorException";
+		
 		Map<String,Integer> mi = deserializeMenuItems(menuItemDetails);
 		model.addAttribute("BulkList",mi);
 		
@@ -722,24 +735,27 @@ public class UserController {
 		} catch(Exception e) {
 		}
 		
-		List<OrderDetails> listod = userSvc.getUserOrders(user_id, "completed");
-		System.out.println(listod);
+		List<OrderDetails> listod = userSvc.getUserOrders(user_id, "Fulfilled");
 		List<Order> listo = new ArrayList<Order>();
 		
-		for(int i = 0; i < listod.size(); i++) {
-			Order o = new Order(listod.get(i).getOrderid(),
-					"",
-					"",
-					listod.get(i).getMenu_items(),
-					listod.get(i).getStatus(),
-					listod.get(i).getpickup_date(),
-					listod.get(i).getpickup_time());
-			o.setMenumap(deserializeMenuItems(listod.get(i).getMenu_items()));
-			listo.add(o);
+		if(!listod.isEmpty()) {
+			for(int i = 0; i < listod.size(); i++) {
+				Order o = new Order(listod.get(i).getOrderid(),
+						"",
+						"",
+						listod.get(i).getMenu_items(),
+						listod.get(i).getStatus(),
+						listod.get(i).getpickup_date(),
+						listod.get(i).getpickup_time());
+				o.setMenumap(deserializeMenuItems(listod.get(i).getMenu_items()));
+				listo.add(o);
+			}
+			model.addAttribute("orderlist",listo);
+			return "ViewCompletedOrders";
+		} else {
+			model.addAttribute("msg","No orders to display");
+			return "NoOrders";
 		}
-		model.addAttribute("orderlist",listo);
-		
-		return "ViewCompletedOrders";
 	}
 	
 	/**
@@ -781,6 +797,7 @@ public class UserController {
 		List<OrderDetails> listod = userSvc.getUserOrders(user_id, "Queued");
 		List<Order> listo = new ArrayList<Order>();
 		
+		if(!listod.isEmpty()) {
 		for(int i = 0; i < listod.size(); i++) {
 			Order o = new Order(listod.get(i).getOrderid(),
 					"",
@@ -794,6 +811,10 @@ public class UserController {
 		}
 		model.addAttribute("orderlist",listo);
 		return "CancelOrders";
+		} else {
+			model.addAttribute("msg","No orders to display");
+			return "NoOrders";
+		}
 	}
 	
 	

@@ -51,7 +51,6 @@ body {
 		var variable = value;	
 		  if(variable == "Modify Order")
 		  {
-			  alert("here");
 		   document.myform.action ="modifyOrder";
 		  }
 		  else
