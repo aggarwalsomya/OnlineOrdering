@@ -49,12 +49,13 @@ public class UserController {
 			throws UnsupportedEncodingException {
 		String category = request.getParameter("category");
 		List<MenuItem> mi = userSvc.getMenuItems(category);
-
+		Map<String, Integer>menumap = new HashMap<String, Integer>();
 		if (mi == null) {
 			model.addAttribute("category", category);
 			return "ErrorFindMenuItem_User";
 		}
 		model.addAttribute("list", mi);
+		model.addAttribute("BulkList",menumap);
 		return "GetUserMenuItems";
 	}
 
@@ -668,7 +669,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/Menu/modifyOrder", method = RequestMethod.GET)
 	public String modifyOrder(HttpServletRequest request, Model model) {
-		int orderid = Integer.parseInt(request.getParameter("orderid"));
+		//int orderid = Integer.parseInt(request.getParameter("orderid"));
 		int user_id = 0;
 		HttpSession session = request.getSession(false);
 		try {
@@ -677,9 +678,23 @@ public class UserController {
 			}
 		} catch(Exception e) {
 		}
-		String menuItemDetails = userSvc.getMenuDetailsForOrder(orderid, user_id);
-		Map<String,Integer> mi = deserializeMenuItems(menuItemDetails);
-		model.addAttribute("menumap",mi);
+		//String menuItemDetails = userSvc.getMenuDetailsForOrder(orderid, user_id);
+		//Map<String,Integer> mi = deserializeMenuItems(menuItemDetails);
+		Map<String, Integer> mi = new HashMap<String, Integer>();
+		mi.put("Vegetable Noodles",2);
+		mi.put("Grilled Platter",1);
+		model.addAttribute("BulkList",mi);
+		
+		String category[] = { MAINCOURSE, DRINK, DESERT, APPETIZER };
+		for (int i = 0; i < category.length; i++) {
+			List<MenuItem> milist;
+			try {
+				milist = userSvc.getMenuItems(category[i]);
+				model.addAttribute("list_" + category[i].toString(), milist);
+			} catch (UnsupportedEncodingException e) {
+				return "OrderErrorException";
+			}
+		}
 		return "GetUserMenuItems";
 	}
 	
