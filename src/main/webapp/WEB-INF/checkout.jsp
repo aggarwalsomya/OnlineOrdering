@@ -189,28 +189,21 @@ var yyyyf = future.getFullYear();
          var hour = spl[1].split(":");
          var date = spl[0].split("-");
          
-         if (parseInt(hour[0])<6 || parseInt(hour[0])>21 )  {
+         var now = new Date(); 
+		 var setDate = e.date;
+         
+         if (parseInt(hour[0]) < 6 || parseInt(hour[0]) > 21 )  {
              alert("Please select a valid time between 06:00 and 21:00 ");
              document.getElementById("in").value = "";
-         }
-         if(parseInt(hour[0]) == 21) {
+         } else if(parseInt(hour[0]) == 21) {
         	 if(parseInt(hour[1]) > 0) {
         		 alert("Please select a valid time between 06:00 and 21:00 ");
                  document.getElementById("in").value = "";
         	 }
-         }
-
-         var now = new Date(); 
-		 var setDate = e.date;
-		 
-		 console.log("now time is:", now.getTime());
-		 console.log("set time is:", setDate.getTime());
-		 
-		 if (now.getTime() > setDate.getTime()) {
+         } else if (now.getTime() > setDate.getTime()) {
 			 alert("Selected time is in past. Try Again!");
              document.getElementById("in").value = "";
          }
-         
          
         document.getElementById("time").value = document.getElementById("in").value;
     });
