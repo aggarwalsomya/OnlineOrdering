@@ -155,7 +155,7 @@ th {
 
 </head>
 <body>
-	<p>hello ${user} !</p>
+	<h2>Hello ${user} !</h2>
 	<div class="bodycontent">
 
 		<div id="title">
