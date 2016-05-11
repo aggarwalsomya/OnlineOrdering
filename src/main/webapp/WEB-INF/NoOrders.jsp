@@ -36,9 +36,9 @@ margin-left:45px;
 <body class="bodycontent">
 	<br>
 	<br>
-	<p>${msg}</p>
+	<h2>${msg}</h2>
 
-	<input type="button" class=mybutton value="Go to Home Page" id="back" name="Go to Home Page"
+	<input type="button" class=mybutton value="Home Page" id="back" name="Go to Home Page"
 		onclick="location.href = 'home';">
 </body>
 </html>

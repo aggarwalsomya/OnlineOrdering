@@ -82,6 +82,9 @@ div.row {
 input[type=checkbox] {
     zoom: 1.5;
 }
+td{
+
+}
 
 </style>
 
@@ -97,12 +100,12 @@ input[type=checkbox] {
 	</div>
 
 	<table>
-	<tr><th>Item Name</th>
+	<tr><th style="text-align:left;">Item Name</th>
 	<th>Quantity</th></tr>
 		<c:forEach var="list" items="${menulist}" varStatus="status">
 			<tr>
 				<td>${list.key}</td>
-				<td>${list.value}</td>
+				<td style="text-align:center;">${list.value}</td>
 			</tr><br>
 		</c:forEach>
 	</table>
