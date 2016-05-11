@@ -122,6 +122,20 @@ public class AdminService {
 	}
 	
 	/**
+	 * deletes the order with the specified order id
+	 * @param orderid
+	 * @author Somya
+	 */
+	@Transactional
+	public void deleteOrder(int orderid) {
+		Query q = em.createQuery("Delete from OrderDetails od where od.orderid=:arg1");
+		q.setParameter("arg1", orderid);
+		q.executeUpdate();
+	}
+	
+	
+	
+	/**
 	 * This function will reset the orders, clean up any existing orders.
 	 */
 	@Transactional
