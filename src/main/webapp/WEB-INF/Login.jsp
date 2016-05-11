@@ -97,7 +97,7 @@ div.row {
 }
 
 .button{
-margin-left : 100px;
+
 background-color: #7EB2C8;
 color:black;
 border: 1px solid #031E2A;
@@ -123,6 +123,7 @@ border: 1px solid #031E2A;
 border-radius: 4px;
 padding: 5px 12px;
 font-size: 16px;
+width:75px;
 }
 .mybutton:hover {
     background-color: #031E2A;
@@ -147,7 +148,7 @@ font-size: 16px;
 		<input class="mybutton" type="submit" name="login" value="Login">
 	<br><br><br>
 	<div class="row">
-	<div class="exist"><span class="col1">New user?</span> <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/register';"></div></div>
+<span style="margin-left:120px;">New user?</span>&nbsp;&nbsp; <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/register';"></div>
 	</form>
 	
 	</div>
