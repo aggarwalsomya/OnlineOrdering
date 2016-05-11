@@ -110,6 +110,16 @@ font-size: 18px;
 margin-left : 155px;
 }
 
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #e6f3ff;
+  text-align: center;
+  align: center;
+}
 
 .mybutton{
 background-color: #7EB2C8;
@@ -147,7 +157,7 @@ $("document").ready(function(){
 
 
 
-                    <h3>Admin- Add Item</h3>
+                   
                     
  
 <div class="bodycontent">
@@ -191,13 +201,17 @@ $("document").ready(function(){
         <span class="col2" style="width:190px;"><input type="text" name="preptime" placeholder="enter preparation time (in mins)" required/></span>
      </div>
       <div class="row">
-        <input type="submit" class=mybutton value="Add" style="margin-left:170px;"required/><br><br/>
-        <input type="button" class=mybutton value="Admin Home" style="margin-left:280px;"
-          id="back" name="back" onclick="location.href = 'AdminHome';">
-        </div>
+        <input type="submit" class=mybutton value="Add" style="margin-left:170px;"required>
+      </div>
+      
 
     </div>
   </form>
+ <br><br><br><br>
+ 
+ 
+  <input type="button" class=mybutton value="Admin Home" style="margin-left:280px;"
+          id="back" name="back" onclick="location.href = 'AdminHome';">
 </div>
 </body>
 </html>
