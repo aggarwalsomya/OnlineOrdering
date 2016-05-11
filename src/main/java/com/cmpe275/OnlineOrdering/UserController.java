@@ -415,6 +415,7 @@ public class UserController {
 			datetime = request.getParameter("time");
 
 		//parsing the order id from request
+		System.out.println(request.getParameter("orderid"));
 		int orderid = Integer.parseInt(request.getParameter("orderid"));
 		System.out.println("order id::"+orderid);
 				
@@ -645,7 +646,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/Menu/cancelOrder", method = RequestMethod.POST)
 	public String cancelOrder_Unplaced(HttpServletRequest request, Model model) {
-		int orderid = Integer.parseInt(request.getParameter("orderid"));
+		int orderid = Integer.parseInt(request.getParameter("orderId"));
 		int user_id = 0;
 		HttpSession session = request.getSession(false);
 		try {
@@ -667,9 +668,9 @@ public class UserController {
 	 * @return
 	 * @author Somya
 	 */
-	@RequestMapping(value = "/Menu/modifyOrder", method = RequestMethod.GET)
+	@RequestMapping(value = "/Menu/modifyOrder", method = RequestMethod.POST)
 	public String modifyOrder(HttpServletRequest request, Model model) {
-		//int orderid = Integer.parseInt(request.getParameter("orderid"));
+		int orderid = Integer.parseInt(request.getParameter("orderId"));
 		int user_id = 0;
 		HttpSession session = request.getSession(false);
 		try {
@@ -678,11 +679,8 @@ public class UserController {
 			}
 		} catch(Exception e) {
 		}
-		//String menuItemDetails = userSvc.getMenuDetailsForOrder(orderid, user_id);
-		//Map<String,Integer> mi = deserializeMenuItems(menuItemDetails);
-		Map<String, Integer> mi = new HashMap<String, Integer>();
-		mi.put("Vegetable Noodles",2);
-		mi.put("Grilled Platter",1);
+		String menuItemDetails = userSvc.getMenuDetailsForOrder(orderid, user_id);
+		Map<String,Integer> mi = deserializeMenuItems(menuItemDetails);
 		model.addAttribute("BulkList",mi);
 		
 		String category[] = { MAINCOURSE, DRINK, DESERT, APPETIZER };
