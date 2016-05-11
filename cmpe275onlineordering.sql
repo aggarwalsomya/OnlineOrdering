@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2016 at 09:15 AM
+-- Generation Time: May 11, 2016 at 07:45 AM
 -- Server version: 5.6.26
 -- PHP Version: 5.6.12
 
@@ -104,27 +104,9 @@ CREATE TABLE IF NOT EXISTS `orderdetails` (
 --
 
 INSERT INTO `orderdetails` (`userid`, `orderid`, `status`, `menu_items`, `pickup_date`, `pickup_time`) VALUES
-(0, 2, 'pending', ' Strawberry Chocolate Cupcake::1;;', NULL, NULL),
-(0, 21, 'pending', ' Coke::1;;', NULL, NULL),
-(0, 29, 'pending', ' Coke::1;;', NULL, NULL),
-(4, 2, 'pending', 'brown rice::3;;chocolate fudge::2;;coke::1;;ice tea::2;;spring rolls::4;;', '2016-05-09', '14:00'),
-(4, 8, 'pending', 'brown rice::3;;chocolate fudge::2;;coke::1;;ice tea::2;;spring rolls::4;;', NULL, NULL),
-(4, 9, 'pending', ' ice tea::1;;', NULL, NULL),
-(4, 11, 'pending', 'brown rice::3;;chocolate fudge::2;;coke::1;;ice tea::2;;spring rolls::4;;', NULL, NULL),
-(4, 17, 'pending', 'brown rice::3;;chocolate fudge::2;;coke::1;;ice tea::2;;spring rolls::4;;', NULL, NULL),
-(4, 26, 'pending', ' Ice Tea::1;;', NULL, NULL),
-(10, 1, 'pending', ' Coke::100;;Ice Tea::10;;', NULL, NULL),
-(10, 2, 'pending', ' Coke::61;;', NULL, NULL),
-(10, 4, 'placed', ' brown rice::3;;chocolate fudge::2;;coke::1;;ice tea::2;;spring rolls::4;;', NULL, NULL),
-(10, 6, 'pending', ' Coke::1;;', NULL, NULL),
-(10, 7, 'pending', ' Coke::60;;', NULL, NULL),
-(10, 9, 'pending', ' Coke::1;;', NULL, NULL),
-(10, 12, 'pending', ' Coke::1;;', NULL, NULL),
-(10, 13, 'pending', ' Coke::60;;', NULL, NULL),
-(10, 22, 'pending', ' Coke::1;;', NULL, NULL),
-(10, 24, 'pending', ' Coke::1;;', NULL, NULL),
-(10, 25, 'pending', ' Coke::1;;', NULL, NULL),
-(10, 28, 'pending', ' Coke::100;;Ice Tea::100;;Orange Juice::50;;', NULL, NULL);
+(10, 7, '2016-05-12', ' Grilled Platter::1;;Nachos with guacamole::1;;', '360', 'pending'),
+(10, 14, 'placed', '  Grilled Platter::2;;', NULL, NULL),
+(10, 24, 'pending', ' Chocolate Cake::1;;Strawberry Chocolate Cupcake::1;;', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -145,33 +127,14 @@ CREATE TABLE IF NOT EXISTS `schedule` (
 --
 
 INSERT INTO `schedule` (`chefid`, `orderid`, `busystarttime`, `busyendtime`, `date`) VALUES
-(1, 101, 540, 600, '2016-05-03'),
-(1, 102, 650, 800, '2016-05-03'),
-(1, 103, 900, 910, '2016-05-03'),
-(1, 104, 910, 920, '2016-05-03'),
-(1, 101, 1000, 1020, '2016-05-05'),
-(1, 105, 650, 700, '2016-05-12'),
-(2, 200, 650, 700, '2016-05-12'),
-(1, 201, 600, 650, '2016-05-12'),
-(2, 202, 600, 650, '2016-05-12'),
-(3, 203, 650, 700, '2016-05-12'),
-(1, 204, 740, 790, '2016-05-12'),
-(1, 205, 890, 940, '2016-05-12'),
-(3, 206, 807, 940, '2016-05-12'),
-(2, 18, 807, 940, '2016-05-12'),
-(1, 800, 540, 1080, '2016-05-08'),
-(2, 801, 540, 1080, '2016-05-08'),
-(3, 803, 540, 1080, '2016-05-08'),
-(1, 21, 300, 1260, '2016-05-10'),
-(2, 22, 300, 1260, '2016-05-10'),
-(1, 21, 300, 1260, '2016-05-10'),
-(2, 22, 300, 1260, '2016-05-10'),
-(3, 23, 300, 1260, '2016-05-10'),
-(1, 31, 300, 1260, '2016-05-11'),
-(2, 32, 300, 1260, '2016-05-11'),
-(3, 33, 300, 1260, '2016-05-11'),
-(1, 26, 483, 548, '2016-05-14'),
-(1, 4, 451, 516, '2016-05-26');
+(1, 14, 1116, 1116, '2016-05-12'),
+(1, 4, 821, 821, '2016-05-10'),
+(1, 101, 300, 1260, '2016-05-11'),
+(2, 102, 300, 1260, '2016-05-11'),
+(3, 103, 300, 1260, '2016-05-11'),
+(1, 5, 1260, 1260, '2016-05-11'),
+(1, 19, 1066, 1066, '2016-05-10'),
+(1, 24, 1260, 1260, '2016-05-11');
 
 -- --------------------------------------------------------
 

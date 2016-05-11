@@ -14,6 +14,6 @@
 	<p>Error in Placing the order</p>
 
 	<input type="button" class=button value="Home Page" id="back" name="Home page"
-		onclick="location.href = 'home';">
+		onclick="location.href = '../home';">
 </body>
 </html>
