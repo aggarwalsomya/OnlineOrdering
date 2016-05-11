@@ -191,10 +191,10 @@ var yyyyf = future.getFullYear();
         		 alert("Please select a valid time between 06:00 and 21:00 ");
                  document.getElementById("in").value = "";
         	 }
-         } else if (now.getTime() > setDate.getTime()) {
+         } /*else if (now.getTime() > setDate.getTime()) {
 			 alert("Selected time is in past. Try Again!");
              document.getElementById("in").value = "";
-         }
+         }*/
          
         document.getElementById("time").value = document.getElementById("in").value;
     });
