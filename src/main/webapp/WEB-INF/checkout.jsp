@@ -11,19 +11,7 @@
 <link rel="stylesheet" type="text/css" media="screen"
 	href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 <style>
-td{
-min-width:70px;
-text-align:center;
-padding:7px;
-}
 
-tr{
-padding:15px;
-}
-th{
-padding:15px;
-text-align:center;
-}
 body {
 	color: #103F53;
 	background: #e6f3ff;
