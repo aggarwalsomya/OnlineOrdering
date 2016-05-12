@@ -110,6 +110,8 @@ text-align:center;
     <th>Pickup Date</th>
     <th> Pickup Time</th>
     <th>Total Price</th>
+    <th>Prep Start Time</th>
+    <th>Prep End Time</th>
     <th>Item Name</th>
     <th>Quantity</th>
    </tr>
@@ -122,6 +124,9 @@ text-align:center;
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>
 						<td>${list1.price}</td>
+						<td>${list1.prepStartTime}</td>
+						<td>${list1.prepEndTime}</td>
+						
 						<td colspan=2><c:forEach var="list" items="${list1.menumap}" varStatus="status">
 								<table><tr>	<td>${list.key}</td>
 								<td>${list.value}</td></tr></table>

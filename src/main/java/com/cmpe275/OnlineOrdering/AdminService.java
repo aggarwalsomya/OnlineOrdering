@@ -192,13 +192,18 @@ public class AdminService {
 				+ "d.status,"
 				+ "d.pickup_date,"
 				+ "d.pickup_time,"
-				+ "d.price "
-				+ "FROM UserCredentials c, OrderDetails d WHERE c.id = d.userid");
+				+ "d.price,"
+				+ "s.busystarttime,"
+				+ "s.busyendtime"
+				+ " FROM UserCredentials c, OrderDetails d, Schedule s WHERE c.id = d.userid and d.orderid = s.orderid");
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> resultList = q.getResultList();
 		List<Order> result = new ArrayList<Order>(resultList.size());
 		for (Object[] row : resultList) {
+			String busystarttime = convertToTime((Integer)row[8]);
+			String busyendtime = convertToTime((Integer)row[9]);
+			
 		    result.add(new Order((Integer) row[0],
 		                            (String) row[1],
 		                            (String) row[2],
@@ -206,7 +211,9 @@ public class AdminService {
 		                            (String) row[4],
 		                            (String) row[5],
 		                            (String) row[6],
-		                            (Float)  row[7]
+		                            (Float)  row[7],
+		                            busystarttime,
+		                            busyendtime
 		    		));
 		}
 		
@@ -221,6 +228,21 @@ public class AdminService {
 		return result;
 	}
 	
+	private String convertToTime(Integer time) {
+		String startTime = "00:00";
+		int h = time / 60 + Integer.parseInt(startTime.substring(0, 2));
+		int m = time % 60 + Integer.parseInt(startTime.substring(3, 5));
+		String hr = String.valueOf(h);
+		String min = String.valueOf(m);
+		
+		if(h <= 9)
+			hr = "0"+h;
+		if(m <= 9)
+			min = "0"+m;
+		
+		return hr + ":" + min;
+	}
+
 	private Map<String, Integer> deserializeMenuItems(String mi) {
 		String[] items = mi.split(";;");
 		Map<String, Integer> menu_items = new TreeMap<String, Integer>();

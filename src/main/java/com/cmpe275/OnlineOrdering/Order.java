@@ -12,7 +12,7 @@ public class Order {
 	private String pickup_date;
 	private String pickup_time;
 	private float price;
-	private String prepStartTtime;
+	private String prepStartTime;
 	private String prepEndTime;
 	
 	public Order(Integer orderid, String username, String email, String menu_items, String status, String pickup_date, String pickup_time, float price) {
@@ -24,6 +24,28 @@ public class Order {
 		this.pickup_date = pickup_date;
 		this.pickup_time = pickup_time;
 		this.price = price;
+	}
+	
+	public Order(Integer orderid,
+			String username, 
+			String email, 
+			String menu_items, 
+			String status, 
+			String pickup_date, 
+			String pickup_time, 
+			float price, 
+			String busystarttime, 
+			String busyendtime) {
+		this.orderid = orderid;
+		this.username = username;
+		this.email = email;
+		this.status = status;
+		this.menu_items = menu_items;
+		this.pickup_date = pickup_date;
+		this.pickup_time = pickup_time;
+		this.price = price;
+		this.prepStartTime = busystarttime;
+		this.prepEndTime = busyendtime;
 	}
 	
 	public int getOrderid() {
@@ -102,12 +124,12 @@ public class Order {
 		this.price = totalprice;
 	}
 
-	public String getPrepStartTtime() {
-		return prepStartTtime;
+	public String getPrepStartTime() {
+		return prepStartTime;
 	}
 
-	public void setPrepStartTtime(String prepStartTtime) {
-		this.prepStartTtime = prepStartTtime;
+	public void setPrepStartTime(String prepStartTime) {
+		this.prepStartTime = prepStartTime;
 	}
 
 	public String getPrepEndTime() {
