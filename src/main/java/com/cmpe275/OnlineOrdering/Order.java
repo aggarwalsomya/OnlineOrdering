@@ -11,8 +11,11 @@ public class Order {
 	private Map<String, Integer>menumap;
 	private String pickup_date;
 	private String pickup_time;
+	private float price;
+	private String prepStartTtime;
+	private String prepEndTime;
 	
-	public Order(Integer orderid, String username, String email, String menu_items, String status, String pickup_date, String pickup_time) {
+	public Order(Integer orderid, String username, String email, String menu_items, String status, String pickup_date, String pickup_time, float price) {
 		this.orderid = orderid;
 		this.username = username;
 		this.email = email;
@@ -20,6 +23,7 @@ public class Order {
 		this.menu_items = menu_items;
 		this.pickup_date = pickup_date;
 		this.pickup_time = pickup_time;
+		this.price = price;
 	}
 	
 	public int getOrderid() {
@@ -88,5 +92,29 @@ public class Order {
 
 	public void setpickup_time(String time) {
 		this.pickup_time = time;
+	}
+
+	public float getprice() {
+		return price;
+	}
+
+	public void setprice(float totalprice) {
+		this.price = totalprice;
+	}
+
+	public String getPrepStartTtime() {
+		return prepStartTtime;
+	}
+
+	public void setPrepStartTtime(String prepStartTtime) {
+		this.prepStartTtime = prepStartTtime;
+	}
+
+	public String getPrepEndTime() {
+		return prepEndTime;
+	}
+
+	public void setPrepEndTime(String prepEndTime) {
+		this.prepEndTime = prepEndTime;
 	}
 }

@@ -108,6 +108,7 @@ text-align:center;
     <th>Pickup Date</th>
     <th> Pickup Time</th>
     <th>Status</th>
+    <th>Total Price</th>
     <th>Item Name</th>
     <th>Quantity</th>
    </tr>
@@ -117,6 +118,7 @@ text-align:center;
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>
 						<td>${list1.status}</td>
+						<td>${list1.price}</td>
 						<td colspan=2>
 							<table>
 								<c:forEach var="list" items="${list1.menumap}" varStatus="status">

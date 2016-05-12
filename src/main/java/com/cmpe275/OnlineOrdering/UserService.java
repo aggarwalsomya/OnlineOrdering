@@ -87,6 +87,7 @@ public class UserService {
 	 * @param status
 	 * @param string 
 	 * @param earlytime 
+	 * @param totalPrice 
 	 */
 	@Transactional
 	public void placeOrder(int userid, 
@@ -94,7 +95,8 @@ public class UserService {
 			String menu_items, 
 			String status,
 			String earlydate, 
-			String earlytime) {
+			String earlytime, 
+			float totalPrice) {
 		
 		OrderDetails od = new OrderDetails();
 		od.setUserid(userid);
@@ -103,7 +105,8 @@ public class UserService {
 		od.setMenu_items(menu_items);
 		od.setpickup_date(earlydate);
 		od.setpickup_time(earlytime);
-	
+		od.setPrice(totalPrice);
+		
 		em.merge(od);
 	}
 	

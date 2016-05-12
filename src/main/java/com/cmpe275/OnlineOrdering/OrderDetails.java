@@ -32,6 +32,8 @@ public class OrderDetails implements Serializable{
 	
 	@Column(name="pickup_time")
 	private String pickup_time;
+	
+	private float price;
 
 	public int getUserid() {
 		return userid;
@@ -84,6 +86,14 @@ public class OrderDetails implements Serializable{
 
 	public void setpickup_time(String pickupTime) {
 		this.pickup_time = pickupTime;
+	}
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
 	}
 }
 

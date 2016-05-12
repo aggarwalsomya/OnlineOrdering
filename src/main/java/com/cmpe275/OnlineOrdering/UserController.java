@@ -306,7 +306,7 @@ public class UserController {
 		model.addAttribute("earlydate", format.parse(earlydate).toString()
 				.substring(0, 11));
 		
-		userSvc.placeOrder(user_id, orderid, menu_items_str,"pending",earlydate, newtime);
+		userSvc.placeOrder(user_id, orderid, menu_items_str,"pending",earlydate, newtime, totalPrice);
 
 		return "checkout";
 	}
@@ -527,8 +527,10 @@ public class UserController {
 			
 			String newtime = hr + ":" + min;
 			
+			float totalPrice = this.getTotalPriceForMenu(mi);
+
 			// update the order status in the database for this order.
-			userSvc.placeOrder(user_id, orderid, menu_items, "Queued",date,newtime);
+			userSvc.placeOrder(user_id, orderid, menu_items, "Queued",date,newtime,totalPrice);
 
 			sch.setOrderid(orderid);
 			sch.setDate(date);
@@ -801,7 +803,8 @@ public class UserController {
 						listod.get(i).getMenu_items(),
 						listod.get(i).getStatus(),
 						listod.get(i).getpickup_date(),
-						listod.get(i).getpickup_time());
+						listod.get(i).getpickup_time(),
+						listod.get(i).getPrice());
 				o.setMenumap(deserializeMenuItems(listod.get(i).getMenu_items()));
 				listo.add(o);
 			}
@@ -860,7 +863,8 @@ public class UserController {
 					listod.get(i).getMenu_items(),
 					listod.get(i).getStatus(),
 					listod.get(i).getpickup_date(),
-					listod.get(i).getpickup_time());
+					listod.get(i).getpickup_time(),
+					listod.get(i).getPrice());
 			o.setMenumap(deserializeMenuItems(listod.get(i).getMenu_items()));
 			listo.add(o);
 		}

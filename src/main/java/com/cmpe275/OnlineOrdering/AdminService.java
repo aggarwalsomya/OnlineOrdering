@@ -191,7 +191,8 @@ public class AdminService {
 				+ "d.menu_items,"
 				+ "d.status,"
 				+ "d.pickup_date,"
-				+ "d.pickup_time "
+				+ "d.pickup_time,"
+				+ "d.price "
 				+ "FROM UserCredentials c, OrderDetails d WHERE c.id = d.userid");
 		
 		@SuppressWarnings("unchecked")
@@ -204,7 +205,8 @@ public class AdminService {
 		                            (String) row[3],
 		                            (String) row[4],
 		                            (String) row[5],
-		                            (String) row[6]
+		                            (String) row[6],
+		                            (Float)  row[7]
 		    		));
 		}
 		
