@@ -117,7 +117,7 @@ td{
 	
 	<div class="row">
 	<label class="col1"><input type="radio" onclick="confirm()"
-		name="pickup" value="confirm" checked/>&nbsp;&nbsp;Earliest Pickup Time: &nbsp;&nbsp;</label>
+		name="pickup" value="confirm"/>&nbsp;&nbsp;Earliest Pickup Time: &nbsp;&nbsp;</label>
 		<span class="col2" id="early">${earliestpickuptime}</span>
 	</div>
 	
@@ -201,8 +201,6 @@ var yyyyf = future.getFullYear();
      
     document.getElementById("orderid").value = document.getElementById ('id').innerHTML;
     document.getElementById("earlypickuptime").value = document.getElementById ('early').innerHTML;
-    document.getElementById("in").disabled=true;
-    document.getElementById("in1").style.visibility = "hidden";
     function confirm() {
         document.getElementById("type").value = "confirm";
         document.getElementById("in").disabled=true;
