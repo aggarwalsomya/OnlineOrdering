@@ -142,12 +142,22 @@ public class LoginController {
 		Password p = new Password();
 		System.out.println("entered registration into db");
 		String email = request.getParameter("email");
-		String codeAssigned = loginSvc.getTuser(email).getCode();
+		
+		//try to get the user from db
+		TempUser t = loginSvc.getTuser(email);
+		String codeAssigned = "";
+		if(t != null)
+			codeAssigned = t.getCode();
+		else {
+			model.addAttribute("msg","Please generate registration code and then enter it here.");
+			return "AfterRegisterClick";
+		}
+		
 		String code = request.getParameter("verCode");
+		
 		if (existingUser(email)) {
 			model.addAttribute("msg",
 					"This email has already been registered. Please proceed to login!");
-			TempUser t = loginSvc.getTuser(email);
 			loginSvc.delTuser(t);
 		} else {
 			if (codeAssigned.equals(code)) {
@@ -167,7 +177,6 @@ public class LoginController {
 				user.setPhone(request.getParameter("phone"));
 				user.setId(getNextNonExistingNumber());
 				loginSvc.adduser(user);
-				TempUser t = loginSvc.getTuser(email);
 				loginSvc.delTuser(t);
 
 			} else {
