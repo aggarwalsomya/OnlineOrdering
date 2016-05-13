@@ -114,7 +114,7 @@ text-align:center;
    </tr>
 				<c:forEach var="list1" items="${orderlist}" varStatus="status">
 					<tr style="border: 2px solid #103F53;" >
-						<td>${list1.orderid}</td>	
+						<td>${list1.orderid}</td>
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>
 						<td>${list1.status}</td>
