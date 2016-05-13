@@ -5,9 +5,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -37,27 +34,8 @@ public class UserController {
 
 	@Autowired
 	private AdminService adminSvc;
-
-	/**
-	 * get data request for some menu name will be mapped here
-	 * 
-	 * @return It will return the required view
-	 * @author Somya
-	 * @throws UnsupportedEncodingException
-	 */
-	public String getData(HttpServletRequest request, Model model)
-			throws UnsupportedEncodingException {
-		String category = request.getParameter("category");
-		List<MenuItem> mi = userSvc.getMenuItems(category);
-		Map<String, Integer>menumap = new HashMap<String, Integer>();
-		if (mi == null) {
-			model.addAttribute("category", category);
-			return "ErrorFindMenuItem_User";
-		}
-		model.addAttribute("list", mi);
-		model.addAttribute("BulkList",menumap);
-		return "GetUserMenuItems";
-	}
+	
+	Utils u = new Utils();
 
 	/**
 	 * @param model
@@ -96,75 +74,18 @@ public class UserController {
 		return "Login";
 
 	}
-
-	/**
-	 * This function will take the current date and return a list of dates for
-	 * next 30 days.
-	 * 
-	 * @param curDate
-	 * @return
-	 * @throws ParseException
-	 * @author Somya
-	 */
-	private List<String> getNextDates(String curDate) throws ParseException {
-		List<String> dateList = new ArrayList<String>();
-		dateList.add(curDate);
-
-		final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		for (int i = 0; i < 29; i++) {
-			final Date date = format.parse(curDate);
-			final Calendar calendar = Calendar.getInstance();
-			calendar.setTime(date);
-			calendar.add(Calendar.DAY_OF_YEAR, 1);
-			dateList.add(format.format(calendar.getTime()));
-			curDate = format.format(calendar.getTime());
-		}
-		return dateList;
-	}
-
-	// Removes whitespace from the beginning of menuitem name
-	private String removeSpace(String part) {
-
-		if (Character.isWhitespace(part.charAt(0))) {
-			System.out.println("inside removespace:" + part);
-			part = part.substring(1);
-			System.out.println("inside removespace:" + part);
-			return part;
-		} else
-			return part;
-
-	}
 	
-	private Map<String, Integer> deserializeMenuItems(String mi) {
-		if(mi.length() == 0 || mi == null)
-			return new HashMap<String, Integer>();
-		
-		String[] items = mi.split(";;");
-		Map<String, Integer> menu_items = new TreeMap<String, Integer>();
-		for (String item : items) {
-			String[] parts = item.split("::");
-			System.out.println("items are: " + parts[0]);
-			parts[0] = removeSpace(parts[0]);
-			menu_items.put(parts[0], Integer.parseInt(parts[1]));
-		}
-		return menu_items;
-	}
-
-	private String serializeMenuItems(Map<String, Integer> menuItems) {
-		String serializedString = " ";
-		for (Map.Entry<String, Integer> entry : menuItems.entrySet()) {
-			serializedString += entry.getKey() + "::"
-					+ Integer.toString(entry.getValue());
-			serializedString += ";;";
-		}
-		return serializedString;
-	}
-
+	/**
+	 * 
+	 * @param orderid
+	 * @param userid
+	 * @return
+	 */
 	private Map<String, Integer> parseMenuItemsFromRequest(int orderid, int userid) {
 		Map<String, Integer> menuitemMap = new TreeMap<String, Integer>();
 		String menuitems = userSvc.getMenuDetailsForOrder(orderid, userid);
 		System.out.println("inside paresmenuitems" + menuitems);
-		menuitemMap = deserializeMenuItems(menuitems);
+		menuitemMap = u.deserializeMenuItems(menuitems);
 		return menuitemMap;
 	}
 
@@ -196,7 +117,7 @@ public class UserController {
 	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.POST)
 	public String getEarliestPickUpTime(HttpServletRequest request, Model model)
 			throws ParseException {
-		System.out.println("Entering the controller...");
+
 		int user_id = 0;
 		HttpSession session = request.getSession(false);
 		try {
@@ -214,17 +135,9 @@ public class UserController {
 			session.removeAttribute("orderID");
 			return "OrderErrorException";
 		}
-		Map<String, Integer> mi = deserializeMenuItems(menuitems);
-
-		Date date = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		String curDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
-		System.out.println(curDate);
-
-		int currMin = cal.get(Calendar.HOUR_OF_DAY) * 60
-				+ cal.get(Calendar.MINUTE);
-		List<String> daterange = getNextDates(curDate);
+		
+		Map<String, Integer> mi = u.deserializeMenuItems(menuitems);
+		List<String> daterange = u.getNextDates(u.getCurrdate());
 		
 		int orderid;
 		if (session.getAttribute("orderID") != null) {
@@ -244,6 +157,7 @@ public class UserController {
 		String earlydate = "";
 		String msg = "";
 		boolean found = false;
+		int currMin = u.getCurrTimeInMins();
 
 		if (totalPrepTime > 960) {
 			msg = "Order is too long to prepare in one day. Cannot accept the order. Please modify or cancel the order.";
@@ -281,32 +195,26 @@ public class UserController {
 			return "OrderError";
 		}
 
-		String menu_items_str = this.serializeMenuItems(mi);
+		String menu_items_str = u.serializeMenuItems(mi);
 
 		// Adding Items to Model as well
 		model.addAttribute("orderid", orderid);
 		model.addAttribute("totalprice", totalPrice);
-
-		String startTime = "00:00";
-		int h = earlytime / 60 + Integer.parseInt(startTime.substring(0, 2));
-		int m = earlytime % 60 + Integer.parseInt(startTime.substring(3, 5));
-		String hr = String.valueOf(h);
-		String min = String.valueOf(m);
-		
-		if(h <= 9)
-			hr = "0"+h;
-		if(m <= 9)
-			min = "0"+m;
-		
-		String newtime = hr + ":" + min;
-		model.addAttribute("earliestpickuptime", earlydate+" "+ newtime);
+		model.addAttribute("earliestpickuptime", earlydate+" "+ u.convertMinsToTime(earlytime));
 		model.addAttribute("menulist", mi);
 
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		model.addAttribute("earlydate", format.parse(earlydate).toString()
-				.substring(0, 11));
+		model.addAttribute("earlydate", format.parse(earlydate).toString().substring(0, 11));
 		
-		userSvc.placeOrder(user_id, orderid, menu_items_str,"pending",earlydate, newtime, totalPrice);
+		userSvc.placeOrder(user_id, 
+				orderid, 
+				menu_items_str,
+				"pending",
+				earlydate, 
+				u.convertMinsToTime(earlytime), 
+				totalPrice, 
+				u.getCurrdate(),
+				u.getCurrtime());
 
 		return "checkout";
 	}
@@ -455,35 +363,23 @@ public class UserController {
 			 orderid = (Integer)session.getAttribute("orderID");
 			 System.out.println("orderis id set in final checkout");
 		} else {
-			
+			System.out.println("Session is null");
 			return "OrderErrorException";
 		}
 		//System.out.println(request.getParameter("orderid"));
 		
 		System.out.println("order id::"+orderid);
 				
-		//parsing the date and time from request
-		String date = "";
-		String time = "";
-		String parts[] = datetime.split(" ");
-		if(parts.length == 2) {
-			date = parts[0];
-			System.out.println("Date::"+date);
-			
-			time = parts[1];
-			System.out.println("time::"+time);
-		} else {
-			date = null;
-			time = null;
-		}
+		String date = u.getDateFromDateTime(datetime);
 		
 		int pickuptime = 0;
 		try {
 			//changing the time in minutes from 24hour format
-			pickuptime = Integer.parseInt(time.substring(0, 2)) * 60 + Integer.parseInt(time.substring(3, 5));
+			pickuptime = u.getCurrTimeInMins();
 			System.out.println("Pickup time in mins::"+pickuptime);
 		} catch(Exception e) {
 			session.removeAttribute("orderID");
+			System.out.println("Exception in parsing time.");
 			return "OrderErrorException";
 		}
 
@@ -502,6 +398,7 @@ public class UserController {
 		if(mi.isEmpty() || mi == null) {
 			model.addAttribute("msg", "Error occured in placing the order");
 			session.removeAttribute("orderID");
+			System.out.println("Menu items is null or empty");
 			return "OrderErrorException";
 		}
 		
@@ -511,26 +408,21 @@ public class UserController {
 		Schedule sch = getAvailableScheduleForOrder(pickuptime, date,totalPrepTime);
 		if (sch != null) {
 			System.out.println("Order Accepted..");
-			String menu_items = serializeMenuItems(mi);
+			String menu_items = u.serializeMenuItems(mi);
 
-			//changing the pickup time in hr:min format
-			String startTime = "00:00";
-			int h = pickuptime / 60 + Integer.parseInt(startTime.substring(0, 2));
-			int m = pickuptime % 60 + Integer.parseInt(startTime.substring(3, 5));
-			String hr = String.valueOf(h);
-			String min = String.valueOf(m);
-			
-			if(h <= 9)
-				hr = "0"+h;
-			if(m <= 9)
-				min = "0"+m;
-			
-			String newtime = hr + ":" + min;
-			
+			String newtime = u.convertMinsToTime(pickuptime);
 			float totalPrice = this.getTotalPriceForMenu(mi);
-
+			
 			// update the order status in the database for this order.
-			userSvc.placeOrder(user_id, orderid, menu_items, "Queued",date,newtime,totalPrice);
+			userSvc.placeOrder(user_id, 
+					orderid, 
+					menu_items, 
+					"Queued",
+					date,
+					newtime,
+					totalPrice,
+					u.getCurrdate() ,
+					u.getCurrtime());
 
 			sch.setOrderid(orderid);
 			sch.setDate(date);
@@ -760,7 +652,7 @@ public class UserController {
 			return "OrderErrorException";
 		}
 		
-		Map<String,Integer> mi = deserializeMenuItems(menuItemDetails);
+		Map<String,Integer> mi = u.deserializeMenuItems(menuItemDetails);
 		model.addAttribute("BulkList",mi);
 		for(String s: mi.keySet()) {
 			System.out.println("final is" + s + mi.get(s));
@@ -780,6 +672,12 @@ public class UserController {
 		return "GetUserMenuItems";
 	}
 	
+	/**
+	 * 
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/completedOrders", method = RequestMethod.GET)
 	public String viewCompletedOrders(HttpServletRequest request,Model model){
 		System.out.println("In function - View Completed Orders");
@@ -805,7 +703,7 @@ public class UserController {
 						listod.get(i).getpickup_date(),
 						listod.get(i).getpickup_time(),
 						listod.get(i).getPrice());
-				o.setMenumap(deserializeMenuItems(listod.get(i).getMenu_items()));
+				o.setMenumap(u.deserializeMenuItems(listod.get(i).getMenu_items()));
 				listo.add(o);
 			}
 			model.addAttribute("orderlist",listo);
@@ -865,7 +763,7 @@ public class UserController {
 					listod.get(i).getpickup_date(),
 					listod.get(i).getpickup_time(),
 					listod.get(i).getPrice());
-			o.setMenumap(deserializeMenuItems(listod.get(i).getMenu_items()));
+			o.setMenumap(u.deserializeMenuItems(listod.get(i).getMenu_items()));
 			listo.add(o);
 		}
 		model.addAttribute("orderlist",listo);

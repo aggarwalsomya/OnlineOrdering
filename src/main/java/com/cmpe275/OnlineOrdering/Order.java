@@ -14,6 +14,7 @@ public class Order {
 	private float price;
 	private String prepStartTime;
 	private String prepEndTime;
+	private String orderdate;
 	
 	public Order(Integer orderid, String username, String email, String menu_items, String status, String pickup_date, String pickup_time, float price) {
 		this.orderid = orderid;
@@ -35,7 +36,8 @@ public class Order {
 			String pickup_time, 
 			float price, 
 			String busystarttime, 
-			String busyendtime) {
+			String busyendtime,
+			String orderdate) {
 		this.orderid = orderid;
 		this.username = username;
 		this.email = email;
@@ -46,6 +48,7 @@ public class Order {
 		this.price = price;
 		this.prepStartTime = busystarttime;
 		this.prepEndTime = busyendtime;
+		this.setOrderdate(orderdate);
 	}
 	
 	public int getOrderid() {
@@ -138,5 +141,13 @@ public class Order {
 
 	public void setPrepEndTime(String prepEndTime) {
 		this.prepEndTime = prepEndTime;
+	}
+
+	public String getOrderdate() {
+		return orderdate;
+	}
+
+	public void setOrderdate(String orderdate) {
+		this.orderdate = orderdate;
 	}
 }

@@ -34,6 +34,10 @@ public class OrderDetails implements Serializable{
 	private String pickup_time;
 	
 	private float price;
+	
+	private String orderdate;
+	
+	private String ordertime;
 
 	public int getUserid() {
 		return userid;
@@ -94,6 +98,22 @@ public class OrderDetails implements Serializable{
 
 	public void setPrice(float price) {
 		this.price = price;
+	}
+
+	public String getOrderdate() {
+		return orderdate;
+	}
+
+	public void setOrderdate(String orderdate) {
+		this.orderdate = orderdate;
+	}
+
+	public String getOrdertime() {
+		return ordertime;
+	}
+
+	public void setOrdertime(String ordertime) {
+		this.ordertime = ordertime;
 	}
 }
 

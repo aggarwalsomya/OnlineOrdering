@@ -184,7 +184,7 @@ public class AdminService {
 		return ret;
 	}
 
-	public List<Order> getAllOrders() {		
+	public List<Order> getAllOrders(String startdate, String enddate) {		
 		Query q = em.createQuery("SELECT d.orderid, "
 				+ "c.fullname,"
 				+ "c.email,"
@@ -194,8 +194,14 @@ public class AdminService {
 				+ "d.pickup_time,"
 				+ "d.price,"
 				+ "s.busystarttime,"
-				+ "s.busyendtime"
-				+ " FROM UserCredentials c, OrderDetails d, Schedule s WHERE c.id = d.userid and d.orderid = s.orderid");
+				+ "s.busyendtime,"
+				+ "d.orderdate "
+				+ " FROM UserCredentials c, "
+				+ "OrderDetails d, "
+				+ "Schedule s WHERE "
+				+ "c.id = d.userid "
+				+ "and "
+				+ "d.orderid = s.orderid");
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> resultList = q.getResultList();
@@ -213,7 +219,8 @@ public class AdminService {
 		                            (String) row[6],
 		                            (Float)  row[7],
 		                            busystarttime,
-		                            busyendtime
+		                            busyendtime,
+		                            (String) row[10]
 		    		));
 		}
 		
@@ -221,8 +228,6 @@ public class AdminService {
 			String menuItems = result.get(i).getMenu_items();
 			Map<String, Integer> m = deserializeMenuItems(menuItems);
 			result.get(i).setMenumap(m);
-			System.out.println(result.get(i).getpickup_time());
-			System.out.println(result.get(i).getpickup_time());
 		}
 
 		return result;

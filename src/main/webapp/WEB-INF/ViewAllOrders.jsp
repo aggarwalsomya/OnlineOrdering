@@ -106,6 +106,7 @@ text-align:center;
     <th>Order Id</th>
     <th>User Name</th>
     <th>User Email</th>
+    <th>Order Date</th>
     <th>Status</th>
     <th>Pickup Date</th>
     <th> Pickup Time</th>
@@ -120,6 +121,7 @@ text-align:center;
 						<td>${list1.orderid}</td>
 						<td>${list1.username}</td>
 						<td>${list1.email}</td>
+						<td>${list1.orderdate}</td>
 						<td>${list1.status}</td>
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>

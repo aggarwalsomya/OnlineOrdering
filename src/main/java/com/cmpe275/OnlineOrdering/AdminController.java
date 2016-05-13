@@ -91,9 +91,11 @@ public class AdminController {
 	
 	@RequestMapping(value = "/vieworders", method = RequestMethod.GET)
 	public String viewOrders(Model model) {
+		String startdate = "2016-05-11";
+		String enddate = "2016-05-16";
 		
 		System.out.println("In view all orders : Admin Controller.");
-		List<Order> od = adminSvc.getAllOrders();
+		List<Order> od = adminSvc.getAllOrders(startdate, enddate);
 		if (od == null) {
 			model.addAttribute("msg", "Currently there are no orders to be displayed");
 		} else {
