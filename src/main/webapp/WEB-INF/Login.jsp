@@ -2,363 +2,147 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>CMPE275_TermProject_Group5:Registration</title>
 </head>
-
-
-<style type="text/css">
-/*
- * Author: Ojas Kale
- */
+<style>
 
 body {
-  background-color: #f2f2f2;
-    font-family: 'EB Garamond', serif;
-    font-weight: 300;
-    font-size: 16px;
-    color: #555;
-
-    -webkit-font-smoothing: antialiased;
-    -webkit-overflow-scrolling: touch;
+	color: #103F53;
+	background: #e6f3ff;
 }
 
-/* Titles */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Oswald', sans-serif;
-    font-weight: 300;
-    color: #333;
-}
-
-
-/* Paragraph & Typographic */
-p {
-    line-height: 28px;
-    margin-bottom: 25px;
-}
-
-.centered {
-    text-align: center;
-}
-
-/* Links */
-a {
-    color: #f85c37;
-    word-wrap: break-word;
-
-    -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -o-transition: color 0.1s ease-in, background 0.1s ease-in;
-    transition: color 0.1s ease-in, background 0.1s ease-in;
-}
-
-a:hover,
-a:focus {
-    color: #7b7b7b;
-    text-decoration: none;
-    outline: 0;
-}
-
-a:before,
-a:after {
-    -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
-    -o-transition: color 0.1s ease-in, background 0.1s ease-in;
-    transition: color 0.1s ease-in, background 0.1s ease-in;
-}
-
- hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
-}
-
-
-/* ==========================================================================
-   Wrap Sections
-   ========================================================================== */
-
-#headerwrap {
-	background: url(https://i.ytimg.com/vi/t9OA8BGMGN0/maxresdefault.jpg) no-repeat center top;
-	margin-top: -10px;
-	padding-top:20px;
-	text-align:center;
-	background-attachment: relative;
-	background-position: center center;
-	min-height: 700px;
-	width: 100%;
-	
-    -webkit-background-size: 100%;
-    -moz-background-size: 100%;
-    -o-background-size: 100%;
-    background-size: 100%;
-
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
-#headerwrap h1 {
-	margin-top: 150px;
-	color: white;
-	font-size: 70px;
-	font-weight: 700;
-}
-
-#headerwrap h3 {
-	color: white;
-	font-size: 30px;
-	font-weight: 100;
-    font-family: 'EB Garamond', serif;
-    font-style: oblique;
-}
-
-#headerwrap .logo {
-	text-align: left;
-	margin-left: 20px;
-	margin-top: 15px;
-}
-
-
-/* Footer Wrap */
-
-#f {
-	background: #1a1a1a;
-	padding-top: 70px;
-	padding-bottom: 70px;
-	text-align: center
-}
-
-#f h3 {
-	color: white;
-	font-size: 28px;
-	font-weight: 700;
-	letter-spacing: 1px;	
-}
-
-#f i {
-	font-size: 8px;
-	color: #fff;
-    padding: 3px;
-}
-
-#f p {
-	font-size: 20px;
-	color: #f2f2f2;
-}
-
-#f img {
+#title {
+	width: 330px;
+	height: 26px;	
+	padding-top: 15px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
 	text-align: center;
+	font-size: 22px;
+	
 }
 
-
-/* MENU CONF*/
-
-.menu {
-	position: fixed;
-	right: -200px;
-	width: 260px;
-	height: 100%;
-	top: 0;
-	z-index: 10;
-	text-align: left;
+form {
+	width: 335px;
 }
 
-.menu.menu-open {
-	right: 0px;
-}
-
-.menu-wrap {
-	position: absolute;
-	top: 0;
-	left: 60px;
-	background: #1a1a1a;
-	width: 200px;
-	height: 100%;
-}
-
-.menu h1.logo a {
-	font-family: 'Oswald', sans-serif;
-	font-size: 16px;
-	font-weight: 700;
-	letter-spacing: 0.15em;
-	line-height: 40px;
-	text-transform: uppercase;
-	color: #ffffff;
-	margin-top: 20px;
-}
-
-.menu h1.logo a:hover {
-	color: #f85c37;
-}
-
-.menu img.logo {
-	margin: 20px 0;
-	max-width: 160px;
-}
-
-.menu a {
-	margin-left: 20px;
-	color: #808080;
-	display: block;
-	font-size: 12px;
-	font-weight: 700;
-	line-height: 40px;
-	letter-spacing: 0.1em;
-	text-transform: uppercase;
-}
-
-.menu a:hover {
-	color: #ffffff;
-}
-
-.menu a:active {
-	color: #ffffff;
-}
-
-.menu a > i {
+.col1 {
+	text-align: right;
+	width: 135px;
+	height: 31px;
+	margin: 0;
 	float: left;
-	display: inline-block;
-	vertical-align: middle; 
-	text-align: left;
-	width: 25px;
-	font-size: 14px;
-	line-height: 40px;
-	margin: 25px 2px;
-}
-
-.menu-close {
-	cursor: pointer;
-	display: block;
-	position: absolute;
-	font-size: 14px;
-	color: #808080;
-	width: 40px;
-	height: 40px;
-	line-height: 40px;
-	top: 20px;
-	right: 5px;
-	-webkit-transition: all .1s ease-in-out;
-	   -moz-transition: all .1s ease-in-out;
-		-ms-transition: all .1s ease-in-out;
-		 -o-transition: all .1s ease-in-out;
-			transition: all .1s ease-in-out;
-}
-
-.menu-close:hover {
-	color: #ffffff;
-	-webkit-transition: all .1s ease-in-out;
-	   -moz-transition: all .1s ease-in-out;
-		-ms-transition: all .1s ease-in-out;
-		 -o-transition: all .1s ease-in-out;
-			transition: all .1s ease-in-out;
-}
-
-/* Push the body after clicking the menu button */
-.body-push {
-	overflow-x: hidden;
-	position: relative;
-	left: 0;
-}
-
-.body-push-toright {
-	left: 200px;
-}
-
-.body-push-toleft {
-	left: -200px;
-}
-
-.menu,
-.body-push {
-	-webkit-transition: all .3s ease;
-	   -moz-transition: all .3s ease;
-		-ms-transition: all .3s ease;
-		 -o-transition: all .3s ease;
-			transition: all .3s ease;
-}
-
-#menuToggle {
-	position: absolute;
-	top: 20px;
-	left: 0;
-	z-index: 11;
-	display: block;
-	text-align: center;
-	font-size: 14px;
-	color: #ffffff;
-	width: 40px;
-	height: 40px;
-	line-height: 40px;
-	cursor: pointer;
-	background: rgba(0,0,0,0.25);
-	-webkit-transition: all .1s ease-in-out;
-	   -moz-transition: all .1s ease-in-out;
-		-ms-transition: all .1s ease-in-out;
-		 -o-transition: all .1s ease-in-out;
-			transition: all .1s ease-in-out;
-}
-
-#menuToggle:hover {
-	color: #ffffff;
-	background: rgba(0,0,0,0.2);
-	-webkit-transition: all .1s ease-in-out;
-	   -moz-transition: all .1s ease-in-out;
-		-ms-transition: all .1s ease-in-out;
-		 -o-transition: all .1s ease-in-out;
-			transition: all .1s ease-in-out;
-}
-
-
-
-
+	margin-right: 2px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
 	
+}
+
+.col2 {
+	width: 195px;
+	height: 40px;
+	display: block;
+	float: left;
+	margin: 0;
+	
+}
+
+.col2comment {
+	width: 195px;
+	height: 98px;
+	margin: 0;
+	display: block;
+	float: left;
+	
+}
+
+.col1comment {
+	text-align: right;
+	width: 135px;
+	height: 98px;
+	float: left;
+	display: block;
+	margin-right: 2px;
+	
+}
+
+div.row {
+	clear: both;
+	width: 335px;
+}
+
+.input {
+	margin: 4px 0 5px 8px;
+	padding: 1px;
+	border: 1px solid #8595B2;
+	height:30px;
+}
+
+.textarea {
+	border: 1px solid #8595B2;
+	margin: 4px 0 5px 8px;
+}
+
+.button:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+} 
+.mybutton
+{
+   margin-left : 140px;
+}
+
+.button{
+
+background-color: #7EB2C8;
+color:black;
+border: 1px solid #031E2A;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 16px;
+}
+
+.bodycontent {
+	margin: auto;
+	margin-top: 50px;
+	width: 40%;
+}
+.exist{
+margin-left : 155px;
+}
+
+
+.mybutton{
+background-color: #7EB2C8;
+color:black;
+border: 1px solid #031E2A;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 16px;
+width:75px;
+}
+.mybutton:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+}
 
 </style>
 
 <body>
-<section id="home" name="home"></section>
-	<div id="headerwrap">
-		<div class="container">
-			
-			<br>
-			<div class="row">
-				<h1>SJSU Food Mart</h1>
-				<br>
-				<h3>CmpE 275 Project - Team 5</h3>
-				<br>
-				<h3>Take away food delivery system</h3>
-				<br>
-				<div class="col-lg-6 col-lg-offset-3">
-				</div>
-			</div>
-		</div><!-- /container -->
-	</div><!-- /headerwrap -->
+<div class="bodycontent">
 
-<section id="about" name="about"></section>
-	<div id="f">
-		<div class="container">
-			<div class="row">
-				<h3>Log In</h3>
-				<p class="centered"><i class="icon icon-circle"></i></p>
-				
-				<div class="col-lg-6 col-lg-offset-3">
-					<form method="post" action="userLogin"  >
+<div id="title"><b>CMPE275_TermProject_Group5</b></div>
+<div id="title" style="font-size: 20px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login</b></div>
+<form method="post" action="userLogin"  >
 	<br>
-	<div class="row"><label class="col1"> Email:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-	<span class="col2"><input type="text" name="email" value="" /></span></div>
-	<br>
+	<div class="row"><label class="col1"> Email:&nbsp;&nbsp;</label>
+	<span class="col2"><input type="text" name="email" value="" required/></span></div>
 	<div class="row"><label class="col1"> Password:&nbsp;&nbsp;</label>
-	<span class="col2"><input type="password" name="password" value="" /></span></div>
+	<span class="col2"><input type="password" name="password" value="" required/></span></div>
 	<br>
 	<br>
 		<input class="mybutton" type="submit" name="login" value="Login">
@@ -366,17 +150,8 @@ a:after {
 	<div class="row">
 <span style="margin-left:120px;">New user?</span>&nbsp;&nbsp; <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/register';"></div>
 	</form>
-				
-				</div>								
-			</div>
-		</div> 
-	</div> 
 	
-	
-	<script src="assets/js/classie.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/smoothscroll.js"></script>
-	<script src="assets/js/main.js"></script>
+	</div>
 
 </body>
 </html>
