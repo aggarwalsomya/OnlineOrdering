@@ -18,12 +18,21 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <style>
 
-body {
-	color: #103F53;
-	background: #e6f3ff;
-}
 
+body {
+  background-size: 1400px 900px;
+	color: #000000;
+background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+font-family: Papyrus, fantasy;
+	font-weight: bold;
+    background-repeat:repeat-y;
+    background-position: 10% 50%;
+    background-attachment: fixed;
+    
+
+}
 #title {
+color: #ffffff;
 	width: 350px;
 	height: 26px;	
 	padding-top: 15px;
@@ -43,12 +52,14 @@ body {
 }
 
 .mybutton{
-background-color: #7EB2C8;
+background-color: #DF6F12;
 color:black;
 border: 1px solid #031E2A;
 border-radius: 4px;
 padding: 5px 12px;
 font-size: 14px;
+float:right;
+margin-right:300px;
 }
 .mybutton:hover {
     background-color: #031E2A;
@@ -90,15 +101,67 @@ th{
 padding:15px;
 text-align:center;
 }
+
+#custom-bootstrap-menu.navbar-default {
+    font-size: 17px;
+    background-color: rgba(223, 111, 18, 1);
+    border-bottom-width: 1px;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(51, 51, 51, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(209, 93, 16, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #df6f12;
+}
+
 </style>
 
 
 </head>
 <body>
 <div class="bodycontent">
+<!---navbar----->
+<div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
+    <div class="container-fluid" style="margin-top:15px; font-size:20px;margin-right:12px;">
+        <div class="collapse navbar-collapse navbar-menubuilder" >
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/OnlineOrdering/AdminHome">Home</a>
+                </li>
+                <li><a href="/contact">Contact Us</a>
+                </li>
+                <li><a href="/OnlineOrdering/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!---navbar----->
 
 <div id="title" style="margin-left:125px;"><b>Delete Menu Items</b></div>
-<br><br>
+<br><br><br><br>
 		<div class="tab-content">
 
 		<div id="Drinks" class="tab-pane fade in active">
@@ -127,13 +190,13 @@ text-align:center;
 		</div>
 	</div>
 	<br><br>
-	
+	</div>
 	<button id="jqcc" class="mybutton">Delete Selected Items</button>
-	<br><br>
+	
 	<form action="deleteMenuItem" method="POST">
 		<input type="hidden" id="itemData" name="itemData"> 
-		<p>Please press confirm delete to make sure you want to delete these items</p><br>
-		<input type="submit" id="next" value="Confirm Delete" class="mybutton" />
+		<div class="bodycontent"><div style="color: #ffffff;"><h3>Please press confirm delete to make sure you want to delete these items</h3>
+		</div></div><input type="submit" id="next" value="Confirm Delete" class="mybutton" /><br><br>
 	</form>
 
 	<div id="demo1"></div>

@@ -32,7 +32,7 @@
 
 
 body {
-  background-size: 1400px 700px;
+  background-size: 100%;
     background-repeat: no-repeat;
 	color: #000000;
 	font-family: Papyrus, fantasy;
