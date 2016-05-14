@@ -4,6 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * mapped to schedule table in the db
+ * @author Somya
+ *
+ */
 @Entity
 @Table(name = "schedule")
 public class Schedule {

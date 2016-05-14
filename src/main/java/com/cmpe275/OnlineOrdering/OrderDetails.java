@@ -8,6 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
+/**
+ * Mapped to order details table of the db
+ * @author Somya
+ *
+ */
 @Entity @IdClass(OrderDetailsId.class)
 @Table(name = "orderdetails")
 public class OrderDetails implements Serializable{

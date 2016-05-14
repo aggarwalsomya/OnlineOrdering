@@ -56,7 +56,7 @@ public class LoginController {
 			return "usernotfound";
 		} else {
 			try {
-				if (p.check(password, uc.getPassword())) {
+				if (p.checkPassword(password, uc.getPassword())) {
 				} else {
 					model.addAttribute("msg", "Invalid Password. Try again!");
 					return "usernotfound";

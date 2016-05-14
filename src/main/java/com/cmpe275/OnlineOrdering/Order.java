@@ -2,6 +2,11 @@ package com.cmpe275.OnlineOrdering;
 
 import java.util.Map;
 
+/**
+ * This class will contain the data for the admin reports - order and schedule details
+ * @author Somya
+ *
+ */
 public class Order {
 	private int orderid;
 	private String username;

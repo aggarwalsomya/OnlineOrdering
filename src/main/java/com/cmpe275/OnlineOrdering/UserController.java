@@ -37,7 +37,7 @@ public class UserController {
 	
 	Utils u = new Utils();
 
-	/**
+	/** get the data for each menu item category
 	 * @param model
 	 * @return
 	 * @author Somya
@@ -63,6 +63,12 @@ public class UserController {
 		return "GetUserMenuItems";
 	}
 
+	/**
+	 * mapping to the home page
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
@@ -76,7 +82,7 @@ public class UserController {
 	}
 	
 	/**
-	 * 
+	 * parse all the menu items from the request page
 	 * @param orderid
 	 * @param userid
 	 * @return
@@ -358,9 +364,12 @@ public class UserController {
 
 		//order id from session.
 		int orderid;
+		int user_id = 0;
+		
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			 orderid = (Integer)session.getAttribute("orderID");
+			orderid = (Integer)session.getAttribute("orderID");
+			user_id = (Integer) session.getAttribute("userID");
 			 System.out.println("orderis id set in final checkout");
 		} else {
 			System.out.println("Session is null");
@@ -378,27 +387,19 @@ public class UserController {
 			pickuptime = u.getCurrTimeInMins();
 			System.out.println("Pickup time in mins::"+pickuptime);
 		} catch(Exception e) {
+			userSvc.cancelOrderUnplaced(orderid, user_id);
 			session.removeAttribute("orderID");
 			System.out.println("Exception in parsing time.");
 			return "OrderErrorException";
 		}
 
-		
-		//getting the userid from the session
-		int user_id = 0;
-		
-		if (session != null) {
-			user_id = (Integer) session.getAttribute("userID");
-			System.out.println("user id::"+user_id);
-			model.addAttribute("userid", user_id);
-		}
-		
 		Map<String, Integer> mi = this.parseMenuItemsFromRequest(orderid, user_id);
 		System.out.println("Menu Order Items:"+mi);
 		if(mi.isEmpty() || mi == null) {
 			model.addAttribute("msg", "Error occured in placing the order");
 			session.removeAttribute("orderID");
 			System.out.println("Menu items is null or empty");
+			userSvc.cancelOrderUnplaced(orderid, user_id);
 			return "OrderErrorException";
 		}
 		
@@ -409,6 +410,9 @@ public class UserController {
 		if (sch != null) {
 			System.out.println("Order Accepted..");
 			String menu_items = u.serializeMenuItems(mi);
+			
+			//update the quantity in the menu item table
+			userSvc.updateQuantity(mi);
 
 			String newtime = u.convertMinsToTime(pickuptime);
 			float totalPrice = this.getTotalPriceForMenu(mi);
@@ -441,6 +445,7 @@ public class UserController {
 			System.out.println("No chef is free, ask him to modify the order");
 			model.addAttribute("msg", "Order cannot be placed due to too many other orders at this time");
 			model.addAttribute("orderid",orderid);
+			userSvc.cancelOrderUnplaced(orderid, user_id);
 			return "OrderError";
 		}
 	}

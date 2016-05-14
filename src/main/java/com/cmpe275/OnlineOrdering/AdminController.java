@@ -22,8 +22,7 @@ public class AdminController {
 	@Autowired
 	private AdminService adminSvc;
 
-	/**
-	 * get data request for some menu name will be mapped here
+	 /** get data request for some menu name will be mapped here
 	 * @return It will return the required view
 	 * @author Somya
 	 */
@@ -89,10 +88,17 @@ public class AdminController {
 		return "ResetSuccess";
 	}
 	
+	/**
+	 * This will show the orders to the admin
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/vieworders", method = RequestMethod.GET)
 	public String viewOrders(Model model) {
-		String startdate = "2016-05-11";
+		String startdate = "2016-05-05";
 		String enddate = "2016-05-16";
+		boolean sortOrderDate = true;
+		boolean sortFulfilmentTime  = false;
 		
 		System.out.println("In view all orders : Admin Controller.");
 		List<Order> od = adminSvc.getAllOrders(startdate, enddate);
@@ -107,7 +113,7 @@ public class AdminController {
 	
 	
 	/**
-	 * 
+	 * Validate if the image file is valid or not
 	 * @param fileUpload
 	 * @return
 	 * @author Somya
@@ -179,7 +185,7 @@ public class AdminController {
 	}
 	
 	/**
-	 * 
+	 * It will show all the menu items to the admin which are available for delete
 	 * @param model
 	 * @return
 	 */
@@ -191,9 +197,8 @@ public class AdminController {
 		return "DeleteMenuItem";
 	}
     
-    //returns search page on click
 	/**
-	 * 
+	 * Admin can search for a menu item
 	 * @param request
 	 * @return
 	 */
@@ -203,9 +208,8 @@ public class AdminController {
         return "SearchMenuItem";
     }
     
-    //returns add item page on click
     /**
-     * 
+     * Add a menu item for the admin
      * @param request
      * @return
      */
@@ -217,9 +221,8 @@ public class AdminController {
     
    
     
-    //logout and jump to first page.
     /**
-     * 
+     * Logout for the admin
      * @param request
      * @return
      */

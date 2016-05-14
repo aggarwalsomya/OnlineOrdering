@@ -20,6 +20,7 @@ public class AdminService {
 
 	@PersistenceContext
 	private EntityManager em;
+	Utils u = new Utils();
 
 	/** This method is used to get the details of a specific menu item with the name as passed.
 	 * @param name of the menu item which is to be looked for
@@ -59,6 +60,11 @@ public class AdminService {
 		return 0;	
 	}
 	
+	/**
+	 * return the price for a menu item from the db
+	 * @param menuitem_name
+	 * @return
+	 */
 	public float getPriceForMenuItem(String menuitem_name) {
 		MenuItem mi;
 		Query q = em.createQuery("Select mi from MenuItem mi where mi.name=:arg1");
@@ -148,6 +154,10 @@ public class AdminService {
 	}
 	
 	
+	/**
+	 * get a list of all menu items present in the db
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<MenuItem> getAllMenuItems() {
@@ -184,6 +194,12 @@ public class AdminService {
 		return ret;
 	}
 
+	/**
+	 * get all orders from a start date to the end date
+	 * @param startdate
+	 * @param enddate
+	 * @return
+	 */
 	public List<Order> getAllOrders(String startdate, String enddate) {		
 		Query q = em.createQuery("SELECT d.orderid, "
 				+ "c.fullname,"
@@ -201,7 +217,14 @@ public class AdminService {
 				+ "Schedule s WHERE "
 				+ "c.id = d.userid "
 				+ "and "
-				+ "d.orderid = s.orderid");
+				+ "d.orderid = s.orderid"
+				+ " and "
+				+ " d.orderdate >= :arg1 "
+				+ "and "
+				+ "d.orderdate <= :arg2"
+				+ " order by d.orderdate desc");
+		q.setParameter("arg1", startdate);
+		q.setParameter("arg2", enddate);
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> resultList = q.getResultList();
@@ -226,13 +249,18 @@ public class AdminService {
 		
 		for(int i = 0; i < result.size(); i++) {
 			String menuItems = result.get(i).getMenu_items();
-			Map<String, Integer> m = deserializeMenuItems(menuItems);
+			Map<String, Integer> m = u.deserializeMenuItems(menuItems);
 			result.get(i).setMenumap(m);
 		}
 
 		return result;
 	}
 	
+	/**
+	 * convert the int time to hr:min format
+	 * @param time
+	 * @return
+	 */
 	private String convertToTime(Integer time) {
 		String startTime = "00:00";
 		int h = time / 60 + Integer.parseInt(startTime.substring(0, 2));
@@ -246,15 +274,5 @@ public class AdminService {
 			min = "0"+m;
 		
 		return hr + ":" + min;
-	}
-
-	private Map<String, Integer> deserializeMenuItems(String mi) {
-		String[] items = mi.split(";;");
-		Map<String, Integer> menu_items = new TreeMap<String, Integer>();
-		for (String item : items) {
-			String[] parts = item.split("::");
-			menu_items.put(parts[0], Integer.parseInt(parts[1]));
-		}
-		return menu_items;
 	}
 }

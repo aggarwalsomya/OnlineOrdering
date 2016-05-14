@@ -14,8 +14,9 @@ import java.util.TreeMap;
 public class Utils {
 	
 	/**
-	 * 
+	 * get the current system date
 	 * @return
+	 * @author Somya
 	 */
 	public String getCurrdate() {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -24,8 +25,9 @@ public class Utils {
 	}
 	
 	/**
-	 * 
+	 * get the current system time
 	 * @return
+	 * @author Somya
 	 */
 	public String getCurrtime() {
 		SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
@@ -60,9 +62,10 @@ public class Utils {
 	}
 	
 	/**
-	 * 
+	 * removing the unnecessary spaces in the order details if any
 	 * @param part
 	 * @return
+	 * @author meera
 	 */
 		public String removeSpace(String part) {
 
@@ -79,6 +82,7 @@ public class Utils {
  * 
  * @param mi
  * @return
+ * @author Somya
  */
 		public Map<String, Integer> deserializeMenuItems(String mi) {
 			if(mi.length() == 0 || mi == null)
@@ -99,6 +103,7 @@ public class Utils {
 	 * 
 	 * @param menuItems
 	 * @return
+	 * @author Somya
 	 */
 	public String serializeMenuItems(Map<String, Integer> menuItems) {
 		String serializedString = " ";
@@ -110,9 +115,10 @@ public class Utils {
 	}
 	
 	/**
-	 * 
+	 * convert the mins to the time
 	 * @param earlytime
 	 * @return
+	 * @author Somya
 	 */
 	public String convertMinsToTime(int earlytime) {
 		String startTime = "00:00";
@@ -131,9 +137,11 @@ public class Utils {
 	}
 	
 	/**
-	 * 
+	 * get the curr time in mins
 	 * @return
+	 * @author Somya
 	 */
+	
 	public int getCurrTimeInMins() {
 		Calendar cal = Calendar.getInstance();
 		int currMin = cal.get(Calendar.HOUR_OF_DAY) * 60
@@ -142,9 +150,10 @@ public class Utils {
 	}
 	
 	/**
-	 * 
+	 * get the date from the date time
 	 * @param datetime
 	 * @return
+	 * @author Somya
 	 */
 	public String getDateFromDateTime(String datetime) {
 		//parsing the date and time from request
@@ -160,9 +169,10 @@ public class Utils {
 	}
 	
 	/**
-	 * 
+	 * get the time from date time
 	 * @param datetime
 	 * @return
+	 * @author Somya
 	 */
 	public String getTimeFromDateTime(String datetime) {
 		// parsing the date and time from request

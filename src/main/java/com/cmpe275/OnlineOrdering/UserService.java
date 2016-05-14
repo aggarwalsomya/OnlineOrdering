@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -67,11 +68,20 @@ public class UserService {
 	 * @param busyFrom
 	 * @param busyTo
 	 * @param date
+	 * @author Somya
 	 */
 	@Transactional
 	public void addOrderToChefSchedule(Schedule sch) {
 		em.merge(sch);
 	}
+	
+	/**
+	 * check if the order exists
+	 * @param user_id
+	 * @param order_id
+	 * @return
+	 * @author Somya
+	 */
 	
 	@Transactional
 	public boolean orderExists(int user_id, int order_id) {
@@ -90,6 +100,7 @@ public class UserService {
 	 * @param totalPrice 
 	 * @param currdate 
 	 * @param currtime 
+	 * @author Somya
 	 */
 	@Transactional
 	public void placeOrder(int userid, 
@@ -117,7 +128,7 @@ public class UserService {
 	}
 	
 	/**
-	 * 
+	 * get the schedule for the chef
 	 * @param chefid
 	 * @param date
 	 * @author Somya
@@ -143,6 +154,12 @@ public class UserService {
 
 	}
 
+	/**
+	 * cancel the unplaced order for the user and order
+	 * @param orderid
+	 * @param userid
+	 * @author Somya
+	 */
 	@Transactional
 	public void cancelOrderUnplaced(int orderid, int userid) {
 		Query q = em.createQuery("Delete from OrderDetails where orderid=:arg1 and userid=:arg2");
@@ -151,6 +168,13 @@ public class UserService {
 		q.executeUpdate();
 	}
 
+	/**
+	 * get the menu details for the order
+	 * @param orderid
+	 * @param userid
+	 * @return
+	 * @author Somya
+	 */
 	@Transactional
 	public String getMenuDetailsForOrder(int orderid, int userid) {
 		Query q = em.createQuery("Select od from OrderDetails od where od.orderid=:arg1 and od.userid=:arg2");
@@ -163,6 +187,13 @@ public class UserService {
 		return od.getMenu_items();
 	}
 
+	/**
+	 * get all the orders for the users
+	 * @param user_id
+	 * @param status
+	 * @return
+	 * @author Somya
+	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<OrderDetails> getUserOrders(int user_id, String status) {
@@ -173,6 +204,24 @@ public class UserService {
 		List<OrderDetails> orderlist = q.getResultList();
 		System.out.println(orderlist);
 		return orderlist;		
+	}
+
+	/**
+	 * update the quantity of the ordered items
+	 * @param mi
+	 * @author Somya
+	 */
+	@Transactional
+	public void updateQuantity(Map<String, Integer> mi) {
+		for (Entry<String, Integer> entry : mi.entrySet()) {
+		    String key = entry.getKey();
+		    Integer value = (Integer) entry.getValue();
+		    
+		    Query q = em.createQuery("Update MenuItem mi Set mi.ordercount = mi.ordercount + :arg1 where mi.name = :arg2");
+		    q.setParameter("arg1", value);
+		    q.setParameter("arg2", key);
+		    q.executeUpdate();
+		}
 	}
 	
 }

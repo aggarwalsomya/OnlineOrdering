@@ -38,6 +38,7 @@ public class MenuItem {
 
 	private int preptime;
 	private String picpath;
+	private int ordercount;
 	
 	public String getCategory() {
 		return category;
@@ -102,6 +103,14 @@ public class MenuItem {
 
 	public void setpicpath(String picpath) {
 		this.picpath = picpath;
+	}
+
+	public int getOrdercount() {
+		return ordercount;
+	}
+
+	public void setOrdercount(int ordercount) {
+		this.ordercount = ordercount;
 	}
 
 }
