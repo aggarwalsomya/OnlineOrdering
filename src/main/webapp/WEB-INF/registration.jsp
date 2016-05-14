@@ -12,9 +12,23 @@
 <style>
 
 body {
-	color: #103F53;
-	background: #e6f3ff;
+background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106396/keih4mm9pyv3kpq8scymlnub2aecxzs9iscdane82nvbmfcc3leqqh7pjk0adoki-o.jpg');
+  background-size: 100%;
+    background-repeat: repeat-y;
+	color: #000000;
+	font-family: Papyrus, fantasy;
+	font-weight: bold;
+	
 }
+#myBackground{
+ background-color: rgba(255,255,255, 0.5);
+ border-radius:4px;
+  color: inherit;
+  width:540px;
+  height:550px;
+}
+
+
 
 #title {
 	width: 350px;
@@ -23,7 +37,9 @@ body {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	text-align: center;
-	font-size: 22px;
+	font-size: 18px;
+	font-family: Papyrus, fantasy;
+	font-weight: bold;
 	
 }
 
@@ -40,6 +56,9 @@ form {
 	margin-right: 2px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
+	font-family: Papyrus, fantasy;
+	font-size:12px;
+	font-weight: bold;
 	
 }
 
@@ -105,25 +124,28 @@ border: 1px solid #031E2A;
 border-radius: 6px;
 padding: 5px 12px;
 font-size: 18px;
+width:90px;
 }
 
 .bodycontent {
 	margin: auto;
-	margin-top: 50px;
-	width: 40%;
+	margin-top: 80px;
+	width: 20%;
 }
 .exist{
 margin-left : 155px;
 }
 
 
+
 .mybutton{
-background-color: #7EB2C8;
+background-color: #DF6F12;
 color:black;
-border: 1px solid #031E2A;
+border: 1px solid #DF6F12;
 border-radius: 4px;
 padding: 5px 12px;
-font-size: 14px;
+font-size: 16px;
+width:95px;
 }
 .mybutton:hover {
     background-color: #031E2A;
@@ -134,10 +156,10 @@ font-size: 14px;
 
 <body>
 	<div class="bodycontent">
-
-<div id="title"><b>CMPE275_TermProject_Group5</b></div>
-<div id="title" style="font-size: 20px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user registration</b></div>
-		<form method="post" action="registerUser">
+<div id="myBackground"><br>
+<div id="title" style="margin-left:45px;"><b>CMPE275_TermProject_Group5</b></div>
+<div id="title" style="font-size: 17px; margin-left:45px;"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user registration</b></div>
+	<br><div style="margin-left:50px;">	<form method="post" action="registerUser">
 			<br>
 			<div class="row">
 				<label class="col1"> Email:&nbsp;&nbsp;</label> <span class="col2"><input
@@ -158,7 +180,7 @@ font-size: 14px;
 			</div>
 			<div class="row">
 				<label class="col1">Mobile Carrier:&nbsp;&nbsp;</label>
-				<span class="col2"> <select id="carrier" name="carrier" style="width:175px;">
+				<span class="col2"> <select id="carrier" name="carrier" style="width:165px;">
 						<option value="ve">Verizon</option>
 						<option value="at">At&T</option>
 						<option value="tm">T-Mobile</option>
@@ -186,15 +208,15 @@ font-size: 14px;
 
 			<br> <br><span class="col2" style="margin-left:35px;"> <input class="mybutton" type="submit"
 				name="register" value="Register"></span>
-		</form>
-
+		</form></div>
+</div>
 	</div>
 	<script
 		src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		function sendotp() {
 			var http = new XMLHttpRequest();
-			var url = "http://127.0.0.1:8080/OnlineOrdering/verifyMail";
+			var url = "http://127.0.0.1:8081/OnlineOrdering/verifyMail";
 			var params = "email=";
 
 			params = params + document.getElementById("email").value
