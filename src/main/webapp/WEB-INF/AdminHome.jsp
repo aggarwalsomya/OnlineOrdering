@@ -28,7 +28,7 @@ body {
 	border-radius: 4px;
 	padding: 5px 12px;
 	font-size: 16px;
-	width:150px;
+	width:200px;
 	text-align:center;
 }
 
@@ -68,7 +68,7 @@ body {
 					id="vieworders" name="vieworders" onclick="location.href = 'vieworders';">
 		<br><br>
 					<input type="button" class=mybutton value="View Popularity Report"
-					id="popreport" name="popreport" onclick="location.href = 'popreport';">
+					id="popreport" name="popreport" onclick="location.href = 'popularityReport';">
 		<br><br>			
 					<input type="button" class=mybutton value="Logout" id="Logout"
 			name="Logout" onclick="location.href = 'logout';">
