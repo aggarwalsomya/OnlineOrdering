@@ -6,22 +6,31 @@
 <head>
 <title>Cmpe275_Term_Project_5 : Add New Menu Item</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+ 
 <style>
 
 body {
-	color: #103F53;
-	background: #e6f3ff;
+background-image:url('http://static1.squarespace.com/static/50ad0f3ae4b0b1fe7cd06071/t/5547e844e4b03cee038489d9/1430775963732/Dollarphotoclub_75694259.jpg?format=2500w');
+ font-family: Papyrus, fantasy;
+	font-weight: bold;
+  background-size: 100%;
+    background-repeat: no-repeat;
+	color: #000000;
+	
 }
 
 #title {
 	width: 350px;
 	height: 26px;	
-	padding-top: 15px;
+	padding-top: 45px;
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	text-align: center;
 	font-size: 22px;
-	margin-left:90px;
+	margin-left:135px;
 }
 
 form {
@@ -104,11 +113,10 @@ font-size: 18px;
 .bodycontent {
 	margin: auto;
 	margin-top: 20px;
-	width: 40%;
+	width: 30%;
+	font-size:14px;
 }
-.exist{
-margin-left : 155px;
-}
+
 
 .footer {
   position: absolute;
@@ -133,12 +141,119 @@ font-size: 14px;
     background-color: #031E2A;
     color: #7EB2C8;
 }
+body {
+  background-size: 100%;
+	color: #000000;
+	    background-image: url('https://s3.uicdn.net/7f2/9f5ff98efd0fdb9f871986209d446/webapp/pizza_bg_LP.png');
+    background-repeat: no-repeat;
+    background-position: 10% 50%;
+    background-attachment: fixed;
+}
+#myBackground{
 
+ border-radius:4px;
+  
+  width:40%;
+  height:60%;
+  margin-left:60%;
+}
+
+.col2 {
+	width: 195px;
+	height: 31px;
+	display: block;
+	float: left;
+	margin: 0;
+	
+}
+
+.mybutton{
+background-color: #DF6F12;
+color:black;
+border: 1px solid #DF6F12;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 16px;	
+	width:120px;
+	text-align:center;
+}
+
+.mybutton:hover {
+    background-color: #031E2A;
+    color: #7EB2C8;
+}
+
+.bodycontent {
+	margin: auto;
+	margin-top: 80px;
+	width:50%;
+	
+}
+
+
+#custom-bootstrap-menu.navbar-default {
+    font-size: 17px;
+    background-color: rgba(223, 111, 18, 1);
+    border-bottom-width: 1px;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(51, 51, 51, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(209, 93, 16, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #df6f12;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0; 
+}
 </style>
 
 </head>
 <body>
-
+<!---navbar----->
+<div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
+    <div class="container-fluid" style="margin-top:15px; font-size:20px;margin-right:12px;">
+        <div class="collapse navbar-collapse navbar-menubuilder" >
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/OnlineOrdering/AdminHome">Home</a>
+                </li>
+                <li><a href="/contact">Contact Us</a>
+                </li>
+                <li><a href="/OnlineOrdering/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!---navbar----->
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -161,12 +276,13 @@ $("document").ready(function(){
                     
  
 <div class="bodycontent">
-<div id="title">Add an Item</div>
- <hr />
+<div id="myBackground">
+<div id="title">Add an Item</div><br><br>
+ <div style="margin-left:150px; width:380px;"><hr></div>
           <form method="post" action="addItem" enctype="multipart/form-data">
         
           
-          <div class="bodycontent">
+          <div class="bodycontent" style="margin-top:25px;"><br>
     <div class="row">
         <label class="col1">Item Name: &nbsp;&nbsp;</label>
         <span class="col2"><input type="text" name="name"
@@ -175,7 +291,7 @@ $("document").ready(function(){
       
       <div class="row">
       <label class="col1">Category: &nbsp;&nbsp;</label>
-         <span class="col2"><select name="category" style="width:145px;">
+         <span class="col2"><select name="category" style="width:175px;">
                 <option name="drink" value="drink">Drink</option>
                 <option name="appetizer" value="appetizer">Appetizer</option>
                 <option name="maincourse" value="maincourse">Main course</option>
@@ -185,7 +301,7 @@ $("document").ready(function(){
         
       <div class="row">
         <label class="col1">Picture: &nbsp;&nbsp;</label>
-        <span class="col2"><input type="file" id="fileUpload" name="fileUpload" size="500000" style="width:145px;" required/>
+        <span class="col2"><input type="file" id="fileUpload" name="fileUpload" size="500000" style="width:165x;" required/>
 
      </div>
       <div class="row">
@@ -199,19 +315,16 @@ $("document").ready(function(){
       <div class="row">
         <label class="col1" >Preparation Time (in mins): &nbsp;&nbsp;</label>        
         <span class="col2" style="width:190px;"><input type="text" name="preptime" placeholder="enter preparation time (in mins)" required/></span>
-     </div>
+     </div><br><br>
       <div class="row">
-        <input type="submit" class=mybutton value="Add" style="margin-left:170px;"required>
+        <input type="submit" class=mybutton value="Add" style="margin-left:172px;width:70px;"required>
       </div>
       
 
     </div>
   </form>
  <br><br><br><br>
- 
- 
-  <input type="button" class=mybutton value="Admin Home" style="margin-left:280px;"
-          id="back" name="back" onclick="location.href = 'AdminHome';">
-</div>
+
+</div></div>
 </body>
 </html>
