@@ -5,11 +5,39 @@
 <head>
 <title>Cmpe275_Term_Project_5 : Admin Home Page</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <style>
+
+
+#backgroundImage{z-index: 1;}
+
+#backgroundImage:before {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+  background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+ background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.9;
+    filter:alpha(opacity=40);
+    height:100%;
+    width:100%;
+ }
+
+
 body {
-	color: #103F53;
-	background: #e6f3ff;
+  background-size: 1400px 700px;
+    background-repeat: no-repeat;
+	color: #000000;
+	font-family: Papyrus, fantasy;
+	font-weight: bold;
+
 }
 
 .col2 {
@@ -22,12 +50,12 @@ body {
 }
 
 .mybutton{
-	background-color: #7EB2C8;
-	color:black;
-	border: 1px solid #031E2A;
-	border-radius: 4px;
-	padding: 5px 12px;
-	font-size: 16px;
+background-color: #DF6F12;
+color:black;
+border: 1px solid #DF6F12;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 16px;	
 	width:200px;
 	text-align:center;
 }
@@ -39,26 +67,80 @@ body {
 
 .bodycontent {
 	margin: auto;
-	margin-top: 50px;
-	width: 40%;
+	margin-top: 80px;
+	width: 20%;
 }
+
+}
+#custom-bootstrap-menu.navbar-default {
+    font-size: 17px;
+    background-color: rgba(223, 111, 18, 1);
+    border-bottom-width: 1px;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(51, 51, 51, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(209, 93, 16, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #df6f12;
+}
+
+
+
 </style>
 
 </head>
 
 
-<body>
+<body id="backgroundImage">
+<!---navbar----->
+<div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
+    <div class="container-fluid" style="margin-top:15px;">
+        <div class="collapse navbar-collapse navbar-menubuilder" >
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Home</a>
+                </li>
+                <li><a href="/contact">Contact Us</a>
+                </li>
+                <li><a href="/OnlineOrdering/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!---navbar----->
 
-                 <div style="margin-left:70px;">   <h2>Welcome Admin!</h2></div>
+<br><br><br><br>
+                 <div style="margin-left:350px; color:white;">   <h2>Welcome Admin!</h2></div>
 
 
    
            <div class="bodycontent">
-          					<input type="button" class=mybutton value="Add Menu Item"
+          					<span><input type="button" class=mybutton value="Add Menu Item"
 					id="addMenuItem" name="addMenuItem" onclick="location.href = 'addIt';">
-		<br><br>
-			
-					<input type="button" class=mybutton value="Delete Menu Item"
+	<br><br>	<input type="button" class=mybutton value="Delete Menu Item"
 					id="delete" name="delete" onclick="location.href = 'AdminDelete';">
 		<br><br>
 					<input type="button" class=mybutton value="System Reset"
@@ -66,12 +148,11 @@ body {
 		<br><br>
 					<input type="button" class=mybutton value="View Orders"
 					id="vieworders" name="vieworders" onclick="location.href = 'vieworders';">
-		<br><br>
-					<input type="button" class=mybutton value="View Popularity Report"
-					id="popreport" name="popreport" onclick="location.href = 'popularityReport';">
+					<br><br>
+				<input type="button" class=mybutton value="View Popularity Report"
+				id="popreport" name="popreport" onclick="location.href = 'popularityReport';">
 		<br><br>			
-					<input type="button" class=mybutton value="Logout" id="Logout"
-			name="Logout" onclick="location.href = 'logout';">
+					
 				
 </div>
 </body>
