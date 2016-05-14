@@ -1,3 +1,5 @@
+
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -19,8 +21,16 @@
 <style>
 
 body {
-	color: #103F53;
-	background: #e6f3ff;
+  background-size: 1400px 900px;
+	color: #000000;
+background-image:url('http://fillyourplate.org/blog/wp-content/uploads/2015/04/bigstock-Spices-Spice-over-Wood-Herbs-62076047.jpg');
+font-family: Papyrus, fantasy;
+	font-weight: bold;
+    background-repeat:repeat-y;
+    background-position: 10% 50%;
+    background-attachment: fixed;
+    
+
 }
 
 #title {
@@ -32,6 +42,7 @@ body {
 	text-align: center;
 	font-size: 22px;
 	margin-left:90px;
+	color:#ffffff;
 }
 
  
@@ -90,11 +101,62 @@ th{
 padding:15px;
 text-align:center;
 }
+
+#custom-bootstrap-menu.navbar-default {
+    font-size: 17px;
+    background-color: rgba(223, 111, 18, 1);
+    border-bottom-width: 1px;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(51, 51, 51, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(209, 93, 16, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #df6f12;
+}
 </style>
 
 
 </head>
 <body>
+<!---navbar----->
+<div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
+    <div class="container-fluid" style="margin-top:15px; font-size:20px;margin-right:12px;">
+        <div class="collapse navbar-collapse navbar-menubuilder" >
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/OnlineOrdering/AdminHome">Home</a>
+                </li>
+                <li><a href="/contact">Contact Us</a>
+                </li>
+                <li><a href="/OnlineOrdering/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!---navbar----->
 <div class="bodycontent">
 
 <div id="title" style="margin-left:180px;"><b>View all orders</b></div>
@@ -106,13 +168,10 @@ text-align:center;
     <th>Order Id</th>
     <th>User Name</th>
     <th>User Email</th>
-    <th>Order Date</th>
+	<th>Order Date</th>
     <th>Status</th>
     <th>Pickup Date</th>
     <th> Pickup Time</th>
-    <th>Total Price</th>
-    <th>Prep Start Time</th>
-    <th>Prep End Time</th>
     <th>Item Name</th>
     <th>Quantity</th>
    </tr>
@@ -125,10 +184,6 @@ text-align:center;
 						<td>${list1.status}</td>
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>
-						<td>${list1.price}</td>
-						<td>${list1.prepStartTime}</td>
-						<td>${list1.prepEndTime}</td>
-						
 						<td colspan=2><c:forEach var="list" items="${list1.menumap}" varStatus="status">
 								<table><tr>	<td>${list.key}</td>
 								<td>${list.value}</td></tr></table>
