@@ -66,6 +66,9 @@ body {
 		<br><br>
 					<input type="button" class=mybutton value="View Orders"
 					id="vieworders" name="vieworders" onclick="location.href = 'vieworders';">
+		<br><br>
+					<input type="button" class=mybutton value="View Popularity Report"
+					id="popreport" name="popreport" onclick="location.href = 'popreport';">
 		<br><br>			
 					<input type="button" class=mybutton value="Logout" id="Logout"
 			name="Logout" onclick="location.href = 'logout';">
