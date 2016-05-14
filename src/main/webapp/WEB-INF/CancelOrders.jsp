@@ -18,11 +18,71 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 <style>
+#custom-bootstrap-menu.navbar-default {
+    font-size: 17px;
+    background-color: rgba(223, 111, 18, 1);
+    border-bottom-width: 1px;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(51, 51, 51, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(209, 93, 16, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #df6f12;
+}
+
+#backgroundImage{z-index: 1;}
+
+#backgroundImage:before {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+  background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+ background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.9;
+    filter:alpha(opacity=40);
+    height:100%;
+    width:100%;
+ }
+
 
 body {
-	color: #103F53;
-	background: #e6f3ff;
+  background-size: 100%;
+    background-repeat:repeat-y;
+background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+
+	font-family: Papyrus, fantasy;
+	font-weight: bold;
+
 }
+
 
 #title {
 	width: 350px;
@@ -33,6 +93,7 @@ body {
 	text-align: center;
 	font-size: 22px;
 	margin-left:90px;
+	color:#ffffff;
 }
 
  
@@ -40,11 +101,14 @@ body {
 .bodycontent {
 	margin: auto;
 	margin-top: 70px;
-	width: 50%;
+	width: 35%;
 }
 
+
+
+
 .mybutton{
-background-color: #7EB2C8;
+background-color: #DF6F12;
 color:black;
 border: 1px solid #031E2A;
 border-radius: 4px;
@@ -70,7 +134,7 @@ input[type=checkbox] {
 .tab-content{
     background-color:#ffffff;
 width:740px;
-    padding:15px;
+    padding:1px;
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
@@ -90,15 +154,33 @@ padding:15px;
 th{
 padding:15px;
 text-align:center;
+background:#d15d10;
 }
 </style>
 
 </head>
 <body>
-<div class="bodycontent">
 
+<!---navbar----->
+<div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
+    <div class="container-fluid" style="margin-top:15px; font-size:20px;margin-right:12px;">
+        <div class="collapse navbar-collapse navbar-menubuilder" >
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/OnlineOrdering/home">Home</a>
+                </li>
+                <li><a href="/contact">Contact Us</a>
+                </li>
+                <li><a href="/OnlineOrdering/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!---navbar----->
+
+<div class="bodycontent"><br><br>
 <div id="title" style="margin-left:160px;"><b>Delete Queued Orders</b></div>
-<br><br>
+<br><br><br><br>
 	<div class="tab-content">
 		<div id="Drinks" class="tab-pane fade in active">
 			<table id="deletetable">
@@ -109,7 +191,6 @@ text-align:center;
     <th>Status</th>
     <th>Pickup Date</th>
     <th> Pickup Time</th>
-    <th>Total Price</th>
     
     <th>Item Name</th>
     <th>Quantity</th>
@@ -121,7 +202,6 @@ text-align:center;
 						<td>${list1.status}</td>
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>
-						<td>${list1.price}</td>
 						<td colspan=2><c:forEach var="list" items="${list1.menumap}" varStatus="status">
 							<table><tr>	<td>${list.key}</td>
 								<td>${list.value}</td></tr></table>
@@ -134,13 +214,12 @@ text-align:center;
 	<br><br>
 	
 	<button id="jqcc" class=mybutton>Delete Selected Items</button>
-	<br><br>
+	
 	<form action="deleteOrders" method="POST">
 		<input type="hidden" id="itemData" name="itemData"> 
 		<p>Please press confirm delete to make sure you want to delete these items</p><br>
 		<input type="submit" class=mybutton id="next" value="Confirm Delete">
-		<input type="button" class=mybutton value="User Home" id="Logout"
-			name="Logout" onclick="location.href = 'home';"/>
+
 	</form>
 
 	<div id="demo1"></div>
