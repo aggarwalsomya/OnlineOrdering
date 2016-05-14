@@ -235,7 +235,7 @@ th {
     <div class="container-fluid" style="margin-top:15px;">
         <div class="collapse navbar-collapse navbar-menubuilder" >
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">Home</a>
+                <li><a href="/OnlineOrdering/home">Home</a>
                 </li>
                 <li><a href="/contact">Contact Us</a>
                 </li>

@@ -100,6 +100,7 @@ padding:15px;
 th{
 padding:15px;
 text-align:center;
+background:#d15d10;
 }
 
 #custom-bootstrap-menu.navbar-default {
