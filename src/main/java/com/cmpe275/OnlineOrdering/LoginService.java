@@ -14,31 +14,54 @@ public class LoginService {
 	@PersistenceContext
 	private EntityManager em;
 
-	// adds temperory user and code data to table.
+	/**
+	 * It will add the verification code details for the user who is in process
+	 * of registering to the tempuser table.
+	 * 
+	 * @param Temperory
+	 *            details of user
+	 * @author Meera
+	 */
 	@Transactional
 	public void addTuser(TempUser t) {
 		em.merge(t);
 	}
-	
-	//delete temperory user 
+
+	/**
+	 * It will delete the verification code details for the user who is in
+	 * process of registering from the tempuser table.
+	 * 
+	 * @param Temperory
+	 *            details of user
+	 * @author Meera
+	 */
 	@Transactional
 	public void delTuser(TempUser t) {
 		System.out.println(t.getId());
 		em.remove(em.contains(t) ? t : em.merge(t));
 	}
-	
-	//adds user details to table
+
+	/**
+	 * It will add the user details of the user who has successfully registered
+	 * to the usercredentials table.
+	 * 
+	 * @param User
+	 *            details
+	 * @author Meera
+	 */
 	@Transactional
 	public void adduser(UserCredentials u) {
 		em.merge(u);
 	}
 
 	/**
-	 * will check if the temp user with the Id exists?
+	 * It will check if the temporary user with the Id exists or not in the
+	 * tempuser table.
 	 * 
 	 * @param Id
 	 *            of the temp user
 	 * @return true if it exists else false
+	 * @author Meera
 	 */
 	public boolean existsByIdTuser(int id) {
 		TempUser te = new TempUser();
@@ -47,27 +70,40 @@ public class LoginService {
 	}
 
 	/**
-	 * will check if the user with the Id exists?
+	 * It will check if the user with the Id exists or not in the
+	 * UserCredentials table.
 	 * 
 	 * @param Id
-	 *            of the  user
+	 *            of the user
 	 * @return true if it exists else false
+	 * @author Meera
 	 */
 	public boolean existsById(int id) {
 		UserCredentials uc = new UserCredentials();
 		uc.setId(id);
 		return em.find(UserCredentials.class, id) != null;
 	}
-	
-	
 
-	// update record of temp user with new code.
+	/**
+	 * It is used to update the temperory user with new verification code.
+	 * 
+	 * @param Temporary
+	 *            details of user
+	 * @author Meera
+	 */
 	@Transactional
 	public void updateTuser(TempUser t) {
 		em.merge(t);
 	}
-	
-	//get specific temp user by searching by email.
+
+	/**
+	 * It is used to get the details of the temporary verification code for the
+	 * user.
+	 * 
+	 * @param email
+	 * @return temporary user details
+	 * @author Meera
+	 */
 	@Transactional
 	public TempUser getTuser(String email) {
 		TempUser t;
@@ -76,31 +112,35 @@ public class LoginService {
 		q.setParameter("arg1", email);
 		try {
 			t = (TempUser) q.getSingleResult();
-			
+
 		} catch (NoResultException e) {
 			t = null;
-			
+
 		}
 		return t;
 	}
-		
-	
-	
-	//get specific  user by searching by email.
-		@Transactional
-		public UserCredentials getUser(String email) {
-			UserCredentials uc;
-			Query q = em
-					.createQuery("Select uc from UserCredentials uc where uc.email=:arg1");
-			q.setParameter("arg1", email);
-			try {
-				uc = (UserCredentials) q.getSingleResult();
-				
-			} catch (NoResultException e) {
-				uc = null;
-				
-			}
-			return uc;
+
+	/**
+	 * It is used to get the registered User details.
+	 * 
+	 * @param email
+	 * @return User details
+	 * @author Meera
+	 */
+	@Transactional
+	public UserCredentials getUser(String email) {
+		UserCredentials uc;
+		Query q = em
+				.createQuery("Select uc from UserCredentials uc where uc.email=:arg1");
+		q.setParameter("arg1", email);
+		try {
+			uc = (UserCredentials) q.getSingleResult();
+
+		} catch (NoResultException e) {
+			uc = null;
+
 		}
+		return uc;
+	}
 
 }

@@ -25,27 +25,44 @@ public class LoginController {
 	@Autowired
 	private LoginService loginSvc;
 
-	// first home login page which user sees
+	/**
+	 * It will return the first login page which the user sees.
+	 * 
+	 * @param request
+	 *            : http request
+	 * @param model
+	 * @return view
+	 * @author Meera
+	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getData(HttpServletRequest request, Model model) {
 		System.out.println("entered user home");
 		HttpSession session = request.getSession(false);
-		
-		if (session != null && session.getAttribute("username")!=null) {
+
+		if (session != null && session.getAttribute("username") != null) {
 			System.out.println("the session is" + session.getId());
 			return "AlreadyLogged";
 		}
 		return "Login";
 	}
 
-	// to check if user is valid
+	/**
+	 * It will check the user credentials, and decide whether it is an admin or
+	 * a registered user and accordingly return the views.
+	 * 
+	 * @param email
+	 *            , password
+	 * @param model
+	 * @return view
+	 * @author Meera
+	 */
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
 	public String userLogin(HttpServletRequest request, Model model) {
 		Password p = new Password();
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		
-		if(isAdmin(email, password)) {
+
+		if (Utils.isAdmin(email, password)) {
 			return "AdminHome";
 		}
 		UserCredentials uc = loginSvc.getUser(email);
@@ -67,8 +84,10 @@ public class LoginController {
 		}
 
 		HttpSession session = request.getSession();
-		if(session.isNew())System.out.println("yes");
-		else System.out.println("no");
+		if (session.isNew())
+			System.out.println("yes");
+		else
+			System.out.println("no");
 		session.setAttribute("userID", uc.getId());
 		session.setAttribute("username", uc.getFullname());
 		session.setAttribute("useremail", uc.getEmail());
@@ -77,84 +96,74 @@ public class LoginController {
 
 	}
 
-	private boolean isAdmin(String email, String password) {
-		// TODO Auto-generated method stub
-		if (email.equals("admin") && password.equals("admin"))return true;
-		return false;
-	}
-
-	// register page shown to user
+	/**
+	 * It will return the registration view.
+	 * 
+	 * @param http
+	 *            request
+	 * @return view
+	 * @author Meera
+	 */
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(HttpServletRequest request) {
 		System.out.println("entered register home");
 		return "registration";
 	}
 
-	// user logging out
+	/**
+	 * It will successfully logout the user, and invalidate the sessions.
+	 * 
+	 * @param
+	 * @return
+	 * @author Meera
+	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(HttpServletRequest request, Model model, HttpServletResponse response) {
+	public String logout(HttpServletRequest request, Model model,
+			HttpServletResponse response) {
 		System.out.println("entered register home");
 		HttpSession session = request.getSession();
 		if (session != null) {
 			String name = (String) session.getAttribute("username");
 			model.addAttribute("user", name);
 			System.out.println("removing attributes");
-		//	session.removeAttribute("username");
-		//	session.removeAttribute("userid");
-		//	session.removeAttribute("username");
-			System.out.println("removed attributes");
-			//deleteCookie(response, request);
-			
 			session.invalidate();
-		//	session.invalidate();
 			System.out.println("invalidated");
-			
-			Cookie[] cookies = request.getCookies();
-			System.out.println("entering cookie");
-			for (Cookie cookie : cookies) {
-				System.out.println("cookie is" + cookie.getName());
-			//	Cookie cookie1 = new Cookie);
-			//	Cookie ck=new Cookie(cookie.getName(),"");  
-		        cookie.setMaxAge(0); 
-		        cookie.setValue("");
-		        response.addCookie(cookie);  	
-		       System.out.println("destroy");
-			}
-			
 
-			
 		} else {
 			model.addAttribute("user", "you have already logged out!");
 		}
-		
-		
-	 //   deleteCookie(response, request);
-		
 		return "logout";
 	}
 
-	
-
-	// verify otp and register
+	/**
+	 * It will verify the user verification code entered, and successfully
+	 * register the user.
+	 * 
+	 * @param user
+	 *            details
+	 * @return success or error message
+	 * @author Meera
+	 */
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
 	public String registerUser(HttpServletRequest request, Model model)
 			throws Exception {
 		Password p = new Password();
 		System.out.println("entered registration into db");
 		String email = request.getParameter("email");
-		
-		//try to get the user from db
+
+		// try to get the user from db
 		TempUser t = loginSvc.getTuser(email);
 		String codeAssigned = "";
-		if(t != null)
+		if (t != null)
 			codeAssigned = t.getCode();
 		else {
-			model.addAttribute("msg","Please generate registration code and then enter it here.");
+			model.addAttribute("msg",
+					"Please generate registration code and then enter it here.");
 			return "AfterRegisterClick";
 		}
-		
+
 		String code = request.getParameter("verCode");
-		
+
 		if (existingUser(email)) {
 			model.addAttribute("msg",
 					"This email has already been registered. Please proceed to login!");
@@ -189,28 +198,31 @@ public class LoginController {
 		return "AfterRegisterClick";
 	}
 
+	/**
+	 * will check if the user is already registered.
+	 * 
+	 * @param email
+	 * @return boolean value
+	 * @author Meera
+	 */
+
 	private boolean existingUser(String email) {
-		// TODO Auto-generated method stub
+
 		UserCredentials uc = loginSvc.getUser(email);
 		if (uc == null)
 			return false;
 		return true;
 	}
 
-	// generate verification code
-	public String generateCode() {
-
-		StringBuffer code = new StringBuffer("");
-		Random randomGenerator = new Random();
-		for (int i = 0; i <= 3; ++i) {
-			int randomInt = randomGenerator.nextInt(10);
-			code.append(Integer.toString(randomInt));
-		}
-		return code.toString();
-	}
-
-	// send code to the user email using SMTP.
-	private void sendCode(String code, String email) {
+	/**
+	 * It will send the verification code as email to the user.
+	 * 
+	 * @param code
+	 *            , email
+	 * @return none
+	 * @author Meera
+	 */
+	private void sendMail(String code, String email) {
 
 		StringBuffer message = new StringBuffer("Your verification code: ");
 		message.append(code);
@@ -226,10 +238,11 @@ public class LoginController {
 	}
 
 	/**
-	 * It will generate the Random Id, if the id exists for temp user, it will
-	 * generate a new one.
+	 * It will generate the Random Id. If the id exists for temperory user, it
+	 * will generate a new one.
 	 * 
 	 * @return the unique id
+	 * @author Meera
 	 */
 	private int getNextNonExistingNumberTuser() {
 		Random rn = new Random();
@@ -243,10 +256,11 @@ public class LoginController {
 	}
 
 	/**
-	 * It will generate the Random Id, if the id exists, it will generate a new
-	 * one.
+	 * It will generate the Random Id for the new User who is successfully
+	 * registering, if the id exists, it will generate a new one.
 	 * 
 	 * @return the unique id
+	 * @author Meera
 	 */
 	private int getNextNonExistingNumber() {
 		Random rn = new Random();
@@ -259,7 +273,14 @@ public class LoginController {
 		}
 	}
 
-	// send sms to mobile
+	/**
+	 * It will send verification code as SMS to the user.
+	 * 
+	 * @param cerification
+	 *            code, sms email according to mobile carrier
+	 * @return none
+	 * @author Meera
+	 */
 	private void sendSms(String code, String smsEmail) {
 
 		StringBuffer message = new StringBuffer("Your verification code: ");
@@ -274,17 +295,26 @@ public class LoginController {
 
 	}
 
-	// send generate code, mail the user, and store the temperory code in DB.
+	/**
+	 * It will store the generated code and details about the user who is in the
+	 * process of registering.
+	 * 
+	 * @param email
+	 *            , phone, phone carrier name
+	 * 
+	 * @return none
+	 * @author Meera
+	 */
 	@RequestMapping(value = "/verifyMail", method = RequestMethod.POST)
 	public void verifyMail(HttpServletRequest request,
 			HttpServletResponse response) {
 		System.out.println("entered otp! " + request.getParameter("phone"));
-		String code = generateCode();
+		String code = Utils.generateCode();
 		String email = request.getParameter("email");
 
-		String carrierMail = getEmail(request.getParameter("carrier"));
+		String carrierMail = Utils.getDomain(request.getParameter("carrier"));
 
-		sendCode(code, email);
+		sendMail(code, email);
 		if (!carrierMail.isEmpty()) {
 
 			sendSms(code, request.getParameter("phone") + carrierMail);
@@ -304,16 +334,4 @@ public class LoginController {
 
 	}
 
-	private String getEmail(String carrier) {
-		// TODO Auto-generated method stub
-		String email = "";
-		if (carrier.equals("ve")) {
-			email = "@vtext.com";
-		} else if (carrier.equals("at")) {
-			email = "@txt.att.net";
-		} else if (carrier.equals("tm")) {
-			email = "@tmomail.net";
-		}
-		return email;
-	}
 }
