@@ -12,10 +12,8 @@
 <script src="http://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.js"></script> 
 </head>
 <body>
-Table for order details
-<table id="mytable" style="border: 1px solid black; display:none;">
-  <tr><th>Abc</th></tr>
-		</table>
+
+
 		<form>
 		Start Date:
 		<input type="text" id="startDate" /><br><br>
@@ -50,9 +48,7 @@ Table for order details
     
     function myfunc(){
    	 var dateObject1 = $('#startDate').val();
-   	 var dateObject2 = $('#endDate').val();
-   	document.getElementById("mytable").style.display = "block";
-   	 
+   	 var dateObject2 = $('#endDate').val();   	 
    }
 </script>  
 
