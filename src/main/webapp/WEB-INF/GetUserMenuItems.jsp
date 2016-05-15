@@ -41,7 +41,7 @@ body {
   background-size: 100%;
     background-repeat:repeat-y;
 background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
-
+color:#000000;
 	font-family: Papyrus, fantasy;
 	font-weight: bold;
 
@@ -190,25 +190,35 @@ input[type=checkbox] {
 .nav-tabs{
   background-color:#ffffff;
   width:520px;
+  color: #000000;
 }
 .tab-content{
     background-color:#ffffff;
 	width:520px;
     padding:5px;
+    color: #000000;
 }
 .nav-tabs {
-	background-color: #ffffff;
+	color:#ffffff;
+	background:#d15d10;
+	color: #000000;
 }
 
 .tab-content {
 	background-color: #ffffff;
 	padding: 5px;
+	color: #000000;
 
+}
+
+li{
+color: #000000;
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
 	{
 	background-color: #ffffff;
+	color: #000000;
 }
 
 td {

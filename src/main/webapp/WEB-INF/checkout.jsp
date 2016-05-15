@@ -12,10 +12,71 @@
 	href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 <style>
 
-body {
-	color: #103F53;
-	background: #e6f3ff;
+#custom-bootstrap-menu.navbar-default {
+    font-size: 17px;
+    background-color: rgba(223, 111, 18, 1);
+    border-bottom-width: 1px;
 }
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(51, 51, 51, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(209, 93, 16, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #df6f12;
+}
+
+#backgroundImage{z-index: 1;}
+
+#backgroundImage:before {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+  background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+ background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.9;
+    filter:alpha(opacity=40);
+    height:100%;
+    width:100%;
+ }
+
+
+body {
+  background-size: 100%;
+    background-repeat:repeat-y;
+background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+
+	font-family: Papyrus, fantasy;
+	font-weight: bold;
+
+}
+
 
 #title {
 	width: 350px;
@@ -26,6 +87,7 @@ body {
 	text-align: center;
 	font-size: 22px;
 	margin-left:90px;
+	color:#ffffff;
 }
 
 form {
@@ -62,42 +124,60 @@ div.row {
 .bodycontent {
 	margin: auto;
 	margin-top: 50px;
-	width: 40%;
+	width: 30%;
+	color:#ffffff;
 }
 
+
 .mybutton{
-	background-color: #7EB2C8;
-	color:black;
-	border: 1px solid #031E2A;
-	border-radius: 4px;
-	padding: 5px 12px;
-	font-size: 14px;
+background-color: #DF6F12;
+color:black;
+border: 1px solid #031E2A;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 14px;
 }
 .mybutton:hover {
     background-color: #031E2A;
     color: #7EB2C8;
 }
 
-
 input[type=checkbox] {
     zoom: 1.5;
 }
-td{
 
+label{
+font-size:12px;
+font-weight:bold;
 }
-
 </style>
 
 
 </head>
-<body>
+<body id="backgroundImage">
+<!---navbar----->
+<div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
+    <div class="container-fluid" style="margin-top:15px;">
+        <div class="collapse navbar-collapse navbar-menubuilder" >
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/OnlineOrdering/home">Home</a>
+                </li>
+                <li><a href="/contact">Contact Us</a>
+                </li>
+                <li><a href="/OnlineOrdering/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!---navbar----->
 <div class="bodycontent">
 
-
-	<div class="row">
-	<label class="col1"><b>Order Id: </b></label>
-	<span class="col2" id="id">${orderid}</span>
-	</div>
+<br><br><br><br>
+	
+	<label class="col1"><b>Order Id: </b><span id="id">${orderid}</span></label>
+	
+	
 
 	<table>
 	<tr><th style="text-align:left;">Item Name</th>
@@ -109,7 +189,7 @@ td{
 			</tr><br>
 		</c:forEach>
 	</table>
-	<br><br>
+	<br><br><div style="margin-left:30px;">
 	<div class="row">
 	<label class="col1">Total Price:&nbsp;&nbsp;</label>
 	<span class="col2">$ ${totalprice}</span>
@@ -117,7 +197,7 @@ td{
 	
 	<div class="row">
 	<label class="col1"><input type="radio" onclick="confirm()"
-		name="pickup" value="confirm"/>&nbsp;&nbsp;Earliest Pickup Time: &nbsp;&nbsp;</label>
+		name="pickup" value="confirm"/>&nbsp;&nbsp;<span style="font-size:12px;">Earliest Pickup Time:</span> &nbsp;&nbsp;</label>
 		<span class="col2" id="early">${earliestpickuptime}</span>
 	</div>
 	
@@ -137,9 +217,9 @@ td{
 			type="hidden" id="type" name="type" value="" /> <input type="hidden"
 			id="time" name="time" value="" /> <input type="hidden"
 			id="earlypickuptime" name="early" value="" /> <input type="submit"
-			name="proceed" class=mybutton value="Proceed" />
+			name="proceed" class=mybutton value="Proceed" style="margin-left:-30px;"/>
 
-	</form>
+	</form></div>
 </div>
 </body>
 <script type="text/javascript"
