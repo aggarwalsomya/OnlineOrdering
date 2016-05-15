@@ -14,12 +14,14 @@
 <body>
 
 
-		<form>
+		<form method="post" action="" >
 		Start Date:
 		<input type="text" id="startDate" /><br><br>
 		End Date: 
 		<input type="text" id="endDate" /><br><br>
-		<button onclick="myfunc();">Generate</button></form>
+		<button type="submit" >Generate</button>
+		
+		</form>
 		<script>
     $(function () {
         $('#startDate').datepicker({
@@ -37,19 +39,13 @@
  		   dateFormat: 'dd-mm-yy',
  		   minDate:0,
  		   maxDate: '+1M',
- 		  onSelect: function()
- 		    { 
- 		        var dateObject2 = $(this).datepicker('getDate'); 
- 		    }
+
  	
  		});
         
       }); 
     
-    function myfunc(){
-   	 var dateObject1 = $('#startDate').val();
-   	 var dateObject2 = $('#endDate').val();   	 
-   }
+    
 </script>  
 
 </body>
