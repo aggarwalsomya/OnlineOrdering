@@ -7,6 +7,10 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 <title>CMPE275_TermProject_Group5:View All Orders</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,10 +22,71 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <style>
 
+#backgroundImage{z-index: 1;}
+
+#backgroundImage:before {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+  background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+ background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.9;
+    filter:alpha(opacity=40);
+    height:100%;
+    width:100%;
+ }
+
+
 body {
-	color: #103F53;
-	background: #e6f3ff;
+  background-size: 100%;
+    background-repeat:repeat-y;
+	color: #000000;
+	font-family: Papyrus, fantasy;
+	font-weight: bold;
+
 }
+
+#custom-bootstrap-menu.navbar-default {
+    font-size: 17px;
+    background-color: rgba(223, 111, 18, 1);
+    border-bottom-width: 1px;
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(51, 51, 51, 1);
+    background-color: rgba(223, 111, 18, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
+#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(209, 93, 16, 1);
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle {
+    border-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
+    background-color: #d15d10;
+}
+#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
+#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
+    background-color: #df6f12;
+}
+
+
 
 #title {
 	width: 350px;
@@ -31,7 +96,8 @@ body {
 	letter-spacing: 2px;
 	text-align: center;
 	font-size: 22px;
-	margin-left:90px;
+	margin-left:35%;
+	color:#ffffff;
 }
 
  
@@ -39,7 +105,7 @@ body {
 .bodycontent {
 	margin: auto;
 	margin-top: 70px;
-	width: 40%;
+	width: 50%;
 }
 
 .mybutton{
@@ -68,7 +134,7 @@ input[type=checkbox] {
 }
 .tab-content{
     background-color:#ffffff;
-width:640px;
+width:820px;
     padding:15px;
 }
 
@@ -95,9 +161,27 @@ text-align:center;
 
 
 </head>
+<body id="backgroundImage">
+<!---navbar----->
+<div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
+    <div class="container-fluid" style="margin-top:15px;">
+        <div class="collapse navbar-collapse navbar-menubuilder" >
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/">Home</a>
+                </li>
+                <li><a href="/contact">Contact Us</a>
+                </li>
+                <li><a href="/OnlineOrdering/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!---navbar----->
+
 <div class="bodycontent">
 
-<div id="title" style="margin-left:125px;"><b>View All Orders</b></div>
+<div id="title" ><b>View All Orders</b></div>
 <br><br>
 	<div class="tab-content">
 		<div id="Drinks" class="tab-pane fade in active">
