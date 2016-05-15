@@ -23,6 +23,7 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminSvc;
+	Utils u = new Utils();
 
 	 /** get data request for some menu name will be mapped here
 	 * @return It will return the required view
@@ -96,11 +97,11 @@ public class AdminController {
 	 * @return
 	 */
 	@RequestMapping(value = "/vieworders", method = RequestMethod.GET)
-	public String viewOrders(Model model) {
+	public String viewOrders(Model model, HttpServletRequest request) {
 		String startdate = "2016-05-05";
 		String enddate = "2016-05-16";
-		boolean sortOrderDate = true;
-		boolean sortFulfilmentTime  = false;
+		//boolean sortOrderDate = true;
+		//boolean sortFulfilmentTime  = false;
 		
 		System.out.println("In view all orders : Admin Controller.");
 		List<Order> od = adminSvc.getAllOrders(startdate, enddate);
@@ -233,6 +234,20 @@ public class AdminController {
         System.out.println("entered register home");
         return "Login";
     }
+    
+    
+    @RequestMapping(value = "/popularityReport", method = RequestMethod.GET)
+	public String viewPopularityReport(HttpServletRequest request, Model model) {
+    	String startdate = "2016-05-01";
+    	String enddate = "2016-05-20";
+    	
+    	String category[] = { u.MAINCOURSE, u.DRINK, u.DESERT, u.APPETIZER };
+		for (int i = 0; i < category.length; i++) {
+			List<MenuPopularity> mp = adminSvc.getPopMenuItems(startdate, enddate, category[i]);
+			model.addAttribute("list_" + category[i].toString(), mp);
+		}
+		return "viewPopReport";
+	}
 	
 	@RequestMapping(value = "/AdminHome", method = RequestMethod.GET)
 	/**

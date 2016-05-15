@@ -223,5 +223,33 @@ public class UserService {
 		    q.executeUpdate();
 		}
 	}
+
+	@Transactional
+	public void addMenuPop(int orderid, Map<String, Integer> mi, String currdate, String currtime) {
+		for (Entry<String, Integer> entry : mi.entrySet()) {
+			MenuPopularity mp = new MenuPopularity();
+
+		    String key = entry.getKey();
+		    Integer value = (Integer) entry.getValue();
+		    String category = getCategoryForMenuItem(key);
+		    mp.setOrderid(orderid);
+		    mp.setOrderdate(currdate);
+		    mp.setOrdertime(currtime);
+		    mp.setName(key);
+		    mp.setQuantity(value);
+		    System.out.println("category->"+category);
+		    mp.setCategory(category);
+		    
+		    em.merge(mp);
+		    
+		}
+	}
+
+	@Transactional
+	private String getCategoryForMenuItem(String name) {
+		Query q = em.createQuery("Select category from MenuItem mi where mi.name = :arg1");
+		q.setParameter("arg1", name);
+		return (String) q.getSingleResult();
+	}
 	
 }

@@ -13,6 +13,12 @@ import java.util.Random;
 import java.util.TreeMap;
 
 public class Utils {
+	
+	public final String MAINCOURSE = "maincourse";
+	public final String DESERT = "desert";
+	public final String APPETIZER = "appetizer";
+	public final String DRINK = "drink";
+	public final String ORDERPLACED = "PLACED";
 
 	/**
 	 * get the current system date

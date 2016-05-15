@@ -4,13 +4,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -274,5 +271,42 @@ public class AdminService {
 			min = "0"+m;
 		
 		return hr + ":" + min;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<MenuPopularity> getPopMenuItems(String startdate, String enddate, String category) {
+		Query q = em.createQuery("SELECT orderid, "
+				+ "name, "
+				+ "category, "
+				+ "sum(quantity) as q, "
+				+ "orderdate, "
+				+ "ordertime "
+				+ "FROM "
+				+ "MenuPopularity mp "
+				+ "WHERE orderdate >= :arg1 "
+				+ "and "
+				+ "orderdate <= :arg2 "
+				+ "group by "
+				+ "name "
+				+ "having "
+				+ "category = :arg3 order by q desc");
+		q.setParameter("arg1", startdate);
+		q.setParameter("arg2", enddate);
+		q.setParameter("arg3", category);
+		
+		List<Object[]> resultList = q.getResultList();
+		List<MenuPopularity> result = new ArrayList<MenuPopularity>(resultList.size());
+		for (Object[] row : resultList) {
+		    result.add(new MenuPopularity((Integer) row[0],
+		                            (String) row[1],
+		                            (String) row[2],
+		                            (Long) row[3],
+		                            (String) row[4],
+		                            (String) row[5]
+		    		));
+		}
+			
+		System.out.println(result.size());
+		return result;
 	}
 }

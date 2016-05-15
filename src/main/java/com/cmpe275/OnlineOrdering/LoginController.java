@@ -1,8 +1,6 @@
 package com.cmpe275.OnlineOrdering;
 
 import java.util.Random;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
