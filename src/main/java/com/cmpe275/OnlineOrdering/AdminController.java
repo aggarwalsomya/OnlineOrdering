@@ -236,10 +236,12 @@ public class AdminController {
     }
     
     
-    @RequestMapping(value = "/popularityReport", method = RequestMethod.GET)
+    @RequestMapping(value = "/popularityReport", method = RequestMethod.POST)
 	public String viewPopularityReport(HttpServletRequest request, Model model) {
-    	String startdate = "2016-05-01";
-    	String enddate = "2016-05-20";
+    	String startdate = request.getParameter("startDate");
+    	String enddate = request.getParameter("endDate");
+    	
+    	System.out.println(startdate+" "+enddate);
     	
     	String category[] = { u.MAINCOURSE, u.DRINK, u.DESERT, u.APPETIZER };
 		for (int i = 0; i < category.length; i++) {
@@ -249,6 +251,15 @@ public class AdminController {
 		return "viewPopReport";
 	}
 	
+    @RequestMapping(value = "/popReport", method = RequestMethod.GET)
+	/**
+	 * returns the home page
+	 * @return
+	 */
+	public String popreport() {
+		return "popReport";
+	}
+    
 	@RequestMapping(value = "/AdminHome", method = RequestMethod.GET)
 	/**
 	 * returns the home page

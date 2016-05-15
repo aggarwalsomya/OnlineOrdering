@@ -14,7 +14,7 @@
 <body>
 
 
-		<form>
+		<form method="post" action="popularityReport">
 		Start Date:
 		<input type="text" id="startDate" /><br><br>
 		End Date: 
