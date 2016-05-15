@@ -150,7 +150,7 @@ font-size: 16px;
 					id="vieworders" name="vieworders" onclick="location.href = 'vieworders';">
 					<br><br>
 				<input type="button" class=mybutton value="View Popularity Report"
-				id="popreport" name="popreport" onclick="location.href = 'popularityReport';">
+				id="popreport" name="popreport" onclick="location.href = '/OnlineOrdering/popReport';">
 		<br><br>			
 					
 				
