@@ -13,13 +13,12 @@
 </head>
 <body>
 
-
 		<form method="post" action="popularityReport" >
 		Start Date:
-		<input type="text" id="startDate" /><br><br>
+		<input type="text" id="startDate" name="startDate" /><br><br>
 		End Date: 
-		<input type="text" id="endDate" /><br><br>
-		<button type="submit" onclick="myfunc();">Generate</button>
+		<input type="text" id="endDate" name="endDate" /><br><br>
+		<button type="submit" >Generate</button>
 		
 		</form>
 		<script>
@@ -34,12 +33,7 @@
  		   dateFormat: 'dd-mm-yy',
  		});
        
-        function myfunc(){
-          	 var dateObject1 = $('#startDate').val();
-          	 var dateObject2 = $('#endDate').val();   
-          	document.getElementById("startDate").value = dateObject1;
-          	document.getElementById("endDate").value = dateObject2;
-          }
+        
       }); 
     
     
