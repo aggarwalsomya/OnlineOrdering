@@ -23,12 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class UserController {
 
-	public final String MAINCOURSE = "maincourse";
-	public final String DESERT = "desert";
-	public final String APPETIZER = "appetizer";
-	public final String DRINK = "drink";
-	public final String ORDERPLACED = "PLACED";
-
 	@Autowired
 	private UserService userSvc;
 
@@ -55,7 +49,7 @@ public class UserController {
 			model.addAttribute("user", "notset");
 		}
 
-		String category[] = { MAINCOURSE, DRINK, DESERT, APPETIZER };
+		String category[] = { u.MAINCOURSE, u.DRINK, u.DESERT, u.APPETIZER };
 		for (int i = 0; i < category.length; i++) {
 			List<MenuItem> mi = userSvc.getMenuItems(category[i]);
 			model.addAttribute("list_" + category[i].toString(), mi);
@@ -438,6 +432,9 @@ public class UserController {
 			// add the order to the chef's schedule as well.
 			userSvc.addOrderToChefSchedule(sch);
 			
+			//add the data in the menupopularity table as well.
+			userSvc.addMenuPop(orderid, mi, u.getCurrdate(), u.getCurrtime());
+			
 			model.addAttribute("msg","Order has been successfully placed");
 			session.removeAttribute("orderID");
 			return "OrderSuccess";
@@ -663,7 +660,7 @@ public class UserController {
 			System.out.println("final is" + s + mi.get(s));
 		}
 		
-		String category[] = { MAINCOURSE, DRINK, DESERT, APPETIZER };
+		String category[] = { u.MAINCOURSE, u.DRINK, u.DESERT, u.APPETIZER };
 		for (int i = 0; i < category.length; i++) {
 			List<MenuItem> milist;
 			try {
