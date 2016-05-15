@@ -165,7 +165,7 @@ width:75px;
 	<br><br><br>
 	<div class="row">
 <span style="margin-left:150px;font-family: Papyrus, fantasy;
-	font-size:12px;">New user?</span>&nbsp;&nbsp; <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/register';"></div>
+	font-size:12px;">New user?</span>&nbsp;&nbsp; <input type="button" class=button id="register" name="register" value="Register" onclick="location.href = '/OnlineOrdering/register';"></div>
 	<br><br></form>
 	
 	</div>
