@@ -80,9 +80,7 @@ public class Utils {
 	public String removeSpace(String part) {
 
 		if (Character.isWhitespace(part.charAt(0))) {
-			System.out.println("inside removespace:" + part);
 			part = part.substring(1);
-			System.out.println("inside removespace:" + part);
 			return part;
 		} else
 			return part;
@@ -103,7 +101,6 @@ public class Utils {
 		Map<String, Integer> menu_items = new TreeMap<String, Integer>();
 		for (String item : items) {
 			String[] parts = item.split("::");
-			System.out.println("items are: " + parts[0]);
 			parts[0] = removeSpace(parts[0]);
 			menu_items.put(parts[0], Integer.parseInt(parts[1]));
 		}
@@ -133,7 +130,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String convertMinsToTime(int earlytime) {
+	public static String convertMinsToTime(int earlytime) {
 		String startTime = "00:00";
 		int h = earlytime / 60 + Integer.parseInt(startTime.substring(0, 2));
 		int m = earlytime % 60 + Integer.parseInt(startTime.substring(3, 5));
@@ -176,7 +173,6 @@ public class Utils {
 		String parts[] = datetime.split(" ");
 		if (parts.length == 2) {
 			date = parts[0];
-			System.out.println("Date::" + date);
 		} else {
 			date = null;
 		}
@@ -196,7 +192,6 @@ public class Utils {
 		String parts[] = datetime.split(" ");
 		if (parts.length == 2) {
 			time = parts[1];
-			System.out.println("time::" + time);
 		} else {
 			time = null;
 		}

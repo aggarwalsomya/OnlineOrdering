@@ -167,28 +167,34 @@ background:#d15d10;
 			<table id="viewallorders">
 			 <tr>
     <th>Order Id</th>
+    <th>Order Date</th>
     <th>User Name</th>
     <th>User Email</th>
-	<th>Order Date</th>
     <th>Status</th>
     <th>Pickup Date</th>
-    <th> Pickup Time</th>
+    <th>Pickup Time</th>
+    <th>Prep Start Time</th>
+    <th>Prep End Time</th>
     <th>Item Name</th>
     <th>Quantity</th>
+    <th>Total Price</th>
    </tr>
 				<c:forEach var="list1" items="${orderlist}" varStatus="status">
 					<tr style="border: 2px solid #103F53;" >
 						<td>${list1.orderid}</td>
+						<td>${list1.orderdate}</td>
 						<td>${list1.username}</td>
 						<td>${list1.email}</td>
-						<td>${list1.orderdate}</td>
 						<td>${list1.status}</td>
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>
+						<td>${list1.prepStartTime}</td>
+						<td>${list1.prepEndTime}</td>
 						<td colspan=2><c:forEach var="list" items="${list1.menumap}" varStatus="status">
 								<table><tr>	<td>${list.key}</td>
 								<td>${list.value}</td></tr></table>
-						</c:forEach></td>			
+						</c:forEach></td>
+						<td>${list1.price}</td>			
 					</tr>
 				</c:forEach>
 			</table>

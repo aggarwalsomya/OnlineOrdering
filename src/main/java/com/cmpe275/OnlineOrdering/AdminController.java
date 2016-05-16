@@ -93,7 +93,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/orderReport", method = RequestMethod.GET)
 	/**
-	 * returns the home page
+	 * returns the order report page
 	 * @return
 	 */
 	public String orderreport() {
@@ -109,17 +109,13 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/vieworders", method = RequestMethod.POST)
 	public String viewOrders(Model model, HttpServletRequest request) {
-		//String startdate = "2016-05-05";
-		//String enddate = "2016-05-16";
-		//boolean sortOrderDate = true;
-		//boolean sortFulfilmentTime  = false;
 		String startdate = request.getParameter("startDate");
     	String enddate = request.getParameter("endDate");
     	String sortby = request.getParameter("sortby");
     	System.out.println(startdate+" "+enddate+" "+sortby);
 		
 		System.out.println("In view all orders : Admin Controller.");
-		List<Order> od = adminSvc.getAllOrders(startdate, enddate);
+		List<Order> od = adminSvc.getAllOrders(startdate, enddate, sortby);
 		if (od == null) {
 			model.addAttribute("msg", "Currently there are no orders to be displayed");
 		} else {
@@ -274,6 +270,8 @@ public class AdminController {
 	public String popreport() {
 		return "popReport";
 	}
+    
+    
     
 	@RequestMapping(value = "/AdminHome", method = RequestMethod.GET)
 	/**
