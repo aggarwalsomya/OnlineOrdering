@@ -91,17 +91,32 @@ public class AdminController {
 		return "ResetSuccess";
 	}
 	
+	@RequestMapping(value = "/orderReport", method = RequestMethod.GET)
+	/**
+	 * returns the home page
+	 * @return
+	 */
+	public String orderreport() {
+		return "orderReport";
+	}
+	
+	
+	
 	/**
 	 * This will show the orders to the admin
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value = "/vieworders", method = RequestMethod.GET)
+	@RequestMapping(value = "/vieworders", method = RequestMethod.POST)
 	public String viewOrders(Model model, HttpServletRequest request) {
-		String startdate = "2016-05-05";
-		String enddate = "2016-05-16";
+		//String startdate = "2016-05-05";
+		//String enddate = "2016-05-16";
 		//boolean sortOrderDate = true;
 		//boolean sortFulfilmentTime  = false;
+		String startdate = request.getParameter("startDate");
+    	String enddate = request.getParameter("endDate");
+    	String sortby = request.getParameter("sortby");
+    	System.out.println(startdate+" "+enddate+" "+sortby);
 		
 		System.out.println("In view all orders : Admin Controller.");
 		List<Order> od = adminSvc.getAllOrders(startdate, enddate);
