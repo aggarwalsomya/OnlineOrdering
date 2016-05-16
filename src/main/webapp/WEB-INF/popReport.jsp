@@ -25,12 +25,12 @@
     $(function () {
     	
         $('#startDate').datepicker({	   
-		   dateFormat: 'dd-mm-yy',
+		   dateFormat: 'yy-mm-dd',
 		});
         
         
         $('#endDate').datepicker({	   
- 		   dateFormat: 'dd-mm-yy',
+ 		   dateFormat: 'yy-mm-dd',
  		});
        
         

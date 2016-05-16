@@ -258,4 +258,9 @@ public class Utils {
 		}
 		return email;
 	}
+
+	public int getTimeinMins(String time) {
+		String parts[] = time.split(":");
+		return Integer.parseInt(parts[0]) * 60 + Integer.parseInt(parts[1]);
+	}
 }
