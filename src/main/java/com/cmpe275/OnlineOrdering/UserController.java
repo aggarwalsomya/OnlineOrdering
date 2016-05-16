@@ -374,11 +374,11 @@ public class UserController {
 		System.out.println("order id::"+orderid);
 				
 		String date = u.getDateFromDateTime(datetime);
+		String time = u.getTimeFromDateTime(datetime);
 		
-		int pickuptime = 0;
+		int pickuptime = u.getTimeinMins(time);
 		try {
 			//changing the time in minutes from 24hour format
-			pickuptime = u.getCurrTimeInMins();
 			System.out.println("Pickup time in mins::"+pickuptime);
 		} catch(Exception e) {
 			userSvc.cancelOrderUnplaced(orderid, user_id);
