@@ -26,7 +26,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String getCurrdate() {
+	public static String getCurrdate() {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String curdate = df.format(new Date());
 		return curdate;
@@ -73,8 +73,8 @@ public class Utils {
 	/**
 	 * removing the unnecessary spaces in the order details if any
 	 * 
-	 * @param part
-	 * @return
+	 * @param the menu item name
+	 * @return menu item name without trailing whitespace.
 	 * @author Meera
 	 */
 	public String removeSpace(String part) {
@@ -156,7 +156,7 @@ public class Utils {
 	 * @author Somya
 	 */
 
-	public int getCurrTimeInMins() {
+	public static int getCurrTimeInMins() {
 		Calendar cal = Calendar.getInstance();
 		int currMin = cal.get(Calendar.HOUR_OF_DAY) * 60
 				+ cal.get(Calendar.MINUTE);
@@ -259,7 +259,7 @@ public class Utils {
 		return email;
 	}
 
-	public int getTimeinMins(String time) {
+	public static int getTimeinMins(String time) {
 		String parts[] = time.split(":");
 		return Integer.parseInt(parts[0]) * 60 + Integer.parseInt(parts[1]);
 	}

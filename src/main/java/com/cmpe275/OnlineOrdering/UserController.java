@@ -157,7 +157,7 @@ public class UserController {
 		String earlydate = "";
 		String msg = "";
 		boolean found = false;
-		int currMin = u.getCurrTimeInMins();
+		int currMin = Utils.getCurrTimeInMins();
 
 		if (totalPrepTime > 960) {
 			msg = "Order is too long to prepare in one day. Cannot accept the order. Please modify or cancel the order.";

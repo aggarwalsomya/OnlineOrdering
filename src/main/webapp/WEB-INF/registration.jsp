@@ -215,8 +215,9 @@ width:95px;
 		src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script type="text/javascript">
 		function sendotp() {
+			alert();
 			var http = new XMLHttpRequest();
-			var url = "http://127.0.0.1:8081/OnlineOrdering/verifyMail";
+			var url = "http://127.0.0.1:8080/OnlineOrdering/verifyMail";
 			var params = "email=";
 
 			params = params + document.getElementById("email").value
