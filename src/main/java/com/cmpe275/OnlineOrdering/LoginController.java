@@ -34,7 +34,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getData(HttpServletRequest request, Model model) {
-		System.out.println("entered user home");
+		//System.out.println("entered user home");
 		HttpSession session = request.getSession(false);
 
 		if (session != null && session.getAttribute("username") != null) {
@@ -104,7 +104,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public String register(HttpServletRequest request) {
-		System.out.println("entered register home");
+		//System.out.println("entered register home");
 		return "registration";
 	}
 
@@ -118,7 +118,7 @@ public class LoginController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, Model model,
 			HttpServletResponse response) {
-		System.out.println("entered register home");
+		//System.out.println("entered register home");
 		HttpSession session = request.getSession();
 		if (session != null) {
 			String name = (String) session.getAttribute("username");
@@ -146,7 +146,7 @@ public class LoginController {
 	public String registerUser(HttpServletRequest request, Model model)
 			throws Exception {
 		Password p = new Password();
-		System.out.println("entered registration into db");
+		//System.out.println("entered registration into db");
 		String email = request.getParameter("email");
 
 		// try to get the user from db

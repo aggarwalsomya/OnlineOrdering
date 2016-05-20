@@ -36,7 +36,7 @@ body {
 	<h1>Error in Placing the order</h1>
 	<br>
 	<br>
-	<p>Error in Placing the order for Orderid:<span id="id">${orderid}</span></p>
+	<p>${msg}, Orderid:<span id="id">${orderid}</span></p>
 <form method="POST" name="myform" action="">
 <input type="hidden" id="orderId" name="orderId"><br />
 	<input type="submit" class=mybutton value="Cancel Order" id="back" name="Cancel Order"

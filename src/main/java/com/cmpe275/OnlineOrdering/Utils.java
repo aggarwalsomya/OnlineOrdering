@@ -14,11 +14,16 @@ import java.util.TreeMap;
 
 public class Utils {
 	
-	public final String MAINCOURSE = "maincourse";
-	public final String DESERT = "desert";
-	public final String APPETIZER = "appetizer";
-	public final String DRINK = "drink";
-	public final String ORDERPLACED = "PLACED";
+	public final static String MAINCOURSE = "maincourse";
+	public final static String DESERT = "desert";
+	public final static String APPETIZER = "appetizer";
+	public final static String DRINK = "drink";
+	public final static String ORDERPLACED = "PLACED";
+	public final static int WORKINGDUR = 960;
+	public final static int OPENTIME = 360;
+	public final static int CLOSETIME = 1260;
+	public final static int WORKTIME = 300;
+	
 
 	/**
 	 * get the current system date
@@ -38,7 +43,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String getCurrtime() {
+	public static String getCurrtime() {
 		SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
 		Date now = new Date();
 		String currtime = sdfTime.format(now);
@@ -54,7 +59,7 @@ public class Utils {
 	 * @throws ParseException
 	 * @author Somya
 	 */
-	public List<String> getNextDates(String curDate) throws ParseException {
+	public static List<String> getNextDates(String curDate) throws ParseException {
 		List<String> dateList = new ArrayList<String>();
 		dateList.add(curDate);
 
@@ -77,7 +82,7 @@ public class Utils {
 	 * @return menu item name without trailing whitespace.
 	 * @author Meera
 	 */
-	public String removeSpace(String part) {
+	public static String removeSpace(String part) {
 
 		if (Character.isWhitespace(part.charAt(0))) {
 			part = part.substring(1);
@@ -93,7 +98,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public Map<String, Integer> deserializeMenuItems(String mi) {
+	public static Map<String, Integer> deserializeMenuItems(String mi) {
 		if (mi.length() == 0 || mi == null)
 			return new HashMap<String, Integer>();
 
@@ -113,7 +118,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String serializeMenuItems(Map<String, Integer> menuItems) {
+	public static String serializeMenuItems(Map<String, Integer> menuItems) {
 		String serializedString = " ";
 		for (Map.Entry<String, Integer> entry : menuItems.entrySet()) {
 			serializedString += entry.getKey() + "::"
@@ -167,7 +172,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String getDateFromDateTime(String datetime) {
+	public static String getDateFromDateTime(String datetime) {
 		// parsing the date and time from request
 		String date = "";
 		String parts[] = datetime.split(" ");
@@ -186,7 +191,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String getTimeFromDateTime(String datetime) {
+	public static String getTimeFromDateTime(String datetime) {
 		// parsing the date and time from request
 		String time = "";
 		String parts[] = datetime.split(" ");

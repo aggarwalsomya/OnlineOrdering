@@ -177,14 +177,18 @@ public class UserService {
 	 */
 	@Transactional
 	public String getMenuDetailsForOrder(int orderid, int userid) {
-		Query q = em.createQuery("Select od from OrderDetails od where od.orderid=:arg1 and od.userid=:arg2");
-		q.setParameter("arg1", orderid);
-		q.setParameter("arg2", userid);
-		OrderDetails od = new OrderDetails();
-		od = (OrderDetails) q.getSingleResult();
-		
-		System.out.println(od.getMenu_items());
-		return od.getMenu_items();
+		System.out.println("UserService:GetMenuDetailsForOrder: orderid-userid:"+orderid+" "+userid);
+		try {
+			Query q = em.createQuery("Select od from OrderDetails od where od.orderid=:arg1 and od.userid=:arg2");
+			q.setParameter("arg1", orderid);
+			q.setParameter("arg2", userid);
+			OrderDetails od = new OrderDetails();
+			od = (OrderDetails) q.getSingleResult();
+			return od.getMenu_items();
+		} catch(Exception ex) {
+			System.out.println(ex.getStackTrace().toString());
+			return null;
+		}
 	}
 
 	/**
@@ -198,29 +202,39 @@ public class UserService {
 	@Transactional
 	public List<OrderDetails> getUserOrders(int user_id, String status) {
 		System.out.println("user_id is:"+user_id+" status:"+status);
-		Query q = em.createQuery("SELECT od FROM OrderDetails od WHERE od.userid = :arg1 and od.status=:arg2");
-		q.setParameter("arg1", user_id);
-		q.setParameter("arg2", status);
-		List<OrderDetails> orderlist = q.getResultList();
-		System.out.println(orderlist);
-		return orderlist;		
+		try {
+			Query q = em.createQuery("SELECT od FROM OrderDetails od WHERE od.userid = :arg1 and od.status=:arg2");
+			q.setParameter("arg1", user_id);
+			q.setParameter("arg2", status);
+			List<OrderDetails> orderlist = q.getResultList();
+			System.out.println(orderlist);
+			return orderlist;
+		} catch(Exception ex) {
+			return null;
+		}
 	}
 
 	/**
 	 * update the quantity of the ordered items
+	 * 
 	 * @param mi
 	 * @author Somya
 	 */
 	@Transactional
 	public void updateQuantity(Map<String, Integer> mi) {
-		for (Entry<String, Integer> entry : mi.entrySet()) {
-		    String key = entry.getKey();
-		    Integer value = (Integer) entry.getValue();
-		    
-		    Query q = em.createQuery("Update MenuItem mi Set mi.ordercount = mi.ordercount + :arg1 where mi.name = :arg2");
-		    q.setParameter("arg1", value);
-		    q.setParameter("arg2", key);
-		    q.executeUpdate();
+		try {
+			for (Entry<String, Integer> entry : mi.entrySet()) {
+				String key = entry.getKey();
+				Integer value = (Integer) entry.getValue();
+
+				Query q = em.createQuery(
+						"Update MenuItem mi Set mi.ordercount = mi.ordercount + :arg1 where mi.name = :arg2");
+				q.setParameter("arg1", value);
+				q.setParameter("arg2", key);
+				q.executeUpdate();
+			}
+		} catch (Exception ex) {
+
 		}
 	}
 
@@ -247,9 +261,13 @@ public class UserService {
 
 	@Transactional
 	private String getCategoryForMenuItem(String name) {
-		Query q = em.createQuery("Select category from MenuItem mi where mi.name = :arg1");
-		q.setParameter("arg1", name);
-		return (String) q.getSingleResult();
+		try {
+			Query q = em.createQuery("Select category from MenuItem mi where mi.name = :arg1");
+			q.setParameter("arg1", name);
+			return (String) q.getSingleResult();
+		}catch(Exception ex)
+		{
+			return null;
+		}
 	}
-	
 }
