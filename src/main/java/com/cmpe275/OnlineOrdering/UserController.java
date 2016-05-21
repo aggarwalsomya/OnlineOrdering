@@ -136,6 +136,7 @@ public class UserController {
 		if(menuitems.length() == 0) {
 			session.removeAttribute("orderID");
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			model.addAttribute("msg","No items in the cart, Select items -> Add to Cart -> Proceed to Checkout");
 			return "OrderErrorException";
 		}
 		
@@ -403,7 +404,6 @@ public class UserController {
 		String date = Utils.getDateFromDateTime(datetime);
 		String time = Utils.getTimeFromDateTime(datetime);
 
-		System.out.println("datetime:" + datetime);
 		int pickuptime = 0;
 		try {
 			// changing the time in minutes from 24hour format
@@ -411,7 +411,6 @@ public class UserController {
 			System.out.println("Pickup entered by the user is:" + pickuptime);
 			System.out.println("Current time in mins:" + Utils.getCurrTimeInMins());
 			if (pickuptime <= Utils.getCurrTimeInMins()) {
-				System.out.println("Custom time should be more than the current time");
 				model.addAttribute("msg", "Pickup time cannot be in past or current time");
 				model.addAttribute("orderid", orderid);
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
