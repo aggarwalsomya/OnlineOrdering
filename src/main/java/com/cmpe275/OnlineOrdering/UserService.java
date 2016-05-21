@@ -271,6 +271,11 @@ public class UserService {
 		}
 	}
 
+	/**
+	 * gets the email of the user for a particular userid
+	 * @param user id
+	 * @author Meera
+	 */
 	@Transactional
 	public String getEmail(int id) {
 	

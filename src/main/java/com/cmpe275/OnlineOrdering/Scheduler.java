@@ -18,9 +18,6 @@ public class Scheduler {
 
 	@Autowired
 	SchedulerService schSvc;
-
-	@Autowired
-	AdminService adminSvc;
 	
 	@Autowired
 	private MailSender mailOtp;
@@ -38,7 +35,7 @@ public class Scheduler {
 
 		System.out.println("The time is now " + currDate);//add condition for not proceeding in the night
 		
-		orders = adminSvc.getAllOrders(currDate, currDate, "");
+		orders = schSvc.getAllOrders(currDate);
 		if (orders != null && !orders.isEmpty()) {
 			for (Order o : orders) {
 				System.out.println("the oder id is" + o.getOrderid());
@@ -87,7 +84,8 @@ public class Scheduler {
 			String mail) {
 	
 		int currTime = Utils.getCurrTimeInMins();
-
+		System.out.println("current time is " + currTime);
+		System.out.println("start time is " + startTime); //check sending mail part.
 		if (currTime == startTime) {
 			StringBuffer message = new StringBuffer(
 					"Your order preparation has begun! ");

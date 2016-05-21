@@ -17,6 +17,11 @@ public class Notify implements Runnable {
 		this.mailOtp=mailOtp;
 	}
 
+	/**
+	 * send notification mails to the user as a separate thread
+	 * 
+	 * @author Meera
+	 */
 	@Override
 	public void run() {
 

@@ -487,7 +487,13 @@ public class UserController {
 			return "OrderError";
 		}
 	}
-
+	
+	/**
+	 * sends mail to the user with order details upon order success
+	 * as a separate thread
+	 * @param user id, order id
+	 * @author Meera
+	 */
 	private void sendMail(int userid, int orderid) {
 		// TODO Auto-generated method stub
 		System.out.println("in sending mail id is " + userid);
