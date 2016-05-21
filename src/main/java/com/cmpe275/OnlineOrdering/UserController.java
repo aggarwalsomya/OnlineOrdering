@@ -359,7 +359,9 @@ public class UserController {
 	}
 
 	/**
-	 * This function will check if the order can be prepared at the custom time or not
+	 * This function will check if the order can be prepared at the custom time
+	 * or not
+	 * 
 	 * @param time
 	 * @param date
 	 * @param preptime
@@ -370,56 +372,62 @@ public class UserController {
 	public String checkCustomTime(HttpServletRequest request, Model model, HttpServletResponse response) {
 
 		System.out.println("In Custom Time function : User Controller");
-		
-		String datetime = "";
-		String ordertype = request.getParameter("type");
-		System.out.println("Order Type::"+ ordertype);
-		if(ordertype.equals("confirm"))
-			datetime = request.getParameter("early");
-		else
-			datetime = request.getParameter("time");
-
-		//order id from session.
+		// order id from session.
 		int orderid;
 		int user_id = 0;
-		
+
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			orderid = (Integer)session.getAttribute("orderID");
+			orderid = (Integer) session.getAttribute("orderID");
 			user_id = (Integer) session.getAttribute("userID");
-			 System.out.println("orderis id set in final checkout");
+			System.out.println("orderis id set in final checkout");
 		} else {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			return "OrderErrorException";
 		}
-		//System.out.println(request.getParameter("orderid"));
-		
-		System.out.println("order id::"+orderid);
-				
+
+		String datetime = "";
+		String ordertype = request.getParameter("type");
+		System.out.println("<----Order Type::" + ordertype);
+		if (ordertype.equals("confirm"))
+			datetime = request.getParameter("early");
+		else if (ordertype.equals("custom"))
+			datetime = request.getParameter("time");
+		else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			model.addAttribute("msg", "Choose one date time by selecting a radio button");
+			model.addAttribute("orderid", orderid);
+			return "OrderError";
+		}
+
 		String date = Utils.getDateFromDateTime(datetime);
 		String time = Utils.getTimeFromDateTime(datetime);
+
+		System.out.println("datetime:" + datetime);
 		int pickuptime = 0;
 		try {
-			//changing the time in minutes from 24hour format
+			// changing the time in minutes from 24hour format
 			pickuptime = Utils.getTimeinMins(time);
-			if(pickuptime <= Utils.getCurrTimeInMins()) {
+			System.out.println("Pickup entered by the user is:" + pickuptime);
+			System.out.println("Current time in mins:" + Utils.getCurrTimeInMins());
+			if (pickuptime <= Utils.getCurrTimeInMins()) {
 				System.out.println("Custom time should be more than the current time");
 				model.addAttribute("msg", "Pickup time cannot be in past or current time");
-				model.addAttribute("orderid",orderid);
+				model.addAttribute("orderid", orderid);
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				return "OrderError";
 			}
-			System.out.println("Pickup time in mins::"+pickuptime);
-		} catch(Exception e) {
-			userSvc.cancelOrderUnplaced(orderid, user_id);
-			session.removeAttribute("orderID");
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			return "OrderErrorException";
+			System.out.println("Pickup time in mins::" + pickuptime);
+		} catch (Exception e) {
+			model.addAttribute("msg", "Enter a valid pickup date and time");
+			model.addAttribute("orderid", orderid);
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return "OrderError";
 		}
 
 		Map<String, Integer> mi = this.parseMenuItemsFromRequest(orderid, user_id);
-		System.out.println("Menu Order Items:"+mi);
-		if(mi.isEmpty() || mi == null) {
+		System.out.println("Menu Order Items:" + mi);
+		if (mi.isEmpty() || mi == null) {
 			model.addAttribute("msg", "Error occured in placing the order");
 			session.removeAttribute("orderID");
 			System.out.println("Menu items is null or empty");
@@ -427,30 +435,23 @@ public class UserController {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			return "OrderErrorException";
 		}
-		
+
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
-		System.out.println("Total prep time for order::"+totalPrepTime);
-		
-		Schedule sch = getAvailableScheduleForOrder(pickuptime, date,totalPrepTime);
+		System.out.println("Total prep time for order::" + totalPrepTime);
+
+		Schedule sch = getAvailableScheduleForOrder(pickuptime, date, totalPrepTime);
 		if (sch != null) {
 			System.out.println("Order Accepted..");
 			String menu_items = Utils.serializeMenuItems(mi);
-			
-			//update the quantity in the menu item table
+
+			// update the quantity in the menu item table
 			userSvc.updateQuantity(mi);
 
 			String newtime = Utils.convertMinsToTime(pickuptime);
 			float totalPrice = this.getTotalPriceForMenu(mi);
-			
+
 			// update the order status in the database for this order.
-			userSvc.placeOrder(user_id, 
-					orderid, 
-					menu_items, 
-					"Queued",
-					date,
-					newtime,
-					totalPrice,
-					Utils.getCurrdate() ,
+			userSvc.placeOrder(user_id, orderid, menu_items, "Queued", date, newtime, totalPrice, Utils.getCurrdate(),
 					Utils.getCurrtime());
 
 			sch.setOrderid(orderid);
@@ -458,21 +459,21 @@ public class UserController {
 			System.out.println("Prep Start Time:" + sch.getBusystarttime());
 			System.out.println("Prep End Time:" + sch.getBusyendtime());
 			System.out.println("Chef ID:" + sch.getChefid());
-			System.out.println("Pickup time in mins:"+pickuptime);
-			
+			System.out.println("Pickup time in mins:" + pickuptime);
+
 			// add the order to the chef's schedule as well.
 			userSvc.addOrderToChefSchedule(sch);
-			
-			//add the data in the menupopularity table as well.
+
+			// add the data in the menupopularity table as well.
 			userSvc.addMenuPop(orderid, mi, Utils.getCurrdate(), Utils.getCurrtime());
-			
-			model.addAttribute("msg","Order has been successfully placed");
+
+			model.addAttribute("msg", "Order has been successfully placed");
 			session.removeAttribute("orderID");
 			return "OrderSuccess";
 		} else {
 			System.out.println("No chef is free, ask him to modify the order");
 			model.addAttribute("msg", "Order cannot be placed due to too many other orders at this time");
-			model.addAttribute("orderid",orderid);
+			model.addAttribute("orderid", orderid);
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "OrderError";
 		}
