@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,13 @@ public class AdminController {
 	 * @author Somya
 	 */
 	@RequestMapping(value = "/searchItem", method = RequestMethod.POST)
-	public String getData(HttpServletRequest request, Model model) {
+	public String getData(HttpServletRequest request, Model model, HttpServletResponse response) {
 		String name = request.getParameter("name");
 		MenuItem mi = adminSvc.getMenuItem(name);
 		
 		if (mi == null) {
 			model.addAttribute("name",name);
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return "ErrorFindMenuItem";
 		}
 		
@@ -69,15 +71,18 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
 	public String addMenuItem(HttpServletRequest request,
-			 					@RequestParam CommonsMultipartFile fileUpload) {
+			 					@RequestParam CommonsMultipartFile fileUpload,
+			 					HttpServletResponse response) {
 		
 		int id = this.getNextNonExistingNumber();
 		adminSvc.add(setParams(request, id, fileUpload
 		));
 		if(validateImageFile(fileUpload))
 			return "AddMenuItem";
-		else
+		else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "ImageUploadError";
+		}
 	}
 
 	/**

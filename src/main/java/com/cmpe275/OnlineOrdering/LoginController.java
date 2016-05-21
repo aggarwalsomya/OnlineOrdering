@@ -55,7 +55,7 @@ public class LoginController {
 	 * @author Meera
 	 */
 	@RequestMapping(value = "/userLogin", method = RequestMethod.POST)
-	public String userLogin(HttpServletRequest request, Model model) {
+	public String userLogin(HttpServletRequest request, Model model,HttpServletResponse response) {
 		Password p = new Password();
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -66,14 +66,15 @@ public class LoginController {
 		UserCredentials uc = loginSvc.getUser(email);
 
 		if (uc == null) {
-			model.addAttribute("msg",
-					"User is not registered. Register with us now!");
+			model.addAttribute("msg","User is not registered. Register with us now!");
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			return "usernotfound";
 		} else {
 			try {
 				if (p.checkPassword(password, uc.getPassword())) {
 				} else {
 					model.addAttribute("msg", "Invalid Password. Try again!");
+					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 					return "usernotfound";
 				}
 			} catch (Exception e) {
@@ -123,9 +124,7 @@ public class LoginController {
 		if (session != null) {
 			String name = (String) session.getAttribute("username");
 			model.addAttribute("user", name);
-			System.out.println("removing attributes");
 			session.invalidate();
-			System.out.println("invalidated");
 
 		} else {
 			model.addAttribute("user", "you have already logged out!");
@@ -143,7 +142,7 @@ public class LoginController {
 	 * @author Meera
 	 */
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-	public String registerUser(HttpServletRequest request, Model model)
+	public String registerUser(HttpServletRequest request, Model model, HttpServletResponse response)
 			throws Exception {
 		Password p = new Password();
 		//System.out.println("entered registration into db");
@@ -190,6 +189,7 @@ public class LoginController {
 				model.addAttribute(
 						"msg",
 						"the verification code you have entered is wrong! Please click register button to register again.");
+				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
 			}
 		}
