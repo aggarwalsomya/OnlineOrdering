@@ -66,7 +66,7 @@ public class Scheduler {
 			if (ordd != null) {
 				ordd.setStatus(status);
 				schSvc.updateStatus(ordd);
-				if (status.equals("fulfilled")) {
+				if (status.equals("Fulfilled")) {
 					schSvc.deleteSchedule(ord.getOrderid());
 				}
 			}
@@ -103,7 +103,7 @@ public class Scheduler {
 		} else if (currTime >= endtime && currTime < pickuptime) {
 			return "prepared";
 		} else if (currTime >= pickuptime) {
-			return "fulfilled";
+			return "Fulfilled";
 		} else
 			return "";
 
