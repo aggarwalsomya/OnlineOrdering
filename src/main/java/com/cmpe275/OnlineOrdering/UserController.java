@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,12 @@ public class UserController {
 
 	@Autowired
 	private AdminService adminSvc;
+	
+	@Autowired
+	private MailSender mailOtp;
+	
+	@Autowired
+	private SchedulerService schSvc;
 	
 	Utils u = new Utils();
 
@@ -470,6 +477,7 @@ public class UserController {
 
 			model.addAttribute("msg", "Order has been successfully placed");
 			session.removeAttribute("orderID");
+			sendMail(user_id,orderid);
 			return "OrderSuccess";
 		} else {
 			//System.out.println("No chef is free, ask him to modify the order");
@@ -478,6 +486,32 @@ public class UserController {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "OrderError";
 		}
+	}
+
+	private void sendMail(int userid, int orderid) {
+		// TODO Auto-generated method stub
+		System.out.println("in sending mail id is " + userid);
+		String email = userSvc.getEmail(userid);
+		System.out.println("in sending mail, email is " + email);
+		if(email != "") {
+			StringBuffer message = new StringBuffer("Thank you for ordering with us. Your order details are:\n");
+			OrderDetails ord = schSvc.getOrder(orderid);
+			String details = ord.getMenu_items();
+			Map<String, Integer> m = Utils.deserializeMenuItems(details);
+			for(String item: m.keySet()) {
+				message.append(item);
+				message.append(" : " + m.get(item) + "\n");
+			}
+			
+			message.append("Pickup Date : " + ord.getpickup_date());
+			message.append("\nPickup Time  : " + ord.getpickup_time());
+			message.append("\nprice : " + ord.getPrice() + "$");
+			
+		
+		Runnable r = new Notify(email, message.toString(), mailOtp);
+		new Thread(r).start();
+		}
+		
 	}
 
 	/**

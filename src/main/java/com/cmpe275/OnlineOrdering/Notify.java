@@ -8,12 +8,13 @@ public class Notify implements Runnable {
 
 	private String email, body;
 
-	@Autowired
+	
 	private MailSender mailOtp;
 
-	public Notify(String email, String body) {
+	public Notify(String email, String body, MailSender mailOtp) {
 		this.email = email;
 		this.body = body;
+		this.mailOtp=mailOtp;
 	}
 
 	@Override

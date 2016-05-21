@@ -270,4 +270,22 @@ public class UserService {
 			return null;
 		}
 	}
+
+	@Transactional
+	public String getEmail(int id) {
+	
+			try {
+				Query q = em.createQuery("Select email from UserCredentials uc where uc.id = :arg1");
+				q.setParameter("arg1", id);
+				String mail = (String)q.getSingleResult();
+				return mail;
+			}catch(Exception ex)
+			{
+				System.out.println("error in gettig email is " + ex);
+				return "";
+			}
+		
+	}
+
+	
 }

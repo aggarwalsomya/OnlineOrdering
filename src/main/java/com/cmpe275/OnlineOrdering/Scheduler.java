@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class Scheduler {
 
 	@Autowired
 	AdminService adminSvc;
+	
+	@Autowired
+	private MailSender mailOtp;
 
 	
 	/**
@@ -90,7 +94,7 @@ public class Scheduler {
 			message.append("It is ready to be picked up soon at ");
 			message.append(Utils.convertMinsToTime(pickuptime));
 			message.append(" hrs");
-			Runnable r = new Notify(mail, message.toString());
+  		 Runnable r = new Notify(mail, message.toString(), mailOtp);
 			new Thread(r).start();
 
 		}
