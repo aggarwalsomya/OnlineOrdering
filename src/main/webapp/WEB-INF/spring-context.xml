@@ -67,4 +67,5 @@
   <!-- Enable @Transactional annotation -->
   <tx:annotation-driven/>
  
+ <mvc:resources mapping="/resources/**" location="/resources/"/>
 </beans>

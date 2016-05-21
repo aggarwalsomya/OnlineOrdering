@@ -21,7 +21,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-  background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+  background-image:url('resources/images/adminhome.jpg');
  background-repeat: no-repeat;
     background-size: 100%;
     opacity: 0.9;

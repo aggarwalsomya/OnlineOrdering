@@ -54,7 +54,7 @@ border: 1px solid #DF6F12;
 border-radius: 4px;
 padding: 5px 12px;
 font-size: 16px;	
-	width:200px;
+	width:210px;
 	text-align:center;
 }
 
