@@ -14,11 +14,16 @@ import java.util.TreeMap;
 
 public class Utils {
 	
-	public final String MAINCOURSE = "maincourse";
-	public final String DESERT = "desert";
-	public final String APPETIZER = "appetizer";
-	public final String DRINK = "drink";
-	public final String ORDERPLACED = "PLACED";
+	public final static String MAINCOURSE = "maincourse";
+	public final static String DESERT = "desert";
+	public final static String APPETIZER = "appetizer";
+	public final static String DRINK = "drink";
+	public final static String ORDERPLACED = "PLACED";
+	public final static int WORKINGDUR = 960;
+	public final static int OPENTIME = 360;
+	public final static int CLOSETIME = 1260;
+	public final static int WORKTIME = 300;
+	
 
 	/**
 	 * get the current system date
@@ -26,7 +31,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String getCurrdate() {
+	public static String getCurrdate() {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String curdate = df.format(new Date());
 		return curdate;
@@ -38,7 +43,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String getCurrtime() {
+	public static String getCurrtime() {
 		SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
 		Date now = new Date();
 		String currtime = sdfTime.format(now);
@@ -54,7 +59,7 @@ public class Utils {
 	 * @throws ParseException
 	 * @author Somya
 	 */
-	public List<String> getNextDates(String curDate) throws ParseException {
+	public static List<String> getNextDates(String curDate) throws ParseException {
 		List<String> dateList = new ArrayList<String>();
 		dateList.add(curDate);
 
@@ -73,16 +78,14 @@ public class Utils {
 	/**
 	 * removing the unnecessary spaces in the order details if any
 	 * 
-	 * @param part
-	 * @return
+	 * @param the menu item name
+	 * @return menu item name without trailing whitespace.
 	 * @author Meera
 	 */
-	public String removeSpace(String part) {
+	public static String removeSpace(String part) {
 
 		if (Character.isWhitespace(part.charAt(0))) {
-			System.out.println("inside removespace:" + part);
 			part = part.substring(1);
-			System.out.println("inside removespace:" + part);
 			return part;
 		} else
 			return part;
@@ -95,7 +98,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public Map<String, Integer> deserializeMenuItems(String mi) {
+	public static Map<String, Integer> deserializeMenuItems(String mi) {
 		if (mi.length() == 0 || mi == null)
 			return new HashMap<String, Integer>();
 
@@ -103,7 +106,6 @@ public class Utils {
 		Map<String, Integer> menu_items = new TreeMap<String, Integer>();
 		for (String item : items) {
 			String[] parts = item.split("::");
-			System.out.println("items are: " + parts[0]);
 			parts[0] = removeSpace(parts[0]);
 			menu_items.put(parts[0], Integer.parseInt(parts[1]));
 		}
@@ -116,7 +118,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String serializeMenuItems(Map<String, Integer> menuItems) {
+	public static String serializeMenuItems(Map<String, Integer> menuItems) {
 		String serializedString = " ";
 		for (Map.Entry<String, Integer> entry : menuItems.entrySet()) {
 			serializedString += entry.getKey() + "::"
@@ -133,7 +135,7 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String convertMinsToTime(int earlytime) {
+	public static String convertMinsToTime(int earlytime) {
 		String startTime = "00:00";
 		int h = earlytime / 60 + Integer.parseInt(startTime.substring(0, 2));
 		int m = earlytime % 60 + Integer.parseInt(startTime.substring(3, 5));
@@ -156,7 +158,7 @@ public class Utils {
 	 * @author Somya
 	 */
 
-	public int getCurrTimeInMins() {
+	public static int getCurrTimeInMins() {
 		Calendar cal = Calendar.getInstance();
 		int currMin = cal.get(Calendar.HOUR_OF_DAY) * 60
 				+ cal.get(Calendar.MINUTE);
@@ -170,13 +172,12 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String getDateFromDateTime(String datetime) {
+	public static String getDateFromDateTime(String datetime) {
 		// parsing the date and time from request
 		String date = "";
 		String parts[] = datetime.split(" ");
 		if (parts.length == 2) {
 			date = parts[0];
-			System.out.println("Date::" + date);
 		} else {
 			date = null;
 		}
@@ -190,13 +191,12 @@ public class Utils {
 	 * @return
 	 * @author Somya
 	 */
-	public String getTimeFromDateTime(String datetime) {
+	public static String getTimeFromDateTime(String datetime) {
 		// parsing the date and time from request
 		String time = "";
 		String parts[] = datetime.split(" ");
 		if (parts.length == 2) {
 			time = parts[1];
-			System.out.println("time::" + time);
 		} else {
 			time = null;
 		}
@@ -259,7 +259,7 @@ public class Utils {
 		return email;
 	}
 
-	public int getTimeinMins(String time) {
+	public static int getTimeinMins(String time) {
 		String parts[] = time.split(":");
 		return Integer.parseInt(parts[0]) * 60 + Integer.parseInt(parts[1]);
 	}

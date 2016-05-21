@@ -15,7 +15,7 @@
 				<label>Sort by:&nbsp;&nbsp;</label>
 				<select id="sortby" name="sortby" style="width:165px;">
 						<option value="ordertime">Order time</option>
-						<option value="startTime">Fulfillment Start Time</option>
+						<option value="starttime">Fulfillment Start Time</option>
 				</select>
 
 		<button type="submit" >Generate</button>

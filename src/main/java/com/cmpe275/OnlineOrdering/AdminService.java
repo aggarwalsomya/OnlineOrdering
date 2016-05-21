@@ -197,7 +197,16 @@ public class AdminService {
 	 * @param enddate
 	 * @return
 	 */
-	public List<Order> getAllOrders(String startdate, String enddate) {		
+	public List<Order> getAllOrders(String startdate, String enddate, String sortby) {	
+		String str = "";
+		if(sortby.contains("order")){
+			System.out.println("Sorting by order date and time");
+			str = " order by d.orderdate desc, d.orderdate desc";
+		} else {
+			System.out.println("Sorting by fulfilment start dtae and time");
+			str = " order by d.pickup_date desc, s.busystarttime desc";
+		}
+			
 		Query q = em.createQuery("SELECT d.orderid, "
 				+ "c.fullname,"
 				+ "c.email,"
@@ -218,8 +227,8 @@ public class AdminService {
 				+ " and "
 				+ " d.orderdate >= :arg1 "
 				+ "and "
-				+ "d.orderdate <= :arg2"
-				+ " order by d.orderdate desc");
+				+ "d.orderdate <= :arg2 "
+				+ str);
 		q.setParameter("arg1", startdate);
 		q.setParameter("arg2", enddate);
 		
@@ -227,8 +236,8 @@ public class AdminService {
 		List<Object[]> resultList = q.getResultList();
 		List<Order> result = new ArrayList<Order>(resultList.size());
 		for (Object[] row : resultList) {
-			String busystarttime = convertToTime((Integer)row[8]);
-			String busyendtime = convertToTime((Integer)row[9]);
+			String busystarttime = Utils.convertMinsToTime((Integer)row[8]);
+			String busyendtime = Utils.convertMinsToTime((Integer)row[9]);
 			
 		    result.add(new Order((Integer) row[0],
 		                            (String) row[1],
@@ -251,26 +260,6 @@ public class AdminService {
 		}
 
 		return result;
-	}
-	
-	/**
-	 * convert the int time to hr:min format
-	 * @param time
-	 * @return
-	 */
-	private String convertToTime(Integer time) {
-		String startTime = "00:00";
-		int h = time / 60 + Integer.parseInt(startTime.substring(0, 2));
-		int m = time % 60 + Integer.parseInt(startTime.substring(3, 5));
-		String hr = String.valueOf(h);
-		String min = String.valueOf(m);
-		
-		if(h <= 9)
-			hr = "0"+h;
-		if(m <= 9)
-			min = "0"+m;
-		
-		return hr + ":" + min;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -306,7 +295,6 @@ public class AdminService {
 		    		));
 		}
 			
-		System.out.println(result.size());
 		return result;
 	}
 }

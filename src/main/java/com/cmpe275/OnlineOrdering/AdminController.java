@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,13 @@ public class AdminController {
 	 * @author Somya
 	 */
 	@RequestMapping(value = "/searchItem", method = RequestMethod.POST)
-	public String getData(HttpServletRequest request, Model model) {
+	public String getData(HttpServletRequest request, Model model, HttpServletResponse response) {
 		String name = request.getParameter("name");
 		MenuItem mi = adminSvc.getMenuItem(name);
 		
 		if (mi == null) {
 			model.addAttribute("name",name);
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return "ErrorFindMenuItem";
 		}
 		
@@ -69,15 +71,18 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
 	public String addMenuItem(HttpServletRequest request,
-			 					@RequestParam CommonsMultipartFile fileUpload) {
+			 					@RequestParam CommonsMultipartFile fileUpload,
+			 					HttpServletResponse response) {
 		
 		int id = this.getNextNonExistingNumber();
 		adminSvc.add(setParams(request, id, fileUpload
 		));
 		if(validateImageFile(fileUpload))
 			return "AddMenuItem";
-		else
+		else {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "ImageUploadError";
+		}
 	}
 
 	/**
@@ -93,7 +98,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/orderReport", method = RequestMethod.GET)
 	/**
-	 * returns the home page
+	 * returns the order report page
 	 * @return
 	 */
 	public String orderreport() {
@@ -109,17 +114,13 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/vieworders", method = RequestMethod.POST)
 	public String viewOrders(Model model, HttpServletRequest request) {
-		//String startdate = "2016-05-05";
-		//String enddate = "2016-05-16";
-		//boolean sortOrderDate = true;
-		//boolean sortFulfilmentTime  = false;
 		String startdate = request.getParameter("startDate");
     	String enddate = request.getParameter("endDate");
     	String sortby = request.getParameter("sortby");
     	System.out.println(startdate+" "+enddate+" "+sortby);
 		
 		System.out.println("In view all orders : Admin Controller.");
-		List<Order> od = adminSvc.getAllOrders(startdate, enddate);
+		List<Order> od = adminSvc.getAllOrders(startdate, enddate, sortby);
 		if (od == null) {
 			model.addAttribute("msg", "Currently there are no orders to be displayed");
 		} else {
@@ -274,6 +275,8 @@ public class AdminController {
 	public String popreport() {
 		return "popReport";
 	}
+    
+    
     
 	@RequestMapping(value = "/AdminHome", method = RequestMethod.GET)
 	/**

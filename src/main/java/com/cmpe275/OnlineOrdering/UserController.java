@@ -11,6 +11,7 @@ import java.util.Random;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class UserController {
 			model.addAttribute("user", "notset");
 		}
 
-		String category[] = { u.MAINCOURSE, u.DRINK, u.DESERT, u.APPETIZER };
+		String category[] = { Utils.MAINCOURSE, Utils.DRINK, Utils.DESERT, Utils.APPETIZER };
 		for (int i = 0; i < category.length; i++) {
 			List<MenuItem> mi = userSvc.getMenuItems(category[i]);
 			model.addAttribute("list_" + category[i].toString(), mi);
@@ -84,8 +85,9 @@ public class UserController {
 	private Map<String, Integer> parseMenuItemsFromRequest(int orderid, int userid) {
 		Map<String, Integer> menuitemMap = new TreeMap<String, Integer>();
 		String menuitems = userSvc.getMenuDetailsForOrder(orderid, userid);
-		System.out.println("inside paresmenuitems" + menuitems);
-		menuitemMap = u.deserializeMenuItems(menuitems);
+		if(menuitems == null)
+			return null;
+		menuitemMap = Utils.deserializeMenuItems(menuitems);
 		return menuitemMap;
 	}
 
@@ -115,7 +117,7 @@ public class UserController {
 	 * @author Somya
 	 */
 	@RequestMapping(value = "/Menu/Checkout", method = RequestMethod.POST)
-	public String getEarliestPickUpTime(HttpServletRequest request, Model model)
+	public String getEarliestPickUpTime(HttpServletRequest request, Model model, HttpServletResponse response)
 			throws ParseException {
 
 		int user_id = 0;
@@ -130,14 +132,15 @@ public class UserController {
 		}
 
 		String menuitems = request.getParameter("itemData");
-		System.out.println("menuitems is" + menuitems);
+		System.out.println("menuitems is-" + menuitems);
 		if(menuitems.length() == 0) {
 			session.removeAttribute("orderID");
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "OrderErrorException";
 		}
 		
-		Map<String, Integer> mi = u.deserializeMenuItems(menuitems);
-		List<String> daterange = u.getNextDates(u.getCurrdate());
+		Map<String, Integer> mi = Utils.deserializeMenuItems(menuitems);
+		List<String> daterange = Utils.getNextDates(Utils.getCurrdate());
 		
 		int orderid;
 		if (session.getAttribute("orderID") != null) {
@@ -149,22 +152,33 @@ public class UserController {
 			System.out.println("orderid is set");
 		}
 	    
-		
-
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
 		float totalPrice = this.getTotalPriceForMenu(mi);
 		int earlytime = 0; // initialize with some random valid value
 		String earlydate = "";
 		String msg = "";
 		boolean found = false;
-		int currMin = u.getCurrTimeInMins();
+		int currMin = Utils.getCurrTimeInMins();
+		String menu_items_str = Utils.serializeMenuItems(mi);
 
-		if (totalPrepTime > 960) {
+		if (totalPrepTime > Utils.WORKINGDUR) {
 			msg = "Order is too long to prepare in one day. Cannot accept the order. Please modify or cancel the order.";
 			model.addAttribute("msg", msg);
 			model.addAttribute("menulist", mi);
 			model.addAttribute("orderid", orderid);
 			model.addAttribute("totalprice", totalPrice);
+			
+			userSvc.placeOrder(user_id, 
+					orderid, 
+					menu_items_str,
+					"pending",
+					earlydate, 
+					Utils.convertMinsToTime(earlytime), 
+					totalPrice, 
+					Utils.getCurrdate(),
+					Utils.getCurrtime());
+
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "OrderError";
 		}
 
@@ -172,15 +186,15 @@ public class UserController {
 			earlytime = getEarliestPickupForDate(totalPrepTime,
 					daterange.get(id), (id == 0 ? currMin : -1));
 
-			if (earlytime > 360 && earlytime <= 1260) {
+			if (earlytime > Utils.OPENTIME && earlytime <= Utils.CLOSETIME) {
 				earlydate = daterange.get(id);
 				System.out.println("Earliest pick up time is:" + earlytime
 						+ " on:" + daterange.get(id));
 				found = true;
 				break;
-			} else if(earlytime > 300 && earlytime <= 360) {
+			} else if(earlytime > Utils.WORKTIME && earlytime <= Utils.OPENTIME) {
 				earlydate = daterange.get(id);
-				earlytime = 360;
+				earlytime = Utils.OPENTIME;
 				found = true;
 				break;
 			}
@@ -192,15 +206,24 @@ public class UserController {
 			model.addAttribute("menulist", mi);
 			model.addAttribute("orderid", orderid);
 			model.addAttribute("totalprice", totalPrice);
+			
+			userSvc.placeOrder(user_id, 
+					orderid, 
+					menu_items_str,
+					"pending",
+					earlydate, 
+					Utils.convertMinsToTime(earlytime), 
+					totalPrice, 
+					Utils.getCurrdate(),
+					Utils.getCurrtime());
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "OrderError";
 		}
-
-		String menu_items_str = u.serializeMenuItems(mi);
 
 		// Adding Items to Model as well
 		model.addAttribute("orderid", orderid);
 		model.addAttribute("totalprice", totalPrice);
-		model.addAttribute("earliestpickuptime", earlydate+" "+ u.convertMinsToTime(earlytime));
+		model.addAttribute("earliestpickuptime", earlydate+" "+ Utils.convertMinsToTime(earlytime));
 		model.addAttribute("menulist", mi);
 
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -211,10 +234,10 @@ public class UserController {
 				menu_items_str,
 				"pending",
 				earlydate, 
-				u.convertMinsToTime(earlytime), 
+				Utils.convertMinsToTime(earlytime), 
 				totalPrice, 
-				u.getCurrdate(),
-				u.getCurrtime());
+				Utils.getCurrdate(),
+				Utils.getCurrtime());
 
 		return "checkout";
 	}
@@ -344,7 +367,7 @@ public class UserController {
 	 * @author Somya
 	 */
 	@RequestMapping(value = "/Menu/finalCheckout", method = RequestMethod.POST)
-	public String checkCustomTime(HttpServletRequest request, Model model) {
+	public String checkCustomTime(HttpServletRequest request, Model model, HttpServletResponse response) {
 
 		System.out.println("In Custom Time function : User Controller");
 		
@@ -366,24 +389,24 @@ public class UserController {
 			user_id = (Integer) session.getAttribute("userID");
 			 System.out.println("orderis id set in final checkout");
 		} else {
-			System.out.println("Session is null");
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			return "OrderErrorException";
 		}
 		//System.out.println(request.getParameter("orderid"));
 		
 		System.out.println("order id::"+orderid);
 				
-		String date = u.getDateFromDateTime(datetime);
-		String time = u.getTimeFromDateTime(datetime);
-		
-		int pickuptime = u.getTimeinMins(time);
+		String date = Utils.getDateFromDateTime(datetime);
+		String time = Utils.getTimeFromDateTime(datetime);
+		int pickuptime = 0;
 		try {
 			//changing the time in minutes from 24hour format
+			pickuptime = Utils.getTimeinMins(time);
 			System.out.println("Pickup time in mins::"+pickuptime);
 		} catch(Exception e) {
 			userSvc.cancelOrderUnplaced(orderid, user_id);
 			session.removeAttribute("orderID");
-			System.out.println("Exception in parsing time.");
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			return "OrderErrorException";
 		}
 
@@ -394,6 +417,7 @@ public class UserController {
 			session.removeAttribute("orderID");
 			System.out.println("Menu items is null or empty");
 			userSvc.cancelOrderUnplaced(orderid, user_id);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			return "OrderErrorException";
 		}
 		
@@ -403,12 +427,12 @@ public class UserController {
 		Schedule sch = getAvailableScheduleForOrder(pickuptime, date,totalPrepTime);
 		if (sch != null) {
 			System.out.println("Order Accepted..");
-			String menu_items = u.serializeMenuItems(mi);
+			String menu_items = Utils.serializeMenuItems(mi);
 			
 			//update the quantity in the menu item table
 			userSvc.updateQuantity(mi);
 
-			String newtime = u.convertMinsToTime(pickuptime);
+			String newtime = Utils.convertMinsToTime(pickuptime);
 			float totalPrice = this.getTotalPriceForMenu(mi);
 			
 			// update the order status in the database for this order.
@@ -419,8 +443,8 @@ public class UserController {
 					date,
 					newtime,
 					totalPrice,
-					u.getCurrdate() ,
-					u.getCurrtime());
+					Utils.getCurrdate() ,
+					Utils.getCurrtime());
 
 			sch.setOrderid(orderid);
 			sch.setDate(date);
@@ -433,7 +457,7 @@ public class UserController {
 			userSvc.addOrderToChefSchedule(sch);
 			
 			//add the data in the menupopularity table as well.
-			userSvc.addMenuPop(orderid, mi, u.getCurrdate(), u.getCurrtime());
+			userSvc.addMenuPop(orderid, mi, Utils.getCurrdate(), Utils.getCurrtime());
 			
 			model.addAttribute("msg","Order has been successfully placed");
 			session.removeAttribute("orderID");
@@ -442,7 +466,7 @@ public class UserController {
 			System.out.println("No chef is free, ask him to modify the order");
 			model.addAttribute("msg", "Order cannot be placed due to too many other orders at this time");
 			model.addAttribute("orderid",orderid);
-			userSvc.cancelOrderUnplaced(orderid, user_id);
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return "OrderError";
 		}
 	}
@@ -633,7 +657,7 @@ public class UserController {
 	 * @author Somya
 	 */
 	@RequestMapping(value = "/Menu/modifyOrder", method = RequestMethod.POST)
-	public String modifyOrder(HttpServletRequest request, Model model) {
+	public String modifyOrder(HttpServletRequest request, Model model, HttpServletResponse response) {
 		int orderid = -1;
 		int user_id = 0;
 		HttpSession session = request.getSession(false);
@@ -644,23 +668,24 @@ public class UserController {
 				System.out.println("got orderid for modifying");
 			}
 		} catch(Exception e) {
-			
-			return "OrderErrorException";
-			
-		}
-		String menuItemDetails = userSvc.getMenuDetailsForOrder(orderid, user_id);
-		if(menuItemDetails.length() == 0) {
-			session.removeAttribute("orderID");
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			return "OrderErrorException";
 		}
 		
-		Map<String,Integer> mi = u.deserializeMenuItems(menuItemDetails);
+		String menuItemDetails = userSvc.getMenuDetailsForOrder(orderid, user_id);
+		if(menuItemDetails == null || menuItemDetails.length() == 0) {
+			session.removeAttribute("orderID");
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			return "OrderErrorException";
+		}
+		
+		Map<String,Integer> mi = Utils.deserializeMenuItems(menuItemDetails);
 		model.addAttribute("BulkList",mi);
 		for(String s: mi.keySet()) {
-			System.out.println("final is" + s + mi.get(s));
+			System.out.println("ModifyOrder:Order:" + s + mi.get(s));
 		}
 		
-		String category[] = { u.MAINCOURSE, u.DRINK, u.DESERT, u.APPETIZER };
+		String category[] = { Utils.MAINCOURSE, Utils.DRINK, Utils.DESERT, Utils.APPETIZER };
 		for (int i = 0; i < category.length; i++) {
 			List<MenuItem> milist;
 			try {
@@ -668,6 +693,7 @@ public class UserController {
 				model.addAttribute("list_" + category[i].toString(), milist);
 			} catch (UnsupportedEncodingException e) {
 				session.removeAttribute("orderID");
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				return "OrderErrorException";
 			}
 		}
@@ -705,7 +731,7 @@ public class UserController {
 						listod.get(i).getpickup_date(),
 						listod.get(i).getpickup_time(),
 						listod.get(i).getPrice());
-				o.setMenumap(u.deserializeMenuItems(listod.get(i).getMenu_items()));
+				o.setMenumap(Utils.deserializeMenuItems(listod.get(i).getMenu_items()));
 				listo.add(o);
 			}
 			model.addAttribute("orderlist",listo);
@@ -765,7 +791,7 @@ public class UserController {
 					listod.get(i).getpickup_date(),
 					listod.get(i).getpickup_time(),
 					listod.get(i).getPrice());
-			o.setMenumap(u.deserializeMenuItems(listod.get(i).getMenu_items()));
+			o.setMenumap(Utils.deserializeMenuItems(listod.get(i).getMenu_items()));
 			listo.add(o);
 		}
 		model.addAttribute("orderlist",listo);
