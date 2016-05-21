@@ -13,73 +13,55 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SchedulerService {
-	
-	
+
 	@PersistenceContext
 	private EntityManager em;
- 
-	
-	//get orders for specific date
-	@SuppressWarnings("unchecked")
-	@Transactional
-	public List<Schedule> getOrders(String date) {
-	
-		System.out.println("entered");
-		List<Schedule> resultList = new ArrayList<Schedule>();
-		
-		Query  q = em.createQuery("Select s from Schedule s where s.date=:arg1");
-		q.setParameter("arg1", date);
-		
-		try {
-			
-			resultList = q.getResultList();  
-					
-		} catch (NoResultException e) {
-			resultList = null;
-			System.out.println("got in no result " + resultList);
-		}
-		return resultList;
-		
-	}
 
-
-	@Transactional
-	public int getPickuptime(int orderid) {
-		// TODO Auto-generated method stub
-		Query q = em.createQuery("Select o from OrderDetails o where o.orderid=:arg1");
-		q.setParameter("arg1", orderid);
-		OrderDetails ob;
-		try {
-		 ob = (OrderDetails)q.getSingleResult();
-		} catch(NoResultException e) {
-			ob = null;
-			return 0;
-		}
-		return  Utils.getTimeinMins(ob.getpickup_time());
-	}
-
-
+	/**
+	 * get the order details of the order with the particular id.
+	 * @param orderid
+	 * @author Meera
+	 */
 	@Transactional
 	public OrderDetails getOrder(int orderid) {
-		// TODO Auto-generated method stub
-		
-		Query q = em.createQuery("Select o from OrderDetails o where o.orderid=:arg1");
+
+		Query q = em
+				.createQuery("Select o from OrderDetails o where o.orderid=:arg1");
 		q.setParameter("arg1", orderid);
 		OrderDetails ob;
 		try {
-		 ob = (OrderDetails)q.getSingleResult();
-		} catch(NoResultException e) {
+			ob = (OrderDetails) q.getSingleResult();
+		} catch (NoResultException e) {
 			ob = null;
 		}
 		return ob;
 	}
 
-    @Transactional
+	/**
+	 * update the status of the order
+	 * @param order details
+	 * @author Meera
+	 */
+	@Transactional
 	public void updateStatus(OrderDetails ord) {
-		// TODO Auto-generated method stub
-    	em.merge(ord);
 		
+		em.merge(ord);
+
 	}
-	
-	
+
+	/**
+	 * deletes the order from chef's schedule
+	 * @param order id
+	 * @author Meera
+	 */
+	@Transactional
+	public void deleteSchedule(int id) {
+		
+		Query q = em
+				.createQuery("Delete from Schedule s where s.orderid=:arg1");
+		q.setParameter("arg1", id);
+		q.executeUpdate();
+
+	}
+
 }
