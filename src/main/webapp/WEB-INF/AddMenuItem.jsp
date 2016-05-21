@@ -46,7 +46,7 @@ form {
 	margin-right: 2px;
 	text-transform: uppercase;
 	letter-spacing: 1px;
-	
+	font-size:14px;
 }
 
 .col2 {
@@ -165,6 +165,7 @@ body {
 	float: left;
 	margin: 0;
 	
+	
 }
 
 .mybutton{
@@ -232,6 +233,9 @@ hr {
     border-top: 1px solid #ccc;
     margin: 1em 0;
     padding: 0; 
+}
+input{
+font-size:14px;
 }
 </style>
 

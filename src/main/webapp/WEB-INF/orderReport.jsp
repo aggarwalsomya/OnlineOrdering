@@ -1,13 +1,14 @@
 <html lang="en">
 <head>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script src="http://trentrichardson.com/examples/timepicker/jquery-ui-timepicker-addon.js"></script> 
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 
 <style>
 
@@ -114,7 +115,8 @@ font-size: 16px;
 
 
 </head>
-<body id="backgroundImage">
+<body>
+<div  id="backgroundImage">
 <!---navbar----->
 <div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
     <div class="container-fluid" style="margin-top:15px; font-size:20px;margin-right:12px;">
@@ -148,13 +150,13 @@ font-size: 16px;
     $(function () {
         $('#startDate').datepicker({
 		   
-		   dateFormat: 'yy-mm-dd',
+		   dateFormat: 'yy-mm-dd'
 
 		});
         
         $('#endDate').datepicker({
  		   
- 		   dateFormat: 'yy-mm-dd',
+ 		   dateFormat: 'yy-mm-dd'
 
  		});
         
@@ -162,6 +164,6 @@ font-size: 16px;
     
     
 </script>  
-
+</div>
 </body>
 </html>

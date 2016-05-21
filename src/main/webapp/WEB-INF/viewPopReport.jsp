@@ -50,7 +50,7 @@ font-family: Papyrus, fantasy;
 .bodycontent {
 	margin: auto;
 	margin-top: 70px;
-	width: 50%;
+	width: 25%;
 }
 
 .mybutton{
@@ -75,12 +75,16 @@ input[type=checkbox] {
 }
 
 .nav-tabs{
-  background-color:#ffffff;
+background:#ffffff;
 }
 .tab-content{
     background-color:#ffffff;
-width:740px;
+width:400px;
     padding:15px;
+    
+}
+a{
+color:#000000;
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
@@ -149,8 +153,6 @@ background:#d15d10;
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/OnlineOrdering/AdminHome">Home</a>
                 </li>
-                <li><a href="/contact">Contact Us</a>
-                </li>
                 <li><a href="/OnlineOrdering/logout">Logout</a>
                 </li>
             </ul>
@@ -160,10 +162,17 @@ background:#d15d10;
 <!---navbar----->
 <div class="bodycontent">
 
-<div id="title" style="margin-left:180px;"><b>View all orders</b></div>
+<div id="title" style="margin-left:30px;"><b>View all orders</b></div>
 <br><br>
+<ul class="nav nav-tabs" style="width:400px;">
+			<li class="active"><a data-toggle="tab" href="#Drinks">Drinks</a></li>
+			<li><a data-toggle="tab" href="#Appetizers">Appetizers</a></li>
+			<li><a data-toggle="tab" href="#Maincourse">Main Course</a></li>
+			<li><a data-toggle="tab" href="#Deserts">Deserts</a></li>
+
+		</ul>
 	<div class="tab-content">
-		<div id="Drinks" class="tab-pane fade in active">
+		<div id="Drinks" class="tab-pane fade in active" style="margin-left:20%;">
 			<table id="viewallorders_1">
 			 <tr>
     <th>Item Name</th>
@@ -177,11 +186,11 @@ background:#d15d10;
 				</c:forEach>
 			</table>
 		</div>
-	</div>
+
 	
 	
-	<div class="tab-content">
-		<div id="Appetizer" class="tab-pane fade in active">
+	
+		<div id="Appetizers" class="tab-pane fade" style="margin-left:20%;">
 			<table id="viewallorders_2">
 			 <tr>
     <th>Item Name</th>
@@ -195,10 +204,10 @@ background:#d15d10;
 				</c:forEach>
 			</table>
 		</div>
-	</div>
 	
-	<div class="tab-content">
-		<div id="Maincourse" class="tab-pane fade in active">
+	
+	
+		<div id="Maincourse" class="tab-pane fade" style="margin-left:20%;">
 			<table id="viewallorders_3">
 			 <tr>
     <th>Item Name</th>
@@ -212,10 +221,10 @@ background:#d15d10;
 				</c:forEach>
 			</table>
 		</div>
-	</div>
 	
-	<div class="tab-content">
-		<div id="Desert" class="tab-pane fade in active">
+	
+	
+		<div id="Deserts" class="tab-pane fade" style="margin-left:20%;">
 			<table id="viewallorders_4">
 			 <tr>
     <th>Item Name</th>

@@ -244,12 +244,10 @@ th {
 <body id="backgroundImage">
 <!---navbar----->
 <div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
-    <div class="container-fluid" style="margin-top:15px;">
+    <div class="container-fluid" style="margin-top:15px;font-size:20px;">
         <div class="collapse navbar-collapse navbar-menubuilder" >
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/OnlineOrdering/home">Home</a>
-                </li>
-                <li><a href="/contact">Contact Us</a>
                 </li>
                 <li><a href="/OnlineOrdering/logout">Logout</a>
                 </li>

@@ -25,7 +25,7 @@
   background-image:url('resources/images/sysreset.jpg');
  background-repeat: no-repeat;
     background-size: 100%;
-    opacity: 0.7;
+    opacity: 0.4;
     filter:alpha(opacity=40);
     height:100%;
     width:100%;
@@ -129,7 +129,7 @@ color:#000000;
 </div>
 <!---navbar-----><br><br><br>
 <div class="bodycontent">
-<h3><b>Thank you for your visit ${user}! You have successfully logged out.</b></h3>
+<h1><b>Thank you for your visit ${user}! You have successfully logged out.</b></h1>
 <br>
 <input type="button" class=mybutton value="Login" id="Logout"
 			name="Logout" onclick="location.href = 'home';">

@@ -50,7 +50,7 @@ font-family: Papyrus, fantasy;
 .bodycontent {
 	margin: auto;
 	margin-top: 70px;
-	width: 50%;
+	width: 65%;
 }
 
 .mybutton{
@@ -79,8 +79,8 @@ input[type=checkbox] {
 }
 .tab-content{
     background-color:#ffffff;
-width:740px;
-    padding:15px;
+width:940px;
+    padding:5px;
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
@@ -149,8 +149,6 @@ background:#d15d10;
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/OnlineOrdering/AdminHome">Home</a>
                 </li>
-                <li><a href="/contact">Contact Us</a>
-                </li>
                 <li><a href="/OnlineOrdering/logout">Logout</a>
                 </li>
             </ul>
@@ -160,16 +158,16 @@ background:#d15d10;
 <!---navbar----->
 <div class="bodycontent">
 
-<div id="title" style="margin-left:180px;"><b>View all orders</b></div>
+<div id="title" style="margin-left:280px;"><b>View all orders</b></div>
 <br><br>
 	<div class="tab-content">
 		<div id="Drinks" class="tab-pane fade in active">
 			<table id="viewallorders">
 			 <tr>
+	<th>User Name</th>
+    <th>User Email</th>
     <th>Order Id</th>
     <th>Order Date</th>
-    <th>User Name</th>
-    <th>User Email</th>
     <th>Status</th>
     <th>Pickup Date</th>
     <th>Pickup Time</th>
@@ -181,10 +179,10 @@ background:#d15d10;
    </tr>
 				<c:forEach var="list1" items="${orderlist}" varStatus="status">
 					<tr style="border: 2px solid #103F53;" >
-						<td>${list1.orderid}</td>
-						<td>${list1.orderdate}</td>
 						<td>${list1.username}</td>
 						<td>${list1.email}</td>
+						<td>${list1.orderid}</td>
+						<td>${list1.orderdate}</td>
 						<td>${list1.status}</td>
 						<td>${list1.pickup_date}</td>
 						<td>${list1.pickup_time}</td>
