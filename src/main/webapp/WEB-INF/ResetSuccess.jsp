@@ -26,7 +26,7 @@
   background-image:url('resources/images/sysreset.jpg');
  background-repeat: no-repeat;
     background-size: 100%;
-    opacity: 0.7;
+    opacity: 0.5;
     filter:alpha(opacity=40);
     height:100%;
     width:100%;
@@ -119,7 +119,7 @@ color:#000000;
 <body id="backgroundImage">
 <!---navbar----->
 <div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
-    <div class="container-fluid" style="margin-top:15px;">
+    <div class="container-fluid" style="margin-top:15px;font-size:20px;">
         <div class="collapse navbar-collapse navbar-menubuilder" >
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/OnlineOrdering/AdminHome">Home</a>
@@ -135,7 +135,7 @@ color:#000000;
 	
 	<br>
 	<br>
-	<h2><b>System Reset Successful!</b></h2><br>
+	<h1><b>System Reset Successful!</b></h1><br>
 
 </div></body>
 </html>

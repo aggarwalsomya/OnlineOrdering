@@ -117,7 +117,7 @@ font-size: 16px;
 <body id="backgroundImage">
 <!---navbar----->
 <div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
-    <div class="container-fluid" style="margin-top:15px;">
+    <div class="container-fluid" style="margin-top:15px;font-size:20px;">
         <div class="collapse navbar-collapse navbar-menubuilder" >
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/OnlineOrdering/AdminHome">Home</a>
