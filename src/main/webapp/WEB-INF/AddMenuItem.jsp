@@ -190,7 +190,6 @@ font-size: 16px;
 	
 }
 
-
 #custom-bootstrap-menu.navbar-default {
     font-size: 17px;
     background-color: rgba(223, 111, 18, 1);

@@ -120,9 +120,7 @@ font-size: 16px;
     <div class="container-fluid" style="margin-top:15px;">
         <div class="collapse navbar-collapse navbar-menubuilder" >
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">Home</a>
-                </li>
-                <li><a href="/contact">Contact Us</a>
+                <li><a href="/OnlineOrdering/AdminHome">Home</a>
                 </li>
                 <li><a href="/OnlineOrdering/logout">Logout</a>
                 </li>
