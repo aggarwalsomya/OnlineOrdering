@@ -40,7 +40,8 @@ margin-left:120px;
 
 	<br>
 	<br>
-	<h3>Error in placing the order. You can place a new order again from Home Page.</h3>
+	<h3>Error in placing the order.	You can place a new order again from Home Page.</h3>
+	<h4>${msg}</h4>
 <br>
 	<input type="mybutton" class=mybutton value="Home Page" id="back" name="Home page"
 		onclick="location.href = '../home';">
