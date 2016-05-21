@@ -47,7 +47,9 @@ color:#000000;
 
 }
 
-
+a{
+color:black;
+}
 
 #custom-bootstrap-menu.navbar-default {
     font-size: 17px;
