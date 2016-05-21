@@ -402,6 +402,13 @@ public class UserController {
 		try {
 			//changing the time in minutes from 24hour format
 			pickuptime = Utils.getTimeinMins(time);
+			if(pickuptime <= Utils.getCurrTimeInMins()) {
+				System.out.println("Custom time should be more than the current time");
+				model.addAttribute("msg", "Pickup time cannot be in past or current time");
+				model.addAttribute("orderid",orderid);
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				return "OrderError";
+			}
 			System.out.println("Pickup time in mins::"+pickuptime);
 		} catch(Exception e) {
 			userSvc.cancelOrderUnplaced(orderid, user_id);
@@ -513,7 +520,7 @@ public class UserController {
 	 */
 	private Schedule isChefFree(int chefid, int pickuptime, String date,int preptime) {
 
-		System.out.println("<------In function ischeffree---->");
+		//System.out.println("<------In function ischeffree---->");
 		Map<Integer, Integer> time = new TreeMap<Integer, Integer>();
 		time = userSvc.getScheduleForChef(chefid, date);
 
