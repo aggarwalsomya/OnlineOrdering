@@ -275,12 +275,13 @@ public class UserController {
 	 */
 	private int getEarliestTimeForChef(int chefid, String date, int preptime,
 			int startMin) {
-
+		System.out.println("chefid:"+chefid+" starMin:"+startMin);
 		Map<Integer, Integer> time = userSvc.getScheduleForChef(chefid, date);
 
 		List<Integer> a = new ArrayList<Integer>();
 		List<Integer> b = new ArrayList<Integer>();
 
+		System.out.println("CHef Schedule:");
 		for (Map.Entry<Integer, Integer> entry : time.entrySet()) {
 			if (entry.getKey() < startMin || entry.getValue() < startMin) {
 				startMin = Math.max(entry.getValue(), startMin);
@@ -288,6 +289,7 @@ public class UserController {
 			}
 			a.add(entry.getKey());
 			b.add(entry.getValue());
+			System.out.println(entry.getKey()+" "+entry.getValue());
 		}
 
 		int restOpen = Math.max(300, startMin);
@@ -372,7 +374,7 @@ public class UserController {
 	@RequestMapping(value = "/Menu/finalCheckout", method = RequestMethod.POST)
 	public String checkCustomTime(HttpServletRequest request, Model model, HttpServletResponse response) {
 
-		System.out.println("In Custom Time function : User Controller");
+		//System.out.println("In Custom Time function : User Controller");
 		// order id from session.
 		int orderid;
 		int user_id = 0;
@@ -381,7 +383,7 @@ public class UserController {
 		if (session != null) {
 			orderid = (Integer) session.getAttribute("orderID");
 			user_id = (Integer) session.getAttribute("userID");
-			System.out.println("orderis id set in final checkout");
+			//System.out.println("orderis id set in final checkout");
 		} else {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			return "OrderErrorException";
@@ -389,7 +391,7 @@ public class UserController {
 
 		String datetime = "";
 		String ordertype = request.getParameter("type");
-		System.out.println("<----Order Type::" + ordertype);
+		//System.out.println("<----Order Type::" + ordertype);
 		if (ordertype.equals("confirm"))
 			datetime = request.getParameter("early");
 		else if (ordertype.equals("custom"))
@@ -408,15 +410,15 @@ public class UserController {
 		try {
 			// changing the time in minutes from 24hour format
 			pickuptime = Utils.getTimeinMins(time);
-			System.out.println("Pickup entered by the user is:" + pickuptime);
-			System.out.println("Current time in mins:" + Utils.getCurrTimeInMins());
-			if (pickuptime <= Utils.getCurrTimeInMins()) {
+			//System.out.println("Pickup entered by the user is:" + pickuptime);
+			//System.out.println("Current time in mins:" + Utils.getCurrTimeInMins());
+			if (date == Utils.getCurrdate() && pickuptime <= Utils.getCurrTimeInMins()) {
 				model.addAttribute("msg", "Pickup time cannot be in past or current time");
 				model.addAttribute("orderid", orderid);
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				return "OrderError";
 			}
-			System.out.println("Pickup time in mins::" + pickuptime);
+			//System.out.println("Pickup time in mins::" + pickuptime);
 		} catch (Exception e) {
 			model.addAttribute("msg", "Enter a valid pickup date and time");
 			model.addAttribute("orderid", orderid);
@@ -425,22 +427,22 @@ public class UserController {
 		}
 
 		Map<String, Integer> mi = this.parseMenuItemsFromRequest(orderid, user_id);
-		System.out.println("Menu Order Items:" + mi);
+		//System.out.println("Menu Order Items:" + mi);
 		if (mi.isEmpty() || mi == null) {
 			model.addAttribute("msg", "Error occured in placing the order");
 			session.removeAttribute("orderID");
-			System.out.println("Menu items is null or empty");
+			//System.out.println("Menu items is null or empty");
 			userSvc.cancelOrderUnplaced(orderid, user_id);
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			return "OrderErrorException";
 		}
 
 		int totalPrepTime = getTotalPrepTimeForMenu(mi);
-		System.out.println("Total prep time for order::" + totalPrepTime);
+		//System.out.println("Total prep time for order::" + totalPrepTime);
 
 		Schedule sch = getAvailableScheduleForOrder(pickuptime, date, totalPrepTime);
 		if (sch != null) {
-			System.out.println("Order Accepted..");
+			//System.out.println("Order Accepted..");
 			String menu_items = Utils.serializeMenuItems(mi);
 
 			// update the quantity in the menu item table
@@ -455,10 +457,10 @@ public class UserController {
 
 			sch.setOrderid(orderid);
 			sch.setDate(date);
-			System.out.println("Prep Start Time:" + sch.getBusystarttime());
-			System.out.println("Prep End Time:" + sch.getBusyendtime());
-			System.out.println("Chef ID:" + sch.getChefid());
-			System.out.println("Pickup time in mins:" + pickuptime);
+			//System.out.println("Prep Start Time:" + sch.getBusystarttime());
+			//System.out.println("Prep End Time:" + sch.getBusyendtime());
+			//System.out.println("Chef ID:" + sch.getChefid());
+			//System.out.println("Pickup time in mins:" + pickuptime);
 
 			// add the order to the chef's schedule as well.
 			userSvc.addOrderToChefSchedule(sch);
@@ -470,7 +472,7 @@ public class UserController {
 			session.removeAttribute("orderID");
 			return "OrderSuccess";
 		} else {
-			System.out.println("No chef is free, ask him to modify the order");
+			//System.out.println("No chef is free, ask him to modify the order");
 			model.addAttribute("msg", "Order cannot be placed due to too many other orders at this time");
 			model.addAttribute("orderid", orderid);
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
