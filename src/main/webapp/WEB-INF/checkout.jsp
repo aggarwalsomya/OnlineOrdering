@@ -182,7 +182,7 @@ pading-right:15px;
 <!---navbar----->
 <div class="bodycontent">
 
-<br><br>
+<br><br><br>
 	
 	<label class="col1"><b>Order Id: </b><span id="id" style="font-size:22px;">${orderid}</span></label>
 	
