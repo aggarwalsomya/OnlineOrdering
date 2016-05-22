@@ -19,7 +19,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-  background-image:url('resources/images/userhome.jpg');
+  background-image:url('resources/images/sysreset.jpg');
  background-repeat: no-repeat;
     background-size: 100%;
     opacity: 0.5;
