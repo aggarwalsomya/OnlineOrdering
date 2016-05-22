@@ -162,8 +162,7 @@ font-weight:bold;
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/OnlineOrdering/home">Home</a>
                 </li>
-                <li><a href="/contact">Contact Us</a>
-                </li>
+                
                 <li><a href="/OnlineOrdering/logout">Logout</a>
                 </li>
             </ul>
