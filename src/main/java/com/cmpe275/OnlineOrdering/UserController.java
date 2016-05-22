@@ -687,14 +687,13 @@ public class UserController {
 			if (session != null) {
 				user_id = (Integer) session.getAttribute("userID");
 				userSvc.cancelOrderUnplaced(orderid, user_id);
-				
 				model.addAttribute("msg", "Order has been successfully cancelled.");
 			}
 		} catch (Exception e) {
 			model.addAttribute("msg", "Sorry order could not be cancelled.");
 		} finally{
 			session.removeAttribute("orderID");
-			System.out.println("orderis removed after cancellation");
+			System.out.println("orderid removed after cancellation");
 		}
 		return "OrderSuccess";
 	}
@@ -806,6 +805,7 @@ public class UserController {
 		for(int i = 0; i < data.length; i++) {
 			System.out.println("Data selected for delete is:"+ data[i]);
 			adminSvc.deleteOrder(Integer.parseInt(data[i]));
+			userSvc.cancelOrderChef(Integer.parseInt(data[i]));
 			model.addAttribute("msg","Orders Cancelled Successfully.");
 		}
 		return "OrderCancelSuccess";
