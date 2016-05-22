@@ -4,16 +4,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Cmpe275_Term_Project_5 : 404 Error</title>
+<title>Cmpe275_Term_Project_5 : Error</title>
 <style>
-body {
-background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106396/keih4mm9pyv3kpq8scymlnub2aecxzs9iscdane82nvbmfcc3leqqh7pjk0adoki-o.jpg');
-  background-size: 100%;
-    background-repeat: no-repeat;
-	color: #000000;
-	font-family: Papyrus, fantasy;
-	font-weight: bold;
-}
+#backgroundImage{z-index: 1;}
+
+#backgroundImage:before {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+  background-image:url('resources/images/background-food-05.jpg');
+ background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.4;
+    filter:alpha(opacity=40);
+    height:100%;
+    width:100%;
+ }
+ 
 #myBackground{
  background-color: rgba(255,255,255, 0.5);
  border-radius:4px;
@@ -144,9 +155,12 @@ width:85px;
 </style>
 </head>
 <body >
-<div class="bodycontent">
-<h3>Error 404</h3><br>
-<p>${msg}</p></div><br><div style="margin-left:400px;">
+<body id="backgroundImage">
+<div style="margin-left:400px;">
+<br><br>
+<h3>Error</h3>
+<h3>${msg}</h3></div><br>
+<div style="margin-left:350px;">
 <input type="button" class=mybutton id="register" name="register" value="Register" onclick="location.href = 'register';"> 
 <input type="button" class=mybutton id="login" name="login" value="Login" style="margin-left:30px;" onclick="location.href = 'home';"> 
 </div>
