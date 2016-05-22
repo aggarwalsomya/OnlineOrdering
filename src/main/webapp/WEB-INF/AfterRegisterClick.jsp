@@ -48,13 +48,26 @@ color:black;
 border: 1px solid #031E2A;
 border-radius: 4px;
 padding: 5px 12px;
-font-size: 14px;
+font-size: 18px;
 margin-left:45px;
 }
+
+.mybutton{
+background-color: #DF6F12;
+color:black;
+border: 1px solid #DF6F12;
+border-radius: 4px;
+padding: 5px 12px;
+font-size: 16px;	
+	width:100px;
+	text-align:center;
+}
+
 .mybutton:hover {
     background-color: #031E2A;
     color: #7EB2C8;
 }
+
 
 #custom-bootstrap-menu.navbar-default {
     font-size: 17px;
@@ -96,12 +109,13 @@ margin-left:45px;
 </head>
 <body id="backgroundImage">
 	<br>
-	<br>
-<form method="post" name="myform">
-<p>${msg}</p>
-<input class=mybutton type="button" name="login" value="Login" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/';">
- <input class=mybutton type="button" name="register" value="Register" onclick="location.href = 'register';">
-</form>
+	<br><br><br>
+	<br><br>
+<div style="margin-left:30%;"><form method="post" name="myform">
+<h1>${msg}</h1>
+<div style="margin-left:15%;"><input class=mybutton type="button" name="login" value="Login" onclick="location.href = 'http://127.0.0.1:8080/OnlineOrdering/';">
+ <input class=mybutton type="button" name="register" value="Register" onclick="location.href = 'register';"></div>
+</form></div>
 
 </body>
 </html>
