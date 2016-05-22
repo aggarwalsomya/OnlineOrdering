@@ -499,9 +499,12 @@ public class UserController {
 		System.out.println("in sending mail id is " + userid);
 		String email = userSvc.getEmail(userid);
 		System.out.println("in sending mail, email is " + email);
-		if(email != "") {
+		OrderDetails ord = schSvc.getOrder(orderid);
+		System.out.println("in sending mail order is " + ord);
+		if(email != "" && ord != null) {
 			StringBuffer message = new StringBuffer("Thank you for ordering with us. Your order details are:\n");
-			OrderDetails ord = schSvc.getOrder(orderid);
+			message.append("Order No. : " + orderid + "\n");
+			
 			String details = ord.getMenu_items();
 			Map<String, Integer> m = Utils.deserializeMenuItems(details);
 			for(String item: m.keySet()) {
@@ -516,7 +519,7 @@ public class UserController {
 		
 		Runnable r = new Notify(email, message.toString(), mailOtp);
 		new Thread(r).start();
-		}
+		} 
 		
 	}
 

@@ -29,11 +29,11 @@ public class Scheduler {
 	 * @author Meera
 	 */
 	@Scheduled(cron = "0 * * * * *")
-	public void reportCurrentTime() {
+	public void scheduleStatus() {
 
 		String currDate = Utils.getCurrdate();
 
-		System.out.println("The time is now " + currDate);//add condition for not proceeding in the night
+		System.out.println("The date is now " + currDate);//add condition for not proceeding in the night
 		
 		orders = schSvc.getAllOrders(currDate);
 		if (orders != null && !orders.isEmpty()) {
@@ -44,7 +44,7 @@ public class Scheduler {
 				int pickupTime = Utils.getTimeinMins(o.getpickup_time());
 
 				String status = statuscheck(startTime, endTime, pickupTime,
-						o.getEmail());
+						o.getEmail(), o.getOrderid());
 				System.out.println("statsu is " + status);
 				updateStatus(status, o);
 			}
@@ -81,14 +81,15 @@ public class Scheduler {
 	 * @author Meera
 	 */
 	private String statuscheck(int startTime, int endtime, int pickuptime,
-			String mail) {
+			String mail, int orderid) {
 	
 		int currTime = Utils.getCurrTimeInMins();
 		System.out.println("current time is " + currTime);
 		System.out.println("start time is " + startTime); //check sending mail part.
 		if (currTime == startTime) {
 			StringBuffer message = new StringBuffer(
-					"Your order preparation has begun! ");
+					"Your order preparation for Order No. " + orderid);
+			message.append(" has begun! ");
 			message.append("It is ready to be picked up soon at ");
 			message.append(Utils.convertMinsToTime(pickuptime));
 			message.append(" hrs");
@@ -98,10 +99,10 @@ public class Scheduler {
 		}
 		if (currTime >= startTime && currTime < endtime) {
 
-			return "inprocess";
+			return "Inprocess";
 
 		} else if (currTime >= endtime && currTime < pickuptime) {
-			return "prepared";
+			return "Prepared";
 		} else if (currTime >= pickuptime) {
 			return "Fulfilled";
 		} else
