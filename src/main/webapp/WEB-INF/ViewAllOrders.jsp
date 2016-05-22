@@ -96,7 +96,7 @@ input[type=checkbox] {
 }
 .tab-content{
     background-color:#ffffff;
-min-width:940px;
+min-width:1000px;
     padding:2px;
 }
 
