@@ -27,7 +27,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-  background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+  background-image:url('../resources/images/Seamless-Food-Delivery_stepOne_Burrito_13.jpg');
  background-repeat: no-repeat;
     background-size: 100%;
     opacity: 0.9;
@@ -40,7 +40,7 @@
 body {
   background-size: 100%;
     background-repeat:repeat-y;
-background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+background-image:url('../resources/images/Seamless-Food-Delivery_stepOne_Burrito_13.jpg');
 color:#000000;
 	font-family: Papyrus, fantasy;
 	font-weight: bold;
@@ -258,11 +258,11 @@ th {
 <!---navbar----->
 
 <br><br><br><br><br><br>
-	<div style="margin-left:290px; color:#ffffff;"><h2>Hello ${user} !</h2></div>
+	<div style="margin-left:400px; color:#ffffff;"><h2><strong>Hello ${user} !</strong></h2></div>
 	<div class="bodycontent">
 
-		<div id="title">
-			<b>Select Your Order</b>
+		<div id="title" style="color:white;">
+			<b><strong>Select Your Order</strong></b>
 		</div>
 		<br>
 		<br><br><br>
