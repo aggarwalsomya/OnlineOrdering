@@ -21,9 +21,9 @@
    bottom: 0;
    left: 0;
    right: 0;
-  background-image:url('resources/images/no_orders.jpg');
+  background-image:url('resources/images/background-food-05.jpg');
  background-repeat: no-repeat;
-    background-size: auto 100%;
+    background-size: auto 180%;
     opacity: 0.3;
     filter:alpha(opacity=40);
     height:100%;
