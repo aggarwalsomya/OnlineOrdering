@@ -28,7 +28,7 @@ public class Scheduler {
 	 * and changing the status accordingly and sending notifications.
 	 * @author Meera
 	 */
-	@Scheduled(cron = "0 * * * * *")
+	@Scheduled(cron = "58 * * * * *")
 	public void scheduleStatus() {
 
 		String currDate = Utils.getCurrdate();
