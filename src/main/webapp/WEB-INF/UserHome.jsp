@@ -20,7 +20,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-  background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+  background-image:url('resources/images/userhome.jpg');
  background-repeat: no-repeat;
     background-size: 100%;
     opacity: 0.9;
@@ -66,7 +66,8 @@ font-size: 16px;
 .bodycontent {
 	margin: auto;
 	margin-top: 80px;
-	width: 20%;
+	width: 10%;
+	margin-right:30%;
 }
 
 }
@@ -125,12 +126,12 @@ font-size: 16px;
 <!---navbar----->
 
 <br><br><br><br>
+<br><br><br>
 
-
-	<div style="margin-left: 350px;color:white;">
-		<h2>
-			<b>Welcome ${user} !!</b>
-		</h2>
+	<div style="margin-left: 40%;color:black;">
+		<h1>
+			<strong>Welcome ${user} !!</strong>
+		</h1>
 	</div>
 	<div class="bodycontent">
 		<input type="button" class=mybutton value="Place Order" id="Order"
