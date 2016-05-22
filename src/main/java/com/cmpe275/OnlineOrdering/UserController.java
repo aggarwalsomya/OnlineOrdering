@@ -578,7 +578,7 @@ public class UserController {
 		for(int i=0;i<a.length;i++)
 			System.out.print(a[i]+"-"+b[i]);
 
-		int minStartTime = Math.max(pickuptime - preptime - 60, 300);
+		int minStartTime = Math.max(Math.max(pickuptime - preptime - 60, 300), Utils.getCurrTimeInMins());
 		int maxStartTime = pickuptime - preptime;
 		System.out.println("\nMinStartTime:" + minStartTime);
 		System.out.println("MaxStartTime:" + maxStartTime);
