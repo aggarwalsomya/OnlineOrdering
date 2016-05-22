@@ -20,7 +20,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-  background-image:url('resources/images/Seamless-Food-Delivery_stepOne_Burrito_13.jpg');
+  background-image:url('resources/images/img.jpg');
  background-repeat: no-repeat;
     background-size: 100%;
     opacity: 0.9;
@@ -126,7 +126,7 @@ font-size: 16px;
 <!---navbar----->
 
 <br><br><br><br>
-<br><br><br>
+<br><br><br><br><br><br>
 
 	<div style="margin-left: 40%;color:black;">
 		<h1>
