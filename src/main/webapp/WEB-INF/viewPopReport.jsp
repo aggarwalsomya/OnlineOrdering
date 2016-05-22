@@ -23,7 +23,7 @@
 body {
   background-size: 1400px 900px;
 	color: #000000;
-background-image:url('http://fillyourplate.org/blog/wp-content/uploads/2015/04/bigstock-Spices-Spice-over-Wood-Herbs-62076047.jpg');
+background-image:url('resources/images/adminhome.jpg');
 font-family: Papyrus, fantasy;
 	font-weight: bold;
     background-repeat:repeat-y;

@@ -806,7 +806,7 @@ public class UserController {
 		for(int i = 0; i < data.length; i++) {
 			System.out.println("Data selected for delete is:"+ data[i]);
 			adminSvc.deleteOrder(Integer.parseInt(data[i]));
-			model.addAttribute("msg","Queued Orders have been cancelled successfully.");
+			model.addAttribute("msg","Orders Cancelled Successfully.");
 		}
 		return "OrderCancelSuccess";
 	}
