@@ -644,7 +644,7 @@ public class UserController {
 								- preptime);
 						sch.setBusyendtime(Math.min(maxLimit, pickuptime));
 						return sch;
-					} else {
+					} else if(maxStartTime <= maxLimit){
 						System.out.println("No, it cannot be accomodated");
 						return null;
 					}
@@ -654,11 +654,8 @@ public class UserController {
 					else {
 						if (minStartTime + preptime <= maxLimit) {
 							System.out.println("Yes, scheduling early");
-							sch.setBusystarttime(minStartTime); // scheduled
-																// here early
-							sch.setBusyendtime(minStartTime + preptime); // scheduled
-																			// here
-																			// early
+							sch.setBusystarttime(minStartTime); 
+							sch.setBusyendtime(minStartTime + preptime); 
 							return sch;
 						} else {
 							System.out.println("No, it cant be accomodated");

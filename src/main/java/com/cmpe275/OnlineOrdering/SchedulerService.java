@@ -32,7 +32,7 @@ public class SchedulerService {
 		OrderDetails ob;
 		try {
 			ob = (OrderDetails) q.getSingleResult();
-		} catch (NoResultException e) {
+		} catch (Exception e) {
 			ob = null;
 		}
 		return ob;
