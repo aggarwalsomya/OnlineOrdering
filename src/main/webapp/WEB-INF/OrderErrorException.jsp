@@ -21,10 +21,10 @@
    bottom: 0;
    left: 0;
    right: 0;
-  background-image:url('../resources/images/img.jpg');
+  background-image:url('../resources/images/banner.jpg');
  background-repeat: no-repeat;
-    background-size: 100%;
-    opacity: 0.9;
+    background-size: auto 100%;
+    opacity: 0.4;
     filter:alpha(opacity=40);
     height:100%;
     width:100%;
@@ -98,7 +98,8 @@ margin-left:120px;
 
 </style>
 </head>
-<body class="bodycontent">
+<body id="backgroundImage">
+<div class="bodycontent">
 <!---navbar----->
 <div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
     <div class="container-fluid" style="margin-top:15px;font-size:20px;">
@@ -114,10 +115,10 @@ margin-left:120px;
 </div>
 <!---navbar----->
 	<br>
-	<br>
-	<b><h2>Error in placing the order. Place a new order again from Home.</h2><br>
-	<h3>${msg}</h3></b>
+	<br><br><br>
+	<b><h2><b>Error in placing the order. Place a new order again from Home.</b></h2><br>
+	<h3><b>${msg}</b></h3></b>
 <br>
-	
+	</div>
 </body>
 </html>
