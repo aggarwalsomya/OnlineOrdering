@@ -105,7 +105,7 @@ form {
 	margin: 0;
 	float: left;
 	margin-right: 2px;
-font-size:24px;
+font-size:22px;
 	letter-spacing: 1px;
 	
 }
@@ -157,6 +157,9 @@ font-weight:bold;
 th{
 padding-bottom:15px;
 }
+tr{
+pading-right:15px;
+}
 </style>
 
 
@@ -179,7 +182,7 @@ padding-bottom:15px;
 <!---navbar----->
 <div class="bodycontent">
 
-<br><br><br><br>
+<br><br>
 	
 	<label class="col1"><b>Order Id: </b><span id="id" style="font-size:22px;">${orderid}</span></label>
 	
@@ -203,7 +206,7 @@ padding-bottom:15px;
 	<br>
 	<div class="row">
 	<label class="col1"><input type="radio" onclick="confirm()"
-		name="pickup" value="confirm"/>&nbsp;&nbsp;<span style="font-size:24px;">Earliest Pickup Time:</span> &nbsp;&nbsp;</label>
+		name="pickup" value="confirm"/>&nbsp;&nbsp;<span style="font-size:22px;">Earliest Pickup Time:</span> &nbsp;&nbsp;</label>
 		<div class="col2" id="early" style="font-size:20px;">${earliestpickuptime}</div>
 	</div>
 	<br>
