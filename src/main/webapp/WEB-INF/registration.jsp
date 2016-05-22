@@ -23,8 +23,8 @@ body {
 	background-color: rgba(255, 255, 255, 0.5);
 	border-radius: 4px;
 	color: inherit;
-	width: 540px;
-	height: 550px;
+	width: 550px;
+	height: 590px;
 }
 
 #title {
@@ -178,6 +178,7 @@ div.row {
 							class="col2"><input type="text" name="phone" id="phone"
 							required /></span>
 					</div>
+					
 					<div class="row">
 						<label class="col1">Mobile Carrier:&nbsp;&nbsp;</label> <span
 							class="col2"> <select id="carrier" name="carrier"
@@ -196,7 +197,8 @@ div.row {
 							placeholder="Enter code received on email" name="verCode"
 							required /></span>
 					</div>
-					<div class="row">
+					<div style="width:410px;margin-left:50px;">**Verification code will be sent on email and as mobile sms.</div>
+					<br><div class="row">
 						<span class="col2" style="margin-left: 35px;"><input
 							class=mybutton type=button name="sendOTP" id="sendOTP"
 							value="Send OTP" onclick="sendotp()"></span>
@@ -213,6 +215,8 @@ div.row {
 					<span class="col2" style="margin-left: 35px;"> <input
 						class="mybutton" type="submit" name="register" value="Register"></span>
 				</form>
+			
+				
 			</div>
 		</div>
 	</div>

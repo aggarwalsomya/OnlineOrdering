@@ -96,12 +96,12 @@ form {
 
 .col1 {
 	text-align: left;
-	width: 250px;
+	width: 300px;
 	height: 31px;
 	margin: 0;
 	float: left;
 	margin-right: 2px;
-	text-transform: uppercase;
+font-size:24px;
 	letter-spacing: 1px;
 	
 }
@@ -147,8 +147,11 @@ input[type=checkbox] {
 }
 
 label{
-font-size:12px;
+font-size:16px;
 font-weight:bold;
+}
+th{
+padding-bottom:15px;
 }
 </style>
 
@@ -174,10 +177,10 @@ font-weight:bold;
 
 <br><br><br><br>
 	
-	<label class="col1"><b>Order Id: </b><span id="id">${orderid}</span></label>
+	<label class="col1"><b>Order Id: </b><span id="id" style="font-size:22px;">${orderid}</span></label>
 	
-	
-
+	<br><br>
+<div class="col1">
 	<table>
 	<tr><th style="text-align:left;">Item Name</th>
 	<th>Quantity</th></tr>
@@ -187,19 +190,19 @@ font-weight:bold;
 				<td style="text-align:center;">${list.value}</td>
 			</tr><br>
 		</c:forEach>
-	</table>
+	</table></div>
 	<br><br><div style="margin-left:30px;">
-	<div class="row">
+	<br><br><br><br><div class="row">
 	<label class="col1">Total Price:&nbsp;&nbsp;</label>
-	<span class="col2">$ ${totalprice}</span>
+	<div class="col2" style="font-size:22px;">$ ${totalprice}</div>
 	</div>
-	
+	<br>
 	<div class="row">
 	<label class="col1"><input type="radio" onclick="confirm()"
-		name="pickup" value="confirm"/>&nbsp;&nbsp;<span style="font-size:12px;">Earliest Pickup Time:</span> &nbsp;&nbsp;</label>
-		<span class="col2" id="early">${earliestpickuptime}</span>
+		name="pickup" value="confirm"/>&nbsp;&nbsp;<span style="font-size:24px;">Earliest Pickup Time:</span> &nbsp;&nbsp;</label>
+		<div class="col2" id="early" style="font-size:20px;">${earliestpickuptime}</div>
 	</div>
-	
+	<br>
 	<div class="row">
 	<label class="col1">
 	<input type="radio" onclick="custom()"
