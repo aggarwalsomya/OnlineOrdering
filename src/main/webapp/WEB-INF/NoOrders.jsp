@@ -24,7 +24,7 @@
   background-image:url('resources/images/no_orders.jpg');
  background-repeat: no-repeat;
     background-size: auto 100%;
-    opacity: 0.4;
+    opacity: 0.3;
     filter:alpha(opacity=40);
     height:100%;
     width:100%;
