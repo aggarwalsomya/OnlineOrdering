@@ -12,7 +12,7 @@
 <title>Cmpe275_Term_Project_5 Order Placement Successful</title>
 <style>
 
-#backgroundImage{z-index: 1;}
+backgroundImage{z-index: 1;}
 
 #backgroundImage:before {
    content: "";
@@ -22,23 +22,24 @@
    bottom: 0;
    left: 0;
    right: 0;
-  background-image:url('resources/images/no_orders.jpg');
+  background-image:url('resources/images/sysreset.jpg');
  background-repeat: no-repeat;
-    background-size: auto 100%;
-    opacity: 0.3;
+    background-size: 100%;
+    opacity: 0.5;
     filter:alpha(opacity=40);
     height:100%;
     width:100%;
  }
 
 body {
-  background-size: auto 100%;
+  background-size: 100%;
     background-repeat:repeat-y;
 	color: #000000;
 	font-family: Papyrus, fantasy;
 	font-weight: bold;
 
 }
+
 .bodycontent {
 	margin: auto;
 	margin-top: 50px;
@@ -110,10 +111,9 @@ width:70px;
 </div>
 <!---navbar----->
 <div class="bodycontent">
+	
 	<br>
-	<br>
-	<h1>${msg}</h1>
-<br>
-<br /></div>
-</body>
+	<br><br><br><br><br><br><br><br>
+	<h1><b> ${msg} </b></h1><br>
+</div></body>
 </html>

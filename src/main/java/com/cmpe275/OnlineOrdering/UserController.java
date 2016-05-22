@@ -475,7 +475,7 @@ public class UserController {
 			// add the data in the menupopularity table as well.
 			userSvc.addMenuPop(orderid, mi, Utils.getCurrdate(), Utils.getCurrtime());
 
-			model.addAttribute("msg", "Order has been successfully placed");
+			model.addAttribute("msg", "Order placement successful");
 			session.removeAttribute("orderID");
 			sendMail(user_id,orderid);
 			return "OrderSuccess";
