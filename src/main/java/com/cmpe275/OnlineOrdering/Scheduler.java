@@ -66,9 +66,7 @@ public class Scheduler {
 			if (ordd != null) {
 				ordd.setStatus(status);
 				schSvc.updateStatus(ordd);
-				if (status.equals("Fulfilled")) {
-					schSvc.deleteSchedule(ord.getOrderid());
-				}
+				
 			}
 		}
 	}
@@ -93,6 +91,7 @@ public class Scheduler {
 			message.append("It is ready to be picked up soon at ");
 			message.append(Utils.convertMinsToTime(pickuptime));
 			message.append(" hrs");
+			System.out.println("sending mail that is has started to prepare");
   		 Runnable r = new Notify(mail, message.toString(), mailOtp);
 			new Thread(r).start();
 
