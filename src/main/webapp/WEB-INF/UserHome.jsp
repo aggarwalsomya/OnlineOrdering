@@ -20,7 +20,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-  background-image:url('resources/images/userhome.jpg');
+  background-image:url('resources/images/Seamless-Food-Delivery_stepOne_Burrito_13.jpg');
  background-repeat: no-repeat;
     background-size: 100%;
     opacity: 0.9;
@@ -66,7 +66,7 @@ font-size: 16px;
 .bodycontent {
 	margin: auto;
 	margin-top: 80px;
-	width: 10%;
+	width: 25%;
 	margin-right:30%;
 }
 
