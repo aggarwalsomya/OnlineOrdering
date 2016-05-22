@@ -4,6 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <title>Login Status</title>
 <style>
 #backgroundImage{z-index: 1;}
@@ -19,7 +22,7 @@
   background-image:url('resources/images/userhome.jpg');
  background-repeat: no-repeat;
     background-size: 100%;
-    opacity: 0.9;
+    opacity: 0.5;
     filter:alpha(opacity=40);
     height:100%;
     width:100%;
@@ -90,8 +93,25 @@ font-size: 14px;
 </style>
 </head>
 <body id="backgroundImage">
+<!---navbar----->
+<div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
+    <div class="container-fluid" style="margin-top:15px;font-size:20px;">
+        <div class="collapse navbar-collapse navbar-menubuilder" >
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/OnlineOrdering/AdminHome">Home</a>
+                </li>
+                <li><a href="/OnlineOrdering/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!---navbar----->
+<div class="bodycontent">
+	
+	<br>
+	<br><br><br><br><br><br><br><br>
+	<h1><b>You are already logged in!</b></h1><br>
 
-<p>You have already logged in!</p>
-<input type="button" class=mybutton id="home" value="Home" onclick="location.href = 'home';">
-</body>
+</div></body>
 </html>
