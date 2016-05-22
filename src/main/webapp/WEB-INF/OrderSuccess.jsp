@@ -42,6 +42,6 @@ width:70px;
 	<input type="button" class=mybutton value="Home" id="back" name="Go to Home Page"
 		onclick="location.href = '../home';">
 		<input type="button" class=mybutton value="Logout" id="Logout"
-			name="Logout" onclick="location.href = 'logout';"><br />
+			name="Logout" onclick="location.href = '../logout';"><br />
 </body>
 </html>
