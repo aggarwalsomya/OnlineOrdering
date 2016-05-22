@@ -22,7 +22,7 @@
 body {
   background-size: 1400px 900px;
 	color: #000000;
-background-image:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/10/106/106399/crsrxfllostehmuxwzqfkdarpcg0di40toehyl4mzmgrkmy3dpfzxttukvsmluvp-o.jpg?1399222059');
+background-image:url('resources/images/deletemenu.jpg');
 font-family: Papyrus, fantasy;
 	font-weight: bold;
     background-repeat:repeat-y;
@@ -32,7 +32,7 @@ font-family: Papyrus, fantasy;
 
 }
 #title {
-color: #ffffff;
+color: #000000;
 	width: 350px;
 	height: 26px;	
 	padding-top: 15px;
@@ -48,7 +48,8 @@ color: #ffffff;
 .bodycontent {
 	margin: auto;
 	margin-top: 70px;
-	width: 40%;
+	width: 10%;
+	margin-right:40%;
 }
 
 .mybutton{
@@ -59,7 +60,7 @@ border-radius: 4px;
 padding: 5px 12px;
 font-size: 14px;
 float:right;
-margin-right:300px;
+margin-right:100px;
 }
 .mybutton:hover {
     background-color: #031E2A;
@@ -79,7 +80,7 @@ input[type=checkbox] {
 }
 .tab-content{
     background-color:#ffffff;
-width:640px;
+width:540px;
     padding:15px;
 }
 
@@ -193,11 +194,10 @@ text-align:center;
 	
 	<form action="deleteMenuItem" method="POST">
 		<input type="hidden" id="itemData" name="itemData"> 
-		<div class="bodycontent"><div style="color: #ffffff;"><h3>Please press confirm delete to make sure you want to delete these items</h3>
-		</div></div><input type="submit" id="next" value="Confirm Delete" class="mybutton" /><br><br>
+		<div style="color: #000000; margin-left:50%; width:450px;"><h3>Please press confirm delete to make sure you want to delete these items</h3>
+		</div><input type="submit" id="next" value="Confirm Delete" class="mybutton" /><br><br>
 	</form>
 
-	<div id="demo1"></div>
 </div>
 	<script>
 		$(function() {

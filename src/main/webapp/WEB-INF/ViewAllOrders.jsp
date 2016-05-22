@@ -80,7 +80,7 @@ input[type=checkbox] {
 .tab-content{
     background-color:#ffffff;
 width:940px;
-    padding:5px;
+    padding:2px;
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
