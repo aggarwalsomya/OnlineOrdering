@@ -23,7 +23,7 @@
 body {
   background-size: 1400px 900px;
 	color: #000000;
-background-image:url('resources/images/adminhome.jpg');
+  background-image:url('resources/images/adminhome.jpg');
 font-family: Papyrus, fantasy;
 	font-weight: bold;
     background-repeat:repeat-y;
