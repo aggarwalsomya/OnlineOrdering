@@ -125,8 +125,13 @@ text-align:center;
 		onclick="selected(this.value)">&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type="submit" class=mybutton value="Modify Order" id="back" name="Modify Order"
 		onclick="selected(this.value)">
-		</form></div>
-		</div>
+		</form>
+		</div><br><br>
+	<p>	
+		<h4><b>NOTE: Modify order marks your selected
+		 items with quantities in the user menu for you and removes them from your current cart.
+		 <br><br>Click on Add to cart after modifying and proceed to Check out.</b></h4>
+	</p></div>
 		<script type="text/javascript">
 	function selected(value){
 		var orderid= ${orderid};
