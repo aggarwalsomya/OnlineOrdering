@@ -19,9 +19,28 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <style>
+#backgroundImage{z-index: 1;}
+
+#backgroundImage:before {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+  background-image:url('resources/images/spices.jpg');
+ background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.9;
+    filter:alpha(opacity=40);
+    height:100%;
+    width:100%;
+ }
+
 
 body {
-  background-size: 1400px 900px;
+  background-size:auto 100%;
 	color: #000000;
   	background-image:url('resources/images/spices.jpg');
 		font-family: Papyrus, fantasy;
@@ -77,7 +96,7 @@ input[type=checkbox] {
 }
 .tab-content{
     background-color:#ffffff;
-width:940px;
+min-width:940px;
     padding:2px;
 }
 
@@ -139,7 +158,7 @@ background:#d15d10;
 
 
 </head>
-<body>
+<body id="backgroundImage">
 <!---navbar----->
 <div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
     <div class="container-fluid" style="margin-top:15px; font-size:20px;margin-right:12px;">
@@ -155,8 +174,8 @@ background:#d15d10;
 </div>
 <!---navbar----->
 <div class="bodycontent">
-
-<div id="title" style="margin-left:280px;"><b>View all orders</b></div>
+<br><br><br><br>
+<div id="title" style="margin-left:35%;"><b>View all orders</b></div>
 <br><br>
 	<div class="tab-content">
 		<div id="Drinks" class="tab-pane fade in active">
