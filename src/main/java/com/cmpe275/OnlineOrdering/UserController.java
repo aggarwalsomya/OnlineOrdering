@@ -578,7 +578,7 @@ public class UserController {
 		for(int i=0;i<a.length;i++)
 			System.out.print(a[i]+"-"+b[i]);
 
-		int minStartTime = pickuptime - preptime - 60;
+		int minStartTime = Math.max(pickuptime - preptime - 60, 300);
 		int maxStartTime = pickuptime - preptime;
 		System.out.println("\nMinStartTime:" + minStartTime);
 		System.out.println("MaxStartTime:" + maxStartTime);
@@ -606,17 +606,18 @@ public class UserController {
 							sch.setBusystarttime(maxStartTime);
 							sch.setBusyendtime(pickuptime);
 							return sch;
-						} else {
+						} else if(minStartTime != maxStartTime) {
 							sch.setBusystarttime(a[0] - preptime);
 							sch.setBusyendtime(a[0]);
 							return sch;
-						}
+						} else 
+							return null;
 					}
-				} else {
+				} else if(maxStartTime < b[0]) {
 					if (a[0] - minStartTime >= preptime) {
 						System.out.println("Will it ever come here?");
 						sch.setBusystarttime(a[0] - preptime);
-						sch.setBusyendtime(pickuptime);
+						sch.setBusyendtime(a[0]);
 						return sch;
 					} else {
 						System.out.println("No, it cannot be accomodated");
