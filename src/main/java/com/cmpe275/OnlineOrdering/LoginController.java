@@ -155,7 +155,7 @@ public class LoginController {
 			codeAssigned = t.getCode();
 		else {
 			model.addAttribute("msg",
-					"Please generate registration code and then enter it here.");
+					"Please generate verification code and register.");
 			return "AfterRegisterClick";
 		}
 
@@ -188,7 +188,7 @@ public class LoginController {
 			} else {
 				model.addAttribute(
 						"msg",
-						"the verification code you have entered is wrong! Please click register button to register again.");
+						"Invalid verification code! Please click register button to register again.");
 				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
 			}
