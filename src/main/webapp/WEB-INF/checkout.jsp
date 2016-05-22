@@ -11,7 +11,11 @@
 <link rel="stylesheet" type="text/css" media="screen"
 	href="http://tarruda.github.com/bootstrap-datetimepicker/assets/css/bootstrap-datetimepicker.min.css">
 <style>
-
+ input[type=radio] {
+    border: 0px;
+    width:6%;
+    height: 2em;
+}
 #custom-bootstrap-menu.navbar-default {
     font-size: 17px;
     background-color: rgba(223, 111, 18, 1);
@@ -96,7 +100,7 @@ form {
 
 .col1 {
 	text-align: left;
-	width: 300px;
+	width: 350px;
 	height: 31px;
 	margin: 0;
 	float: left;
