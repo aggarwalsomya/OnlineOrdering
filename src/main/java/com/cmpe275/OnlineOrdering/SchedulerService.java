@@ -29,10 +29,12 @@ public class SchedulerService {
 		Query q = em
 				.createQuery("Select o from OrderDetails o where o.orderid=:arg1");
 		q.setParameter("arg1", orderid);
+		System.out.println("orderid in schsvc getorder is " + orderid );
 		OrderDetails ob;
 		try {
 			ob = (OrderDetails) q.getSingleResult();
 		} catch (Exception e) {
+			System.out.println("error in get order is " + e);
 			ob = null;
 		}
 		return ob;
@@ -55,7 +57,7 @@ public class SchedulerService {
 	 * @param order id
 	 * @author Meera
 	 */
-	@Transactional
+	/*@Transactional
 	public void deleteSchedule(int id) {
 		
 		Query q = em
@@ -63,7 +65,7 @@ public class SchedulerService {
 		q.setParameter("arg1", id);
 		q.executeUpdate();
 
-	}
+	}*/
 	
 	/**
 	 * gets all orders scheduled for today by joining
