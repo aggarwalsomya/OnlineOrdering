@@ -292,5 +292,17 @@ public class UserService {
 		
 	}
 
+	@Transactional
+	/**
+	 * 
+	 * @param orderid
+	 */
+	public void cancelOrderChef(int orderid) {
+		System.out.println("orderid-------------------->"+orderid);
+		Query q = em.createQuery("Delete from Schedule where orderid=:arg1");
+		q.setParameter("arg1", orderid);
+		q.executeUpdate();		
+	}
+
 	
 }
