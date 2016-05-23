@@ -203,6 +203,7 @@ public class AdminService {
 	 * @param enddate
 	 * @return
 	 */
+    @Transactional
 	public List<Order> getAllOrders(String startdate, String enddate, String sortby) {	
 		String str = "";
 		if(sortby.contains("order")){
@@ -269,6 +270,7 @@ public class AdminService {
 	}
 
 	@SuppressWarnings("unchecked")
+    @Transactional
 	public List<MenuPopularity> getPopMenuItems(String startdate, String enddate, String category) {
 		Query q = em.createQuery("SELECT orderid, "
 				+ "name, "

@@ -52,20 +52,7 @@ public class SchedulerService {
 
 	}
 
-	/**
-	 * deletes the order from chef's schedule
-	 * @param order id
-	 * @author Meera
-	 */
-	/*@Transactional
-	public void deleteSchedule(int id) {
-		
-		Query q = em
-				.createQuery("Delete from Schedule s where s.orderid=:arg1");
-		q.setParameter("arg1", id);
-		q.executeUpdate();
-
-	}*/
+	
 	
 	/**
 	 * gets all orders scheduled for today by joining
