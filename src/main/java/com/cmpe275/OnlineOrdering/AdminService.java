@@ -95,9 +95,15 @@ public class AdminService {
 	 * @author Somya
 	 */
 	public boolean exists(String name) {
-		MenuItem mi = new MenuItem();
-		mi.setName(name);
-		return em.find(MenuItem.class, name) != null;
+		Query q = em.createQuery("Select mi from MenuItem mi where mi.name=:arg1");
+		q.setParameter("arg1", name);
+		
+		try {
+			q.getSingleResult();
+		} catch(NoResultException ex) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**

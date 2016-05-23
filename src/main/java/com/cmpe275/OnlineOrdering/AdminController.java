@@ -72,11 +72,20 @@ public class AdminController {
 	@RequestMapping(value = "/addItem", method = RequestMethod.POST)
 	public String addMenuItem(HttpServletRequest request,
 			 					@RequestParam CommonsMultipartFile fileUpload,
-			 					HttpServletResponse response) {
+			 					HttpServletResponse response,
+			 					Model model) {
 		
 		int id = this.getNextNonExistingNumber();
-		adminSvc.add(setParams(request, id, fileUpload
-		));
+		if(!adminSvc.exists(request.getParameter("name"))) {
+			adminSvc.add(setParams(request, id, fileUpload
+			));
+		} else {
+			model.addAttribute("msg", "Error! Menu Item already exists.");
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return "AdminError";
+		}
+		
+		
 		if(validateImageFile(fileUpload))
 			return "AddMenuItem";
 		else {
