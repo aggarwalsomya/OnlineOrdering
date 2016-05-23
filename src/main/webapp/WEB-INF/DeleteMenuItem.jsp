@@ -172,7 +172,7 @@ text-align:center;
     <th>Item Name</th>
     <th>Price</th>
     <th>Calories</th>
-    <th>Quantity</th></tr>
+    <th>Preparation Time</th></tr>
 				<c:forEach var="list1" items="${itemlist}" varStatus="status">
 					<tr>
 						<td><input id="cb1" type="checkbox" name="checker1" />
