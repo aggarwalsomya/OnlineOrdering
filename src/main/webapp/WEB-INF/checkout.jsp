@@ -61,7 +61,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-  background-image:url('../resources/images/Seamless-Food-Delivery_stepOne_Burrito_13.jpg');
+
  background-repeat: no-repeat;
     background-size: 100%;
     opacity: 0.9;
@@ -74,7 +74,7 @@
 body {
   background-size: 100%;
     background-repeat:repeat-y;
-background-image:url('../resources/images/Seamless-Food-Delivery_stepOne_Burrito_13.jpg');
+
 
 	font-family: Papyrus, fantasy;
 	font-weight: bold;
@@ -119,7 +119,7 @@ font-size:22px;
 	
 }
 
-div.row {
+div.row1 {
 	clear: both;
 	width: 675px;
 }
@@ -169,8 +169,9 @@ td{
 
 </head>
 <body id="backgroundImage">
+<div class="container-fluid" style="margin:0; padding:0;">
+<div class="row"><div class="span12">
 
-<div class="bodycontent">
 
 	
 	<label class="col1"><b>Order Id: </b><span id="id" style="font-size:22px;">${orderid}</span></label>
@@ -184,20 +185,20 @@ td{
 				<td style="min-width:350px;height:35px;text-align:left;">${list.value}</td>
 			</tr><br>
 		</c:forEach>
-	</table></div>
+	</table></div></div></div><div class="row"><div class="span12">
 	<br><br><div style="margin-left:30px;">
-	<div class="row">
+	<div class="row1">
 	<label class="col1" style="margin-top:30%;">Total Price:&nbsp;&nbsp;</label>
 	<div class="col2" style="font-size:22px;margin-top:30%;">$ ${totalprice}</div>
 	</div>
 	<br>
-	<div class="row">
+	<div class="row1">
 	<label class="col1"><input type="radio" onclick="confirm()"
 		name="pickup" value="confirm"/>&nbsp;&nbsp;<span style="font-size:22px;">Earliest Pickup Time:</span> &nbsp;&nbsp;</label>
 		<div class="col2" id="early" style="font-size:20px;">${earliestpickuptime}</div>
 	</div>
 	<br>
-	<div class="row">
+	<div class="row1">
 	<label class="col1">
 	<input type="radio" onclick="custom()"
 		name="pickup" value="custom" />&nbsp;&nbsp;<span>Pick your own date & time.(Between 6am-9pm, within next 30 days.)</span>&nbsp;&nbsp;</label>
@@ -217,7 +218,7 @@ td{
 
 	</form></div><br><br><br><br>
 </div>
-</body>
+
 <script type="text/javascript"
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js">
 </script>
@@ -289,5 +290,7 @@ var yyyyf = future.getFullYear();
     }
  
 </script>
-
+</div>
+</div>
+</body>
 </html>
