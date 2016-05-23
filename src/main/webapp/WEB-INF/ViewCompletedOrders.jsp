@@ -105,7 +105,7 @@ body {
 .bodycontent {
 	margin: auto;
 	margin-top: 70px;
-	width: 50%;
+	width: 40%;
 }
 
 .mybutton{
@@ -134,8 +134,8 @@ input[type=checkbox] {
 }
 .tab-content{
     background-color:#ffffff;
-width:820px;
-    padding:15px;
+width:100%;
+    padding:3px;
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
@@ -156,6 +156,7 @@ style="border: 1px solid black;"
 th{
 padding:15px;
 text-align:center;
+background-color: #d15d10;
 }
 </style>
 
@@ -180,7 +181,7 @@ text-align:center;
 
 <div class="bodycontent">
 
-<div id="title" ><b>View All Orders</b></div>
+<div id="title" style="margin-left:140px;" ><b>View All Orders</b></div>
 <br><br>
 	<div class="tab-content">
 		<div id="Drinks" class="tab-pane fade in active">

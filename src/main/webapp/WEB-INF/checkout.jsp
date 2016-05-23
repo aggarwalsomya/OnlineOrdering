@@ -159,30 +159,19 @@ padding-bottom:15px;
 }
 tr{
 pading-right:15px;
+padding-bottom:10px;
+}
+td{
+
 }
 </style>
 
 
 </head>
 <body id="backgroundImage">
-<!---navbar----->
-<div id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background:#df6f12; height:70px;">
-    <div class="container-fluid" style="margin-top:15px;">
-        <div class="collapse navbar-collapse navbar-menubuilder" >
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/OnlineOrdering/home">Home</a>
-                </li>
-                
-                <li><a href="/OnlineOrdering/logout">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-<!---navbar----->
+
 <div class="bodycontent">
 
-<br><br><br>
 	
 	<label class="col1"><b>Order Id: </b><span id="id" style="font-size:22px;">${orderid}</span></label>
 	
@@ -193,15 +182,15 @@ pading-right:15px;
 	<th>Quantity</th></tr>
 		<c:forEach var="list" items="${menulist}" varStatus="status">
 			<tr>
-				<td>${list.key}</td>
-				<td style="text-align:center;">${list.value}</td>
+				<td style="min-width:350px;height:35px;">${list.key}</td>
+				<td style="min-width:350px;height:35px;text-align:left;">${list.value}</td>
 			</tr><br>
 		</c:forEach>
 	</table></div>
 	<br><br><div style="margin-left:30px;">
 	<br><br><br><br><div class="row">
-	<label class="col1">Total Price:&nbsp;&nbsp;</label>
-	<div class="col2" style="font-size:22px;">$ ${totalprice}</div>
+	<label class="col1" style="margin-top:30%;">Total Price:&nbsp;&nbsp;</label>
+	<div class="col2" style="font-size:22px;margin-top:30%;">$ ${totalprice}</div>
 	</div>
 	<br>
 	<div class="row">
