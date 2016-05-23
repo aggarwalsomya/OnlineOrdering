@@ -174,8 +174,6 @@ td{
 
 	
 	<label class="col1"><b>Order Id: </b><span id="id" style="font-size:22px;">${orderid}</span></label>
-	
-	<br><br>
 <div class="col1">
 	<table>
 	<tr><th style="text-align:left;">Item Name</th>
@@ -188,7 +186,7 @@ td{
 		</c:forEach>
 	</table></div>
 	<br><br><div style="margin-left:30px;">
-	<br><br><br><br><div class="row">
+	<div class="row">
 	<label class="col1" style="margin-top:30%;">Total Price:&nbsp;&nbsp;</label>
 	<div class="col2" style="font-size:22px;margin-top:30%;">$ ${totalprice}</div>
 	</div>
