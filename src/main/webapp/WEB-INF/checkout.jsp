@@ -61,7 +61,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-
+background-image:url('../resources/images/Seamless-Food-Delivery_stepOne_Burrito_13.jpg');
  background-repeat: no-repeat;
     background-size: 100%;
     opacity: 0.9;
@@ -74,8 +74,8 @@
 body {
   background-size: 100%;
     background-repeat:repeat-y;
-
-
+background-image:url('../resources/images/Seamless-Food-Delivery_stepOne_Burrito_13.jpg');
+color:white;
 	font-family: Papyrus, fantasy;
 	font-weight: bold;
 
@@ -154,16 +154,12 @@ label{
 font-size:16px;
 font-weight:bold;
 }
-th{
-padding-bottom:15px;
-}
+
 tr{
 pading-right:15px;
 padding-bottom:10px;
 }
-td{
 
-}
 </style>
 
 
@@ -179,7 +175,7 @@ td{
 				<span id="id" style="font-size:22px;">${orderid}</span>
 			</label>
 			
-			<table>
+			<table style="font-size:22px;">
 				<tr><th style="text-align:left;">Item Name</th>
 					<th style="text-align:left;">Quantity</th>
 				</tr>
@@ -196,7 +192,7 @@ td{
 	<div class="row"><div class="span3" style="width:30%;"></div>
 		<div class="span6">
 			<label class="col1" >Total Price:&nbsp;&nbsp;</label>
-			<div class="col2" >$ ${totalprice}</div>
+			<div class="col2" ><span style="font-size:22px;">$ ${totalprice}</span></div>
 		
 			<label class="col1">
 				<input type="radio" onclick="confirm()"name="pickup" value="confirm"/>
