@@ -170,53 +170,59 @@ td{
 </head>
 <body id="backgroundImage">
 <div class="container-fluid" style="margin:0; padding:0;">
-<div class="row"><div class="span12">
-
-
-	
-	<label class="col1"><b>Order Id: </b><span id="id" style="font-size:22px;">${orderid}</span></label>
-<div class="col1">
-	<table>
-	<tr><th style="text-align:left;">Item Name</th>
-	<th>Quantity</th></tr>
-		<c:forEach var="list" items="${menulist}" varStatus="status">
-			<tr>
-				<td style="min-width:350px;height:35px;">${list.key}</td>
-				<td style="min-width:350px;height:35px;text-align:left;">${list.value}</td>
-			</tr><br>
-		</c:forEach>
-	</table></div></div></div><div class="row"><div class="span12">
-	<br><br><div style="margin-left:30px;">
-	<div class="row1">
-	<label class="col1" style="margin-top:30%;">Total Price:&nbsp;&nbsp;</label>
-	<div class="col2" style="font-size:22px;margin-top:30%;">$ ${totalprice}</div>
+<div class="row" style="height:50px;"><div class="span12"></div></div>
+<div class="row" style="height:50px;"><div class="span12"></div></div>
+	<div class="row"><div class="span3" style="width:30%;"></div>
+		<div class="span6">
+			<label class="col1">
+				<b>Order Id: </b>
+				<span id="id" style="font-size:22px;">${orderid}</span>
+			</label>
+			
+			<table>
+				<tr><th style="text-align:left;">Item Name</th>
+					<th style="text-align:left;">Quantity</th>
+				</tr>
+				<c:forEach var="list" items="${menulist}" varStatus="status">
+					<tr>
+						<td style="min-width:350px;height:35px;">${list.key}</td>
+						<td style="min-width:350px;height:35px;text-align:left;">${list.value}</td>
+					</tr><br>
+				</c:forEach>
+			</table>
+		</div><div class="span3"></div>
 	</div>
-	<br>
-	<div class="row1">
-	<label class="col1"><input type="radio" onclick="confirm()"
-		name="pickup" value="confirm"/>&nbsp;&nbsp;<span style="font-size:22px;">Earliest Pickup Time:</span> &nbsp;&nbsp;</label>
-		<div class="col2" id="early" style="font-size:20px;">${earliestpickuptime}</div>
+	<div class="row" style="height:50px;"><div class="span12"></div></div>
+	<div class="row"><div class="span3" style="width:30%;"></div>
+		<div class="span6">
+			<label class="col1" >Total Price:&nbsp;&nbsp;</label>
+			<div class="col2" >$ ${totalprice}</div>
+		
+			<label class="col1">
+				<input type="radio" onclick="confirm()"name="pickup" value="confirm"/>
+				&nbsp;&nbsp;<span style="font-size:22px;">Earliest Pickup Time:</span> &nbsp;&nbsp;
+			</label>
+			<div class="col2" id="early" style="font-size:20px;">${earliestpickuptime}</div>
+		
+			<label class="col1">
+			<input type="radio" onclick="custom()" name="pickup" value="custom" />
+			&nbsp;&nbsp;<span>Pick your own date & time.(Between 6am-9pm, within next 30 days.)</span>&nbsp;&nbsp;
+			</label><br><br><br><br>
+			<div id="datetimepicker" class="input-append date">
+				<input type="text" id="in"></input> <span class="add-on" id="in1"> <i
+					data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+				</span>
+			</div>
+		
+			<form method="post" action="finalCheckout">
+				<input type="hidden" id="orderid" name="orderid" value="" />
+				<input	type="hidden" id="type" name="type" value="" /> 
+				<input type="hidden" id="time" name="time" value="" /> 
+				<input type="hidden" id="earlypickuptime" name="early" value="" /><br><br><br>
+				<input type="submit" name="proceed" class=mybutton value="Proceed" style="margin-left:0px;"/>
+			</form>
+		</div><div class="span3"></div>
 	</div>
-	<br>
-	<div class="row1">
-	<label class="col1">
-	<input type="radio" onclick="custom()"
-		name="pickup" value="custom" />&nbsp;&nbsp;<span>Pick your own date & time.(Between 6am-9pm, within next 30 days.)</span>&nbsp;&nbsp;</label>
-		<span class="col2">
-	<div id="datetimepicker" class="input-append date">
-		<input type="text" id="in"></input> <span class="add-on" id="in1"> <i
-			data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-		</span>
-	</div></span></div>
-<br><br><br><br>
-	<form method="post" action="finalCheckout">
-		<input type="hidden" id="orderid" name="orderid" value="" /> <input
-			type="hidden" id="type" name="type" value="" /> <input type="hidden"
-			id="time" name="time" value="" /> <input type="hidden"
-			id="earlypickuptime" name="early" value="" /> <input type="submit"
-			name="proceed" class=mybutton value="Proceed" style="margin-left:-30px;"/>
-
-	</form></div><br><br><br><br>
 </div>
 
 <script type="text/javascript"
@@ -290,7 +296,6 @@ var yyyyf = future.getFullYear();
     }
  
 </script>
-</div>
-</div>
+
 </body>
 </html>
