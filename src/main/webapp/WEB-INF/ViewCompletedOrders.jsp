@@ -134,8 +134,8 @@ input[type=checkbox] {
 }
 .tab-content{
     background-color:#ffffff;
-width:100%;
-    padding:3px;
+min-width:735px;
+    
 }
 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
