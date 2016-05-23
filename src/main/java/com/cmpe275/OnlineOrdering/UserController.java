@@ -417,9 +417,12 @@ public class UserController {
 		try {
 			// changing the time in minutes from 24hour format
 			pickuptime = Utils.getTimeinMins(time);
-			//System.out.println("Pickup entered by the user is:" + pickuptime);
-			//System.out.println("Current time in mins:" + Utils.getCurrTimeInMins());
-			if (date == Utils.getCurrdate() && pickuptime <= Utils.getCurrTimeInMins()) {
+			System.out.println("Pickup entered by the user is:" + pickuptime);
+			System.out.println("Current time in mins:" + Utils.getCurrTimeInMins());
+			System.out.println("date is: " + date );
+			System.out.println(Utils.getCurrdate());
+			if ((date.equals(Utils.getCurrdate())) && (pickuptime <= Utils.getCurrTimeInMins())) {
+				System.out.println("going inside check");
 				model.addAttribute("msg", "Pickup time cannot be in past or current time");
 				model.addAttribute("orderid", orderid);
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -581,7 +584,12 @@ public class UserController {
 		for(int i=0;i<a.length;i++)
 			System.out.print(a[i]+"-"+b[i]);
 
-		int minStartTime = Math.max(Math.max(pickuptime - preptime - 60, 300), Utils.getCurrTimeInMins());
+		int minStartTime = 0;
+		if(date.equals(Utils.getCurrdate()))
+			minStartTime = Math.max(Math.max(pickuptime - preptime - 60, 300), Utils.getCurrTimeInMins());
+		else
+			minStartTime = Math.max(pickuptime - preptime - 60, 300);
+		
 		int maxStartTime = pickuptime - preptime;
 		System.out.println("\nMinStartTime:" + minStartTime);
 		System.out.println("MaxStartTime:" + maxStartTime);
