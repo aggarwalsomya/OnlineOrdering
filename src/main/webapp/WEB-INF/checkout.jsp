@@ -61,7 +61,7 @@
    bottom: 0;
    left: 0;
    right: 0;
-background-image:url('../resources/images/Seamless-Food-Delivery_stepOne_Burrito_13.jpg');
+
  background-repeat: no-repeat;
     background-size: 100%;
     opacity: 0.9;
@@ -75,7 +75,7 @@ body {
   background-size: 100%;
     background-repeat:repeat-y;
 background-image:url('../resources/images/Seamless-Food-Delivery_stepOne_Burrito_13.jpg');
-color:white;
+
 	font-family: Papyrus, fantasy;
 	font-weight: bold;
 
@@ -170,17 +170,17 @@ padding-bottom:10px;
 <div class="row" style="height:50px;"><div class="span12"></div></div>
 	<div class="row"><div class="span3" style="width:30%;"></div>
 		<div class="span6">
-			<label class="col1">
+			<label class="col1" style="color:white;">
 				<b>Order Id: </b>
-				<span id="id" style="font-size:22px;">${orderid}</span>
+				<span id="id" style="font-size:22px;color:white;">${orderid}</span>
 			</label>
-			
-			<table style="font-size:22px;">
-				<tr><th style="text-align:left;">Item Name</th>
-					<th style="text-align:left;">Quantity</th>
+			<br>
+			<table style="font-size:22px;color:white;">
+				<tr><th style="text-align:left;color:white;">Item Name</th>
+					<th style="text-align:left;color:white;">Quantity</th>
 				</tr>
 				<c:forEach var="list" items="${menulist}" varStatus="status">
-					<tr>
+					<tr style="color:white;">
 						<td style="min-width:350px;height:35px;">${list.key}</td>
 						<td style="min-width:350px;height:35px;text-align:left;">${list.value}</td>
 					</tr><br>
@@ -191,18 +191,18 @@ padding-bottom:10px;
 	<div class="row" style="height:50px;"><div class="span12"></div></div>
 	<div class="row"><div class="span3" style="width:30%;"></div>
 		<div class="span6">
-			<label class="col1" >Total Price:&nbsp;&nbsp;</label>
-			<div class="col2" ><span style="font-size:22px;">$ ${totalprice}</span></div>
+			<label class="col1" style="color:white;" >Total Price:&nbsp;&nbsp;</label>
+			<div class="col2" style="color:white; font-size:22px;" >$ ${totalprice}</div>
 		
 			<label class="col1">
 				<input type="radio" onclick="confirm()"name="pickup" value="confirm"/>
-				&nbsp;&nbsp;<span style="font-size:22px;">Earliest Pickup Time:</span> &nbsp;&nbsp;
+				&nbsp;&nbsp;<span style="font-size:22px;color:white;">Earliest Pickup Time:</span> &nbsp;&nbsp;
 			</label>
-			<div class="col2" id="early" style="font-size:20px;">${earliestpickuptime}</div>
+			<div class="col2" id="early" style="font-size:20px;color:white;">${earliestpickuptime}</div>
 		
 			<label class="col1">
 			<input type="radio" onclick="custom()" name="pickup" value="custom" />
-			&nbsp;&nbsp;<span>Pick your own date & time.(Between 6am-9pm, within next 30 days.)</span>&nbsp;&nbsp;
+			&nbsp;&nbsp;<span style="color:white;">Pick your own date & time.(Between 6am-9pm, within next 30 days.)</span>&nbsp;&nbsp;
 			</label><br><br><br><br>
 			<div id="datetimepicker" class="input-append date">
 				<input type="text" id="in"></input> <span class="add-on" id="in1"> <i
